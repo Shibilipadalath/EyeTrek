@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EyeTrek adminLogin</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/favicon.svg">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            overflow: hidden;
+            width: 100%;
+        }
+        .main{
+            width: 100%;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .login-section {
+            padding: 50px 0;
+        }
+
+        .login-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px;
+            width: 150%;
+        }
+
+        .login-box h3 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            margin-right: 5px;
+        }
+
+        .forgot-password {
+            color: #e93131;
+            text-decoration: none;
+            text-size-adjust: 1;
+        }
+
+        .btn.login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #242424;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .create-account {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .preloader-content {
+            text-align: center;
+        }
+
+        .loader {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .loader .bar {
+            width: 10px;
+            height: 30px;
+            background: #f733335a;
+            margin: 0 5px;
+            animation: loader 0.6s infinite alternate;
+        }
+
+        .loader .bar:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loader .bar:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes loader {
+            from {
+                height: 30px;
+            }
+            to {
+                height: 60px;
+            }
+        }
+
+        .welcome-box {
+            background: black;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            width: 35%;
+        }
+        span{
+            color: red;
+            font-size: 10px;
+        }
+
+    </style>
+    
+</head>
+<body>
+    <main class="main">
+        <section class="login-section">
+            <div class="container">
+                <div class="login-wrapper">
+                    <div class="welcome-box">
+                        Admin
+                    </div>
+                    <div class="box login-box">
+                        <% if(error){ %>
+                            <span id="backend-error"><%= error %></span>
+                            <% } %>
+                        <form method="post" id="loginForm" action='/admin'>
+                            <div class="form-group">
+                                <input type="text" name="email" id="email" placeholder="Your Email" value="shibilipadalath@gmail.com">
+                                <span id="email-error"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" id="password" placeholder="Password" value="Shibili123">
+                                <span id="password-error"></span>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn login-btn">Log in</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <div id="preloader-active" class="preloader">
+        <div class="preloader-content">
+            <h5>Now Loading</h5>
+            <div class="loader">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const preloader = document.getElementById('preloader-active');
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 1000); 
+        });
+        const spanError = document.getElementById('backend-error')
+        setTimeout(()=>{
+            spanError.style.display='none';
+        },3000)
+        
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded',(event)=>{
+            const form=document.getElementById('loginForm')
+            const email=document.getElementById('email')
+            const password=document.getElementById('password')
+
+            const emailError=document.getElementById('email-error')
+            const passwordError=document.getElementById('password-error')
+
+            form.addEventListener('submit',(event)=>{
+                let isValid=true
+
+                //email validation
+                const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                if(!emailPattern.test(email.value)){
+                    isValid=false
+                    emailError.innerText='Invalid email'
+                }else{
+                    emailError.innerText=''
+                }
+
+                //password validation
+                const passwordPattern=/^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
+                if (!passwordPattern.test(password.value)) {
+                    isValid = false;
+                    passwordError.innerText='Invalid password'
+                }else{
+                    passwordError.innerText=''
+                }
+
+                if (!isValid) {
+                    event.preventDefault();
+
+                }else{
+                    emailError.innerText=''
+                    passwordError.innerText=''
+                }
+            })
+
+
+        })
+    </script>
+</body>
+</html>

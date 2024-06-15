@@ -1,0 +1,428 @@
+<%- include('./partials/adminHeader') %>
+
+<style>
+    .colorForError{
+        color: red;
+    }
+</style>
+<style>
+    #image-preview img {
+        max-width: 100px;
+        max-height: 100px;
+        margin: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+    }
+</style>
+
+<body>
+    <div class="screen-overlay"></div>
+    <aside class="navbar-aside" id="offcanvas_aside">
+        <div class="aside-top">
+            <a href="index.html" class="brand-wrap">
+                <img src="/public/adminAsset/imgs/theme/logo.svg" class="logo" alt="Evara Dashboard">
+            </a>
+            <div>
+                <button class="btn btn-icon btn-aside-minimize">
+                    <i class="text-muted material-icons md-menu_open"></i>
+                </button>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu-aside">
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/adminHome">
+                        <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <a class="menu-link" href="/admin/productList">
+                        <i class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">Products</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/orderPage">
+                        <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Orders</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/userManagement">
+                        <i class="icon material-icons md-store"></i>
+                        <span class="text">Users</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/categoryPage">
+                        <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Category</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="page-transactions-1.html">
+                        <i class="icon material-icons md-monetization_on"></i>
+                        <span class="text">Transactions</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="page-transactions-1.html">Transaction 1</a>
+                        <a href="page-transactions-2.html">Transaction 2</a>
+                        <a href="page-transactions-details.html">Transaction Details</a>
+                    </div>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="#">
+                        <i class="icon material-icons md-person"></i>
+                        <span class="text">Account</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="page-account-login.html">User login</a>
+                        <a href="page-account-register.html">User registration</a>
+                        <a href="page-error-404.html">Error 404</a>
+                    </div>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="page-reviews.html">
+                        <i class="icon material-icons md-comment"></i>
+                        <span class="text">Reviews</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="page-brands.html">
+                        <i class="icon material-icons md-stars"></i>
+                        <span class="text">Brands</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" disabled href="#">
+                        <i class="icon material-icons md-pie_chart"></i>
+                        <span class="text">Statistics</span>
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <ul class="menu-aside">
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="#">
+                        <i class="icon material-icons md-settings"></i>
+                        <span class="text">Settings</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="page-settings-1.html">Setting sample 1</a>
+                        <a href="page-settings-2.html">Setting sample 2</a>
+                    </div>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="page-blank.html">
+                        <i class="icon material-icons md-local_offer"></i>
+                        <span class="text">Starter page</span>
+                    </a>
+                </li>
+            </ul>
+            <br>
+            <br>
+        </nav>
+    </aside>
+    <main class="main-wrap">
+        <header class="main-header navbar">
+            <div class="col-search">
+                <form class="searchform">
+                    <div class="input-group">
+                        <input list="search_terms" type="text" class="form-control" placeholder="Search term">
+                        <button class="btn btn-light bg" type="button">
+                            <i class="material-icons md-search"></i>
+                        </button>
+                    </div>
+                    <datalist id="search_terms">
+                        <option value="Products">
+                        <option value="New orders">
+                        <option value="Apple iphone">
+                        <option value="Ahmed Hassan">
+                    </datalist>
+                </form>
+            </div>
+            <div class="col-nav">
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside">
+                    <i class="material-icons md-apps"></i>
+                </button>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon" href="#">
+                            <i class="material-icons md-notifications animation-shake"></i>
+                            <span class="badge rounded-pill">3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon darkmode" href="#">
+                            <i class="material-icons md-nights_stay"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="requestfullscreen nav-link btn-icon">
+                            <i class="material-icons md-cast"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false">
+                            <i class="material-icons md-public"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
+                            <a class="dropdown-item text-brand" href="#"><img src="assets/imgs/theme/flag-us.png" alt="English">English</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-fr.png" alt="Français">Français</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-jp.png" alt="Français">日本語</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-cn.png" alt="Français">中国人</a>
+                        </div>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false">
+                            <img class="img-xs rounded-circle" src="/public/adminAsset/imgs/people/avatar2.jpg" alt="User">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="/admin/adminLogout"><i class="material-icons md-exit_to_app"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section class="content-main">
+            <div class="row">
+                <div class="col-6">
+                    <div class="content-header">
+                        <h2 class="content-title">Add New Product</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <form action="/admin/addProduct" method="post" enctype="multipart/form-data" id="productForm">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <h6>1. General info</h6>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="mb-4">
+                                            <label class="form-label">Product title</label>
+                                            <input type="text" name="name" id="name" placeholder="Type here" class="form-control">
+                                            <span id="title-error" class="colorForError"></span>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="form-label">Description</label>
+                                            <textarea placeholder="Type here" name="Description" id="Description" class="form-control" rows="4"></textarea>
+                                            <span id="description-error"class="colorForError"></span>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="form-label">Brand</label>
+                                            <input type="text" name="brand" id="brand" placeholder="Type here" class="form-control">
+                                            <span id="brand-error"class="colorForError"></span>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="form-label">Stock</label>
+                                            <input type="text" name="stock" id="stock" placeholder="Type here" class="form-control">
+                                            <span id="stock-error"class="colorForError"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mb-4 mt-0">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <h6>2. Pricing</h6>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="mb-4">
+                                            <label class="form-label">Original Price</label>
+                                            <input type="text" name="originalPrice" id="originalPrice" placeholder="$00.0" class="form-control">
+                                            <span id="originalPrice-error"class="colorForError"></span>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="form-label">Offer Price</label>
+                                            <input type="text" name="offerPrice" id="offerPrice" placeholder="$00.0" class="form-control">
+                                            <span id="offerPrice-error"class="colorForError"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mb-4 mt-0">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <h6>3. Category</h6>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="mb-4">
+                                            <select class="form-select" name="category" id="category">
+                                                <% for(let i=0;i<category.length;i++){ %>
+                                                <option><%= category[i].name %></option>
+                                                <% } %>
+                                            </select>
+                                            <span id="category-error"class="colorForError"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mb-4 mt-0">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <h6>4. Media</h6>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="mb-4">
+                                            <label class="form-label">Images</label>
+                                            <input class="form-control" type="file" name="images" id="images" accept=".jpg,.jpeg,.png,.webp" multiple>
+                                            <span id="images-error" class="colorForError"></span>
+                                        </div>
+                                        <div id="image-preview" class="row"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-9 offset-md-3">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                const form = document.getElementById('productForm');
+                const title = document.getElementById('name');
+                const description = document.getElementById('Description');
+                const brand = document.getElementById('brand');
+                const stock = document.getElementById('stock');
+                const originalPrice = document.getElementById('originalPrice');
+                const offerPrice = document.getElementById('offerPrice');
+                const category = document.getElementById('category');
+                const images = document.getElementById('images');
+
+                const titleError = document.getElementById('title-error');
+                const descriptionError = document.getElementById('description-error');
+                const brandError = document.getElementById('brand-error');
+                const stockError = document.getElementById('stock-error');
+                const originalPriceError = document.getElementById('originalPrice-error');
+                const offerPriceError = document.getElementById('offerPrice-error');
+                const imagesError = document.getElementById('images-error');
+
+                form.addEventListener('submit', function(event) {
+                    let isValid = true;
+
+                    // Title validation
+                    const textPattern = /^(?!.* {2})[a-zA-Z0-9 ]+$/;
+
+                    if (!textPattern.test(title.value)) {
+                        isValid = false;
+                        titleError.innerText = 'Invalid Title';
+                    } else {
+                        titleError.innerText = '';
+                    }
+
+                    // Description validation
+                    if (!textPattern.test(description.value)) {
+                        isValid = false;
+                        descriptionError.innerText = 'Invalid Description';
+                    } else {
+                        descriptionError.innerText = '';
+                    }
+
+                    // Brand validation
+                    if (!textPattern.test(brand.value)) {
+                        isValid = false;
+                        brandError.innerText = 'Invalid Brand';
+                    } else {
+                        brandError.innerText = '';
+                    }
+
+                    // Stock validation
+                    const numberPattern = /^(?!.* {2})[0-9 ]+$/;
+
+                    if (!numberPattern.test(stock.value)) {
+                        isValid = false;
+                        stockError.innerText = 'Invalid Stock';
+                    } else {
+                        stockError.innerText = '';
+                    }
+
+                    // Original Price validation
+                    if (!numberPattern.test(originalPrice.value)) {
+                        isValid = false;
+                        originalPriceError.innerText = 'Invalid Price';
+                    } else {
+                        originalPriceError.innerText = '';
+                    }
+
+                    // Offer Price validation
+                    if (!numberPattern.test(offerPrice.value)) {
+                        isValid = false;
+                        offerPriceError.innerText = 'Invalid Price';
+                    } else {
+                        offerPriceError.innerText = '';
+                    }
+
+                    // Images validation
+                    const validImageTypes = ['image/jpeg', 'image/png', 'image/webp'];
+                    if (images.files.length < 1) {
+                        isValid = false;
+                        imagesError.innerText = 'Please upload at least 1 image';
+                    } else {
+                        for (const file of images.files) {
+                            if (!validImageTypes.includes(file.type)) {
+                                isValid = false;
+                                imagesError.innerText = 'Only image files are allowed (JPEG, PNG, WEBP)';
+                                break;
+                            } else {
+                                imagesError.innerText = '';
+                            }
+                        }
+                    }
+
+                    if (!isValid) {
+                        event.preventDefault();
+                    }
+                });
+            });
+        </script>
+
+        <!-- image preview -->
+        <script>
+            document.getElementById('images').addEventListener('change', function(event) {
+                const imagePreviewContainer = document.getElementById('image-preview');
+                imagePreviewContainer.innerHTML = ''; // Clear previous previews
+            
+                const files = event.target.files;
+            
+                if (files) {
+                    Array.from(files).forEach(file => {
+                        const reader = new FileReader();
+            
+                        reader.onload = function(e) {
+                            const imgElement = document.createElement('img');
+                            imgElement.src = e.target.result;
+                            imgElement.classList.add('img-thumbnail');
+                            imgElement.style.margin = '10px';
+                            imgElement.style.width = '100px'; // Adjust the width as needed
+                            imgElement.style.height = '100px'; // Adjust the height as needed
+            
+                            const colDiv = document.createElement('div');
+                            colDiv.classList.add('col-md-3');
+                            colDiv.appendChild(imgElement);
+            
+                            imagePreviewContainer.appendChild(colDiv);
+                        };
+            
+                        reader.readAsDataURL(file);
+                    });
+                }
+            });
+            </script>
+            
+        <%- include('./partials/adminFooter') %>

@@ -1,0 +1,67 @@
+/* Custom styles for the product card */
+.custom-product-card {
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden; /* Hide the overflow to prevent second image from showing initially */
+}
+
+.custom-product-card .product-img img {
+    width: 100%;
+    height: auto;
+    transition: opacity 0.5s ease-in-out; /* Adding opacity transition */
+}
+
+/* Set the opacity of the hover image to 0 initially */
+.custom-product-card .product-img img.hover-img {
+    opacity: 0;
+}
+
+.custom-product-card:hover .product-img img.default-img {
+    opacity: 0; /* Fade out the default image on hover */
+}
+
+.custom-product-card:hover .product-img img.hover-img {
+    opacity: 1; /* Fade in the hover image on hover */
+}
+
+/* Custom styles for the new image on hover */
+.custom-product-card .hover-image {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.custom-product-card .hover-image img {
+    width: 100%;
+    height: auto;
+}
+/* Custom styles for the product card */
+.custom-product-card {
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden; /* Hide the overflow to prevent second image from showing initially */
+}
+
+.custom-product-card .product-img {
+    position: relative; /* Position relative for containing the hover image */
+}
+
+.custom-product-card .product-img img {
+    width: 100%;
+    height: auto;
+    transition: opacity 0.5s ease-in-out; /* Adding opacity transition */
+}
+
+/* Set the opacity of the hover image to 0 initially */
+.custom-product-card .product-img img.hover-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out; /* Adding opacity transition */
+}
+
+

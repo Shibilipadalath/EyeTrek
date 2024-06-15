@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EyeTrek OTP Verification</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/favicon.svg">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            overflow: hidden;
+        }
+
+        .otp_wrap {
+            width: 100%;
+            max-width: 1200px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .heading_s1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #000000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #000000;
+        }
+
+        .resend_link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        span{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="otp_wrap">
+        <div class="heading_s1">
+            <h3>OTP Verification</h3>
+            <% if(error){ %>
+                <span><%=error %></span>
+            <% } %>
+        </div>
+        <form action="/verify-otp" method="post">
+            <div class="form-group">
+                <input type="text" name="otp" placeholder="Enter OTP">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn">Verify OTP</button>
+            </div>
+            <!-- <a href="/resendOtp" class="resend_link">Didn't receive OTP? Resend</a> -->
+        </form>
+    </div>
+    
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const preloader = document.getElementById('preloader-active');
+            if (preloader) {
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 1000); // Adjust time as needed
+            }
+        });
+    </script>
+</body>
+</html>
