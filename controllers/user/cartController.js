@@ -1,6 +1,6 @@
-const Product=require('../../models/productModel')
-const Cart=require('../../models/cartModel')
-const User=require('../../models/userModel')
+const Product = require('../../models/productModel')
+const Cart = require('../../models/cartModel')
+const User = require('../../models/userModel')
 
 
 
@@ -13,7 +13,7 @@ const cartPage = async (req, res) => {
         }
 
         const user = await User.findOne({ _id: userId });
-        
+
         const cart = await Cart.findOne({ userId }).populate({
             path: 'cartItems.productId',
             model: 'Product' // Assuming your product model is named 'Product'
@@ -173,15 +173,15 @@ const updateCartQuantity = async (req, res) => {
     }
 };
 
-const checkOutPage=async(req,res)=>{
+const checkOutPage = async (req, res) => {
 
     try {
-        const userId=req.session.userId
-        if(userId){
-            const user=await User.findById(userId)
-            res.render('checkOut',{user})
+        const userId = req.session.userId
+        if (userId) {
+            const user = await User.findById(userId)
+            res.render('checkOut', { user })
         }
-        
+
     } catch (error) {
         console.error(error);
     }
@@ -196,7 +196,7 @@ const checkOutPage=async(req,res)=>{
 
 
 
-module.exports={
+module.exports = {
     cartPage,
     addToCart,
     removeFromCart,

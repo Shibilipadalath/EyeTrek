@@ -8,18 +8,17 @@ const MulterImg = require('../config/multer')
 
 const adminRouter = express()
 adminRouter.set('views', 'views/admin')
-adminRouter.set('view engine', 'ejs')
 
 //admin
 
-adminRouter.get('/',adminAuth.isLogout,adminController.loadAdmin)
-adminRouter.post('/',adminAuth.isLogout, adminController.adminLogin);
+adminRouter.get('/', adminAuth.isLogout, adminController.loadAdmin)
+adminRouter.post('/', adminAuth.isLogout, adminController.adminLogin);
 adminRouter.get('/adminHome', adminAuth.isLogin, adminController.adminHome);
 adminRouter.get('/userManagement', adminAuth.isLogin, adminController.userManagement)
 adminRouter.get('/userEditPage', adminAuth.isLogin, adminController.userEditPage)
 adminRouter.put('/blockUser/:id', adminAuth.isLogin, adminController.blockUser)
 adminRouter.put('/UnBlockUser/:id', adminAuth.isLogin, adminController.unBlockUser)
-adminRouter.get('/adminLogout',adminAuth.isLogin,adminController.adminLogout)
+adminRouter.get('/adminLogout', adminAuth.isLogin, adminController.adminLogout)
 
 //product
 
@@ -44,7 +43,7 @@ adminRouter.post('/ToggleBlockCategories/:id', adminAuth.isLogin, categoryContro
 
 //order
 
-adminRouter.get('/orderPage',adminAuth.isLogin,adminController.orderPage)
+adminRouter.get('/orderPage', adminAuth.isLogin, adminController.orderPage)
 
 
 module.exports = adminRouter

@@ -1,5 +1,5 @@
-const User=require('../../models/userModel')
-const Address=require('../../models/addressModel')
+const User = require('../../models/userModel')
+const Address = require('../../models/addressModel')
 
 const myAccount = async (req, res) => {
     try {
@@ -91,7 +91,7 @@ const editAddress = async (req, res) => {
     }
 }
 
-const deleteAddress=async(req,res)=>{
+const deleteAddress = async (req, res) => {
     try {
         const addressId = req.params.addressId;
         const userId = req.session.userId;
@@ -115,7 +115,7 @@ const deleteAddress=async(req,res)=>{
 }
 
 
-module.exports={
+module.exports = {
     myAccount,
     addAddress,
     editAddress,

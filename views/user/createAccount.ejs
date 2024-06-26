@@ -68,6 +68,27 @@
             background-color: #000000;
         }
 
+        .google-auth {
+            width: 100%;
+            padding: 10px;
+            background-color: #db4437;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 15px; /* Add some margin to separate from the other button */
+        }
+
+        .google-auth img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
         .login_link {
             display: block;
             text-align: center;
@@ -75,7 +96,8 @@
             color: #007bff;
             text-decoration: none;
         }
-        span{
+
+        span {
             color: red;
             font-size: 10px;
         }
@@ -88,7 +110,7 @@
             <h3>Sign Up</h3>
             <% if(signUpAlert){ %>
                 <h6><%= signUpAlert %></h6>
-                <% } %>
+            <% } %>
         </div>
         <form action="/signUp" id="signupForm" method="post">
             <div class="form-group">
@@ -114,96 +136,99 @@
             <div class="form-group">
                 <button type="submit" class="btn" name="signup">Sign Up</button>
             </div>
+            <div class="form-group">
+                <button type="button" class="google-auth">
+                    <img src="\public\assets\imgs\theme\icons\google-icon.png" alt="Google icon"> Sign up with Google
+                </button>
+            </div>
             <a href="/login" class="login_link">Already have an account? Log in</a>
         </form>
     </div>
     
     <script src="assets/js/main.js"></script>
-    <script>document.addEventListener("DOMContentLoaded", function() {
-        const preloader = document.getElementById('preloader-active');
-        if (preloader) {
-            setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 1000); // Adjust time as needed
-        }
-    });
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const preloader = document.getElementById('preloader-active');
+            if (preloader) {
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 1000); // Adjust time as needed
+            }
+        });
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             const form = document.getElementById('signupForm');
-            const mobile=document.getElementById('mobile')
-            const name=document.getElementById('name')
+            const mobile = document.getElementById('mobile');
+            const name = document.getElementById('name');
             const password = document.getElementById('password');
             const confirmPassword = document.getElementById('confirm_password');
             const email = document.querySelector('input[name="email"]');
 
-            const nameError=document.getElementById('name-error')
-            const emailError=document.getElementById('email-error')
-            const passwordError=document.getElementById('password-error')
-            const mobileError=document.getElementById('mobile-error')
-            const confirmPasswordError=document.getElementById('confirmPassword-error')
+            const nameError = document.getElementById('name-error');
+            const emailError = document.getElementById('email-error');
+            const passwordError = document.getElementById('password-error');
+            const mobileError = document.getElementById('mobile-error');
+            const confirmPasswordError = document.getElementById('confirmPassword-error');
             
             form.addEventListener('submit', function(event) {
                 let isValid = true;
 
-                //validate name
-                const namePattern=  /^(?!.*  )[^\d]+$/;
-                if(!namePattern.test(name.value)){
-                    isValid=false
-                    // errorMessage+='Invalid user name'
-                    nameError.innerText='Invalid Name'
-                }else{
-                    nameError.innerText='';
+                // Validate name
+                const namePattern = /^(?!.*  )[^\d]+$/;
+                if (!namePattern.test(name.value)) {
+                    isValid = false;
+                    nameError.innerText = 'Invalid Name';
+                } else {
+                    nameError.innerText = '';
                 }
-        
+
                 // Validate email
                 const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
                 if (!emailPattern.test(email.value)) {
                     isValid = false;
-                    emailError.innerText='Invalid Email'
-                }else{
-                    emailError.innerText=''
+                    emailError.innerText = 'Invalid Email';
+                } else {
+                    emailError.innerText = '';
                 }
 
-                //validate mobile
-                const mobilePattern=/^[6789]\d{9}$/;
-                if(!mobilePattern.test(mobile.value)){
-                    isValid=false;
-                    mobileError.innerText='Invalid Mobile'
-                }else{
-                    mobileError.innerText=''
+                // Validate mobile
+                const mobilePattern = /^[6789]\d{9}$/;
+                if (!mobilePattern.test(mobile.value)) {
+                    isValid = false;
+                    mobileError.innerText = 'Invalid Mobile';
+                } else {
+                    mobileError.innerText = '';
                 }
-        
+
                 // Validate password
-                const passwordPattern=/^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
+                const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
                 if (!passwordPattern.test(password.value)) {
                     isValid = false;
-                    passwordError.innerText='At least one letter and one number must be included in the password, which must be eight characters.'
-                }else{
-                    passwordError.innerText=''
+                    passwordError.innerText = 'At least one letter and one number must be included in the password, which must be eight characters.';
+                } else {
+                    passwordError.innerText = '';
                 }
-        
+
                 // Check if passwords match
-                if (password.value !== confirmPassword.value || confirmPassword.value==='') {
+                if (password.value !== confirmPassword.value || confirmPassword.value === '') {
                     isValid = false;
-                    confirmPasswordError.innerText= 'Passwords do not match.\n';
-                }else{
-                    confirmPasswordError.innerText=''
+                    confirmPasswordError.innerText = 'Passwords do not match.\n';
+                } else {
+                    confirmPasswordError.innerText = '';
                 }
-        
+
                 if (!isValid) {
                     event.preventDefault();
-
-                }else{
-                    nameError.innerText='';
-                    emailError.innerText=''
-                    passwordError.innerText=''
-                    confirmPasswordError.innerText=''
-                    form.submit()
+                } else {
+                    nameError.innerText = '';
+                    emailError.innerText = '';
+                    passwordError.innerText = '';
+                    confirmPasswordError.innerText = '';
+                    form.submit();
                 }
             });
         });
-        </script>
-        
+    </script>
 </body>
 </html>

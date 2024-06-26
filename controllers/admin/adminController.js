@@ -9,7 +9,7 @@ const adminLogin = async (req, res) => {
         const { email, password } = req.body
         if (process.env.adminEmail == email && process.env.adminPassword == password) {
             req.session.adminId = email
-             res.redirect('/admin/adminHome')
+            res.redirect('/admin/adminHome')
             console.log("PAGE rendered`")
         } else {
             return res.render('adminLogin', { error: 'Admin credentials not recognized' })
@@ -36,7 +36,7 @@ const adminLogout = async (req, res) => {
 
 const adminHome = async (req, res) => {
     try {
-    res.render('adminHome')
+        res.render('adminHome')
     } catch (error) {
         console.log(error);
     }
@@ -62,28 +62,17 @@ const userEditPage = async (req, res) => {
 }
 const blockUser = async (req, res) => {
     try {
-        const userId = req.params.id
+        const userId = req.params.id;
         console.log("block", userId);
-        const block = await User.findByIdAndUpdate(userId, { isBlocked: true }, { new: true })
+        const block = await User.findByIdAndUpdate(userId, { isBlocked: true }, { new: true });
         console.log("blocked", block);
-        // Destroy the user's session
-        if (req.session) {
-            req.session.destroy((err) => {
-                if (err) {
-                    console.error("Error destroying session: ", err);
-                    return res.status(500).json({ message: "Error blocking user and destroying session" });
-                }
-
-                // Respond after session is destroyed
-                return res.status(200).json(block);
-            });
-        } else {
-            return res.status(200).json(block);
-        }
+        return res.status(200).json(block);
     } catch (error) {
-        console.error(error)
+        console.error(error);
+        return res.status(500).json({ message: "Error blocking user" });
     }
-}
+};
+
 const unBlockUser = async (req, res) => {
     try {
         const userId = req.params.id
@@ -98,7 +87,7 @@ const unBlockUser = async (req, res) => {
     }
 }
 
-const orderPage=async(req,res)=>{
+const orderPage = async (req, res) => {
     try {
         return res.render('orderManagement')
     } catch (error) {

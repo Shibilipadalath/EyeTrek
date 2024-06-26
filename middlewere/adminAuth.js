@@ -11,13 +11,13 @@ const isLogin = (req, res, next) => {
     }
 };
 
-const isLogout=(req,res,next)=>{
+const isLogout = (req, res, next) => {
     try {
-        if(req.session.adminId){
-           return  res.redirect('/admin/adminHome')
-        }else{
+        if (req.session.adminId) {
+            return res.redirect('/admin/adminHome')
+        } else {
             next()
-        }        
+        }
     } catch (error) {
         console.error('Error in isLogout middleware:', error);
         res.status(500).send('Internal Server Error');
