@@ -668,23 +668,25 @@
                                             <span><i class="fi-rs-apps-sort"></i>Sort by:</span>
                                         </div>
                                         <div class="sort-by-dropdown-wrap">
-                                            <span> Featured <i class="fi-rs-angle-small-down"></i></span>
+                                            <span> - <i class="fi-rs-angle-small-down"></i></span>
                                         </div>
                                     </div>
                                     <div class="sort-by-dropdown">
                                         <ul>
-                                            <li><a class="active" href="#">Featured</a></li>
-                                            <li><a href="#">Price: Low to High</a></li>
-                                            <li><a href="#">Price: High to Low</a></li>
+                                            <li><a href="/shop?sort=featured">Featured</a></li>
+                                            <li><a href="/shop?sort=priceLowHigh">Price: Low to High</a></li>
+                                            <li><a href="/shop?sort=priceHighLow">Price: High to Low</a></li>
+                                            <li><a href="/shop?sort=nameAZ">Name: A to Z</a></li>
+                                            <li><a href="/shop?sort=nameZA">Name: Z to A</a></li>
+                                            <li><a href="/shop?sort=newArrivals">New Arrivals</a></li>
                                         </ul>
-                                    </div>
+                                    </div>                                                                     
                                 </div>
                             </div>
                         </div>
                         <div class="row product-grid-3">
                             <% if(product){ %>
                                 <% for(let i=0;i<product.length;i++){ %>
-                                    <% if(product[i].isActive===true){ %>
                             <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                 <div class="product-cart-wrap mb-30">
                                     <div class="product-img-action-wrap">
@@ -703,7 +705,7 @@
                                     </div>
                                     <div class="product-content-wrap">
                                         <div class="product-category">
-                                            <a href="/productDetails?productId=<%=product[i]._id %>"><%= product[i].category %></a>
+                                            <a href="/productDetails?productId=<%=product[i]._id %>"><%= product[i].category.name%></a>
                                         </div>
                                         <h2><a href="/productDetails?productId=<%=product[i]._id %>"><%= product[i].name %></a></h2>
                                         <div class="rating-result" title="90%">
@@ -723,21 +725,19 @@
                             </div>
                             <% } %>
                             <% } %>
-                            <% } %>
                         </div>
                         <!--pagination-->
                         <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-start">
-                                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">02</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">03</a></li>
-                                    <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">16</a></li>
-                                    <li class="page-item"><a class="page-link" href="#"><i class="fi-rs-angle-double-small-right"></i></a></li>
+                                    <% for (let i = 1; i <= totalPages; i++) { %>
+                                        <li class="page-item <%= (i === currentPage) ? 'active' : '' %>">
+                                            <a class="page-link" href="/shop?page=<%= i %>&sort=<%= sort %>"><%= i %></a>
+                                        </li>
+                                    <% } %>
                                 </ul>
                             </nav>
-                        </div>
+                        </div>                        
                     </div>
                     <div class="col-lg-3 primary-sidebar sticky-sidebar">
                         <div class="row">
@@ -746,14 +746,9 @@
                         </div>
                         <div class="widget-category mb-30">
                             <h5 class="section-title style-1 mb-30 wow fadeIn animated">Category</h5>
+                            
                             <ul class="categories">
                                 <li><a href="shop-grid-right.html">Shoes & Bags</a></li>
-                                <li><a href="shop-grid-right.html">Blouses & Shirts</a></li>
-                                <li><a href="shop-grid-right.html">Dresses</a></li>
-                                <li><a href="shop-grid-right.html">Swimwear</a></li>
-                                <li><a href="shop-grid-right.html">Beauty</a></li>
-                                <li><a href="shop-grid-right.html">Jewelry & Watch</a></li>
-                                <li><a href="shop-grid-right.html">Accessories</a></li>
                             </ul>
                         </div>
                         

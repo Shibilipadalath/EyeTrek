@@ -1,6 +1,8 @@
 const Product = require('../../models/productModel')
 const Cart = require('../../models/cartModel')
 const User = require('../../models/userModel')
+const Address = require('../../models/addressModel')
+const Order = require('../../models/orderModel')
 
 
 
@@ -177,13 +179,27 @@ const checkOutPage = async (req, res) => {
 
     try {
         const userId = req.session.userId
+        const userData = await User.findOne({ _id: userId })
         if (userId) {
-            const user = await User.findById(userId)
-            res.render('checkOut', { user })
+            const addressData = await Address.findOne({ userId }).populate('userId')
+            const cartData = await Cart.findOne({ userId }).populate('cartItems.productId')
+            return res.render('checkOut', { user: userData, address: addressData, cart: cartData })
         }
-
     } catch (error) {
         console.error(error);
+    }
+}
+
+const thankYou = async (req, res) => {
+    try {
+        const userId = req.session.userId
+        const latestOrder = await Order.findOne({ userId }).sort({ createdAt: -1 }).exec()
+
+
+        res.render('thankPage', { order: latestOrder })
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
     }
 }
 
@@ -201,5 +217,6 @@ module.exports = {
     addToCart,
     removeFromCart,
     updateCartQuantity,
-    checkOutPage
+    checkOutPage,
+    thankYou
 }

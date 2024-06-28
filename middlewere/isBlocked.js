@@ -5,22 +5,18 @@ const isBlocked = async (req, res, next) => {
         const userId = req.session.userId;
         console.log('userid', userId);
 
-        // Check if userId exists in session
         if (!userId) {
-            return res.status(401).send('User not logged in');
+            return res.redirect('/')
         }
-
         const user = await User.findOne({ _id: userId });
-        // console.log('user', user);
-
-        // Check if user exists
         if (!user) {
-            return res.status(404).send('User not found');
+            return res.redirect('/')
         }
 
         if (user.isBlocked) {
-            req.session.userId = null; // Clear the session userId before redirecting
-            return res.redirect('/userLogout');
+            req.session.userId = null;
+            // return res.redirect('/userLogout');
+            return res.redirect('/')
         } else {
             next();
         }

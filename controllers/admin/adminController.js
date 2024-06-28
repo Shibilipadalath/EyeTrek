@@ -65,6 +65,8 @@ const blockUser = async (req, res) => {
         const userId = req.params.id;
         console.log("block", userId);
         const block = await User.findByIdAndUpdate(userId, { isBlocked: true }, { new: true });
+        if(req.session.userId === userId)
+            req.session.userId = null
         console.log("blocked", block);
         return res.status(200).json(block);
     } catch (error) {
@@ -78,6 +80,8 @@ const unBlockUser = async (req, res) => {
         const userId = req.params.id
         console.log("unblock", userId);
         const unBlock = await User.findByIdAndUpdate(userId, { isBlocked: false }, { new: true })
+        if(req.session.userId === userId)
+            req.session.userId = userId
         console.log("unBlocked", unBlock);
         return res.status(200).json(unBlock)
 

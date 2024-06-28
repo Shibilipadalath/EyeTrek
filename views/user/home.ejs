@@ -579,7 +579,8 @@
                                     </div>
                                     <div class="col-lg-7 col-md-6">
                                         <div class="single-slider-img single-slider-img-1">
-                                            <img class="animated" src="public/assets/imgs/slider/slider-6.1.png" alt="" style="padding-top: 60px; padding-left: 70px;" >
+                                            <img class="animated" src="public/assets/imgs/slider/slider-6.1.png" alt="" style="padding-top: 10px; padding-bottom: 10px; padding-left: 90px; width: 90%; height: 800px;">
+
                                         </div>
                                     </div>
                                 </div>
@@ -623,7 +624,7 @@
                                 <div class="row product-grid-4">
                                     <% if(product){ %>
                                         <% for(let i=0;i<product.length;i++){ %>
-                                            <% if(product[i].isActive===true){ %>
+    
                                     <div class="col-lg-4 col-md-4 col-12 col-sm-6">                            
                                         <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
@@ -641,7 +642,7 @@
                                             </div>
                                             <div class="product-content-wrap">
                                                 <div class="product-category">
-                                                    <a href="/productDetails?productId=<%=product[i]._id %>"><%= product[i].brand %></a>
+                                                    <a href="/productDetails?productId=<%=product[i]._id %>"><%= product[i].category.name %></a>
                                                 </div>
                                                 <h2><a href="/productDetails?productId=<%=product[i]._id %>"><%= product[i].name %></a></h2>
                                                 <div class="rating-result" title="90%">
@@ -659,7 +660,6 @@
                                         </div>
                                         
                                     </div>
-                                    <% } %>
                                     <% } %>
                                         <% } %>
                                 </div>

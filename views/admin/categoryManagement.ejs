@@ -204,9 +204,9 @@
                                         <td>
                                             <a class="btn btn-sm btn-warning" href="/admin/categoryEdit?id=<%= category[i]._id %>">Edit</a>
                                             <% if(category[i].isActive===true){ %>
-                                                <button class="btn btn-sm btn-danger" onclick="confirmBlock('<%= category[i]._id %>')">Block</button>
+                                                <button class="btn btn-sm btn-danger" onclick="confirmBlock('<%= category[i]._id %>')">Unlist</button>
                                             <% }else{ %>
-                                                <button class="btn btn-sm btn-danger" onclick="confirmUnBlock('<%= category[i]._id %>')">UnBlock</button>
+                                                <button class="btn btn-sm btn-danger" onclick="confirmUnBlock('<%= category[i]._id %>')">List</button>
                                             <% } %>    
                                         </td>
                                     </tr>

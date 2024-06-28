@@ -9,7 +9,8 @@ const bcrypt = require('bcrypt')
 const homePage = async (req, res) => {
     try {
 
-        const product = await Product.find({})
+        const activedProducts = await Product.find({isActive:true}).limit(6).populate('category')
+        const product = activedProducts.filter((item)=> item.category.isActive === true)
         const userExist = await User.findOne({ _id: req.session.userId })
         res.render('home', { product, userExist })
     } catch (error) {
@@ -52,19 +53,6 @@ const userLogin = async (req, res) => {
 }
 
 const userLogout = (req, res) => {
-    // try {
-    // req.session.destroy((err) => {
-    //     if (err) {
-    //         console.error('Error occurred during user logout:', err);
-    //         return res.status(500).send('Internal Server Error'); 
-    //     }
-    //     return res.redirect('/login');
-    // });
-
-    // } catch (error) {
-    //     console.error('Unexpected error during user logout:', error);
-    //     return res.status(500).send('Internal Server Error'); // Handle the error as appropriate
-    // }
     try {
         if (req.session.userId) {
             console.log('user', req.session.userId)
@@ -111,6 +99,7 @@ const userSignUp = async (req, res) => {
             })
             console.log(otp)
             req.session.otp = otp
+            
             let mailSender = mailController.mailSender
             await mailSender(email, 'Verification Email', `<h3>Confirm your OTP</h3><h5>Here is your OTP: <b>${otp}</b></h5>`);
             res.render('otpPage', { error: '' })

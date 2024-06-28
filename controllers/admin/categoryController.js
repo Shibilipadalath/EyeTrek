@@ -11,7 +11,9 @@ const categoryPage = async (req, res) => {
 const addCategory = async (req, res) => {
     try {
         const { categoryName } = req.body
-        const categoryChecker = await Category.findOne({ name: categoryName })
+        const categoryChecker = await Category.findOne({
+            name: { $regex: new RegExp(`^${categoryName}$`, 'i') }
+        });
         if (categoryChecker) {
             const category = await Category.find({})
             res.render('categoryManagement', { categoryAlert: 'Category already exist', category })
@@ -45,24 +47,26 @@ const categoryEditing = async (req, res) => {
 }
 const categoryUpdate = async (req, res) => {
     try {
-        const categoryId = req.query.id
-        const { categoryName } = req.body
+        const categoryId = req.query.id;
+        const { categoryName } = req.body;
 
-        const existingCategory = await Category.findOne({ name: categoryName, _id: { $ne: categoryId } })
+        const existingCategory = await Category.findOne({
+            name: { $regex: new RegExp(`^${categoryName}$`, 'i') },
+            _id: { $ne: categoryId }
+        });
 
         if (existingCategory) {
-            const categoryData = await Category.findOne({ _id: categoryId })
-            res.render('categoryEditingPage', { category: categoryData, error: 'Category already exist' })
+            const categoryData = await Category.findOne({ _id: categoryId });
+            res.render('categoryEditingPage', { category: categoryData, error: 'Category already exists' });
         } else {
-            const categoryData = await Category.findByIdAndUpdate(categoryId, { $set: { name: categoryName } }, { new: true })
-            res.redirect('/admin/categoryPage')
+            await Category.findByIdAndUpdate(categoryId, { $set: { name: categoryName } }, { new: true });
+            res.redirect('/admin/categoryPage');
         }
-
-
     } catch (error) {
-        console.error(error)
+        console.error(error);
     }
-}
+};
+
 
 const ToggleBlockCategories = async (req, res) => {
     try {

@@ -5,19 +5,29 @@ const cartController = require('../controllers/user/cartController')
 const accountController = require('../controllers/user/accountController')
 const userAuth = require('../middlewere/userAuth')
 const userBlock = require('../middlewere/isBlocked')
+const orderController = require("../controllers/user/orderController")
+const googleAuthController=require('../controllers/user/googleAuthController')
 
 
 const userRoute = express()
 
 userRoute.set('views', 'views/user')
 
+//googleAuth
+
+userRoute.get('/auth/google', googleAuthController.googleAuth);
+userRoute.get('/auth/google/callback', googleAuthController.googleAuthCallback);
+userRoute.get('/auth/google/failure', googleAuthController.failure);
+
+//user
+
 userRoute.get('/', userController.homePage)
 userRoute.get('/login', userAuth.isLogout, userController.loginPage)
 userRoute.post('/login', userAuth.isLogout, userController.userLogin)
 userRoute.get('/userLogout', userController.userLogout)
-userRoute.get('/signUp', userController.signupPage)
-userRoute.post('/signUp', userController.userSignUp)
-userRoute.post('/verify-otp', userController.otpVerification)
+userRoute.get('/signUp',userAuth.isLogout, userController.signupPage)
+userRoute.post('/signUp',userAuth.isLogout, userController.userSignUp)
+userRoute.post('/verify-otp',userAuth.isLogout, userController.otpVerification)
 
 
 //product
@@ -27,19 +37,30 @@ userRoute.get('/shop', productDetailsController.shoppingPage)
 
 //cart
 
-userRoute.get('/cart', userAuth.isLogin, cartController.cartPage)
-userRoute.get('/addToCart', userAuth.isLogin, cartController.addToCart)
-userRoute.delete('/deleteFromCart', userAuth.isLogin, cartController.removeFromCart)
-userRoute.post('/updateCartQuantity', userAuth.isLogin, cartController.updateCartQuantity)
-userRoute.get('/checkOut', userAuth.isLogin, cartController.checkOutPage)
+userRoute.get('/cart',userBlock.isBlocked, userAuth.isLogin, cartController.cartPage)
+userRoute.get('/addToCart',userBlock.isBlocked, userAuth.isLogin, cartController.addToCart)
+userRoute.delete('/deleteFromCart',userBlock.isBlocked, userAuth.isLogin, cartController.removeFromCart)
+userRoute.post('/updateCartQuantity',userBlock.isBlocked, userAuth.isLogin, cartController.updateCartQuantity)
+
+//chenckOut
+
+userRoute.get('/checkOut',userBlock.isBlocked, userAuth.isLogin, cartController.checkOutPage)
+userRoute.get('/thankYou',userBlock.isBlocked, userAuth.isLogin, cartController.thankYou)
 
 //account
 
-userRoute.get('/myAccount', userAuth.isLogin, accountController.myAccount)
-userRoute.post('/addAddress', userAuth.isLogin, accountController.addAddress)
-userRoute.post('/editAddress', userAuth.isLogin, accountController.editAddress)
-userRoute.delete('/deleteAddress/:addressId', userAuth.isLogin, accountController.deleteAddress)
+userRoute.get('/myAccount',userBlock.isBlocked, userAuth.isLogin, accountController.myAccount)
+userRoute.post('/addAddress',userBlock.isBlocked, userAuth.isLogin, accountController.addAddress)
+userRoute.post('/editAddress',userBlock.isBlocked, userAuth.isLogin, accountController.editAddress)
+userRoute.delete('/deleteAddress/:addressId',userBlock.isBlocked, userAuth.isLogin, accountController.deleteAddress)
+userRoute.post('/updateDetails',userBlock.isBlocked, userAuth.isLogin, accountController.updateDetails);
+userRoute.post('/updatePassword',userBlock.isBlocked,userAuth.isLogin,accountController.updatePassword);
+userRoute.post('/checkPassword',userBlock.isBlocked,userAuth.isLogin,accountController.checkPassword);
+userRoute.get('/order/:id',userBlock.isBlocked,userAuth.isLogin,accountController.viewOrder);
 
+
+//order
+userRoute.post('/placeOrder',userBlock.isBlocked,userAuth.isLogin,orderController.placeOrder)
 
 
 module.exports = userRoute

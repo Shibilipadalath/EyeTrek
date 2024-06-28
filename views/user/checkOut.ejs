@@ -1,695 +1,949 @@
 ﻿<!DOCTYPE html>
 <html class="no-js" lang="en">
 
-<%- include('./partials/userHeader')  %>
+<%- include('./partials/userHeader') %>
 
-<body>
-    <header class="header-area header-style-1 header-height-2">
-        <div class="header-top header-top-ptb-1 d-none d-lg-block">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-xl-3 col-lg-4">
-                        <div class="header-info">
-                           
+    <style>
+        .error-message {
+            color: red;
+        }
+    </style>
+
+    <body>
+        <header class="header-area header-style-1 header-height-2">
+            <div class="header-top header-top-ptb-1 d-none d-lg-block">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-xl-3 col-lg-4">
+                            <div class="header-info">
+
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-4">
-                        
-                    </div>
-                    <div class="col-xl-3 col-lg-4">
-                        <div class="header-info header-info-right">
-                            <ul>
-                                <li>
-                                    <a class="language-dropdown-active" href="/myAccount"> Account <i ></i></a>
-                                    
-                                </li>
-                                <% if(user) { %>
-                                    <span><%= user.userName %></span>&nbsp;&nbsp;&nbsp;<a href="/userLogout">logout</a>
-                               <% }else{ %>
-                                <li><i class="fi-rs-user"></i><a href="/login">Log In </a>/<a href="/signUp">Sign Up</a></li>
-                                <%}%>
-                            </ul>
-                            
+                        <div class="col-xl-6 col-lg-4">
+
+                        </div>
+                        <div class="col-xl-3 col-lg-4">
+                            <div class="header-info header-info-right">
+                                <ul>
+                                    <li>
+                                        <a class="language-dropdown-active" href="/myAccount"> Account <i></i></a>
+
+                                    </li>
+                                    <% if(user) { %>
+                                        <span>
+                                            <%= user.userName %>
+                                        </span>&nbsp;&nbsp;&nbsp;<a href="/userLogout">logout</a>
+                                        <% }else{ %>
+                                            <li><i class="fi-rs-user"></i><a href="/login">Log In </a>/<a
+                                                    href="/signUp">Sign Up</a></li>
+                                            <%}%>
+                                </ul>
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
-            <div class="container">
-                <div class="header-wrap">
-                    <div class="logo logo-width-1">
-                        <a href="index.html"><img src="public/assets/imgs/theme/logo.svg" alt="logo"></a>
-                    </div>
-                    <div class="header-right">
-                        <div class="search-style-2">
-                            <form action="#">
-                                <select class="select-active">
-                                    <option>All Categories</option>
-                                    <option>Women's</option>
-                                    <option>Men's</option>
-                                    <option>Cellphones</option>
-                                    <option>Computer</option>
-                                    <option>Electronics</option>
-                                    <option> Accessories</option>
-                                    <option>Home & Garden</option>
-                                    <option>Luggage</option>
-                                    <option>Shoes</option>
-                                    <option>Mother & Kids</option>
-                                </select>
-                                <input type="text" placeholder="Search for items...">
-                            </form>
+            <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
+                <div class="container">
+                    <div class="header-wrap">
+                        <div class="logo logo-width-1">
+                            <a href="index.html"><img src="public/assets/imgs/theme/logo.svg" alt="logo"></a>
                         </div>
-                        <div class="header-action-right">
+                        <div class="header-right">
+                            <div class="search-style-2">
+                                <form action="#">
+                                    <select class="select-active">
+                                        <option>All Categories</option>
+                                        <option>Women's</option>
+                                        <option>Men's</option>
+                                        <option>Cellphones</option>
+                                        <option>Computer</option>
+                                        <option>Electronics</option>
+                                        <option> Accessories</option>
+                                        <option>Home & Garden</option>
+                                        <option>Luggage</option>
+                                        <option>Shoes</option>
+                                        <option>Mother & Kids</option>
+                                    </select>
+                                    <input type="text" placeholder="Search for items...">
+                                </form>
+                            </div>
+                            <div class="header-action-right">
+                                <div class="header-action-2">
+                                    <div class="header-action-icon-2">
+                                        <a href="shop-wishlist.html">
+                                            <img class="svgInject" alt="Evara"
+                                                src="public/assets/imgs/theme/icons/icon-heart.svg">
+                                        </a>
+                                    </div>
+                                    <div class="header-action-icon-2">
+                                        <a class="mini-cart-icon" href="shop-cart.html">
+                                            <img alt="Evara" src="public/assets/imgs/theme/icons/icon-cart.svg">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-bottom header-bottom-bg-color sticky-bar">
+                <div class="container">
+                    <div class="header-wrap header-space-between position-relative">
+                        <div class="logo logo-width-1 d-block d-lg-none">
+                            <a href="index.html"><img src="public/assets/imgs/theme/logo.svg" alt="logo"></a>
+                        </div>
+                        <div class="header-nav d-none d-lg-flex">
+                            <div class="main-categori-wrap d-none d-lg-block">
+                                <a class="categori-button-active" href="#">
+                                    <span class="fi-rs-apps"></span> Browse Categories
+                                </a>
+                                <div class="categori-dropdown-wrap categori-dropdown-active-large">
+                                    <ul>
+                                        <li class="has-children">
+                                            <a href="shop-grid-right.html"><i class="evara-font-dress"></i>Women's
+                                                Clothing</a>
+                                            <div class="dropdown-menu">
+                                                <ul class="mega-menu d-lg-flex">
+                                                    <li class="mega-menu-col col-lg-7">
+                                                        <ul class="d-lg-flex">
+                                                            <li class="mega-menu-col col-lg-6">
+                                                                <ul>
+                                                                    <li><span class="submenu-title">Hot &
+                                                                            Trending</span></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Dresses</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Blouses & Shirts</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Hoodies & Sweatshirts</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Women's Sets</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Suits & Blazers</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Bodysuits</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Tanks & Camis</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Coats & Jackets</a></li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mega-menu-col col-lg-6">
+                                                                <ul>
+                                                                    <li><span class="submenu-title">Bottoms</span></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Leggings</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Skirts</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Shorts</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Jeans</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Pants & Capris</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Bikini Sets</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Cover-Ups</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Swimwear</a></li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="mega-menu-col col-lg-5">
+                                                        <div class="header-banner2">
+                                                            <img src="public/assets/imgs/banner/menu-banner-2.jpg"
+                                                                alt="menu_banner1">
+                                                            <div class="banne_info">
+                                                                <h6>10% Off</h6>
+                                                                <h4>New Arrival</h4>
+                                                                <a href="#">Shop now</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="header-banner2">
+                                                            <img src="public/assets/imgs/banner/menu-banner-3.jpg"
+                                                                alt="menu_banner2">
+                                                            <div class="banne_info">
+                                                                <h6>15% Off</h6>
+                                                                <h4>Hot Deals</h4>
+                                                                <a href="#">Shop now</a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="has-children">
+                                            <a href="shop-grid-right.html"><i class="evara-font-tshirt"></i>Men's
+                                                Clothing</a>
+                                            <div class="dropdown-menu">
+                                                <ul class="mega-menu d-lg-flex">
+                                                    <li class="mega-menu-col col-lg-7">
+                                                        <ul class="d-lg-flex">
+                                                            <li class="mega-menu-col col-lg-6">
+                                                                <ul>
+                                                                    <li><span class="submenu-title">Jackets &
+                                                                            Coats</span></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Down Jackets</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Jackets</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Parkas</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Faux Leather Coats</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Trench</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Wool & Blends</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Vests & Waistcoats</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Leather Coats</a></li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mega-menu-col col-lg-6">
+                                                                <ul>
+                                                                    <li><span class="submenu-title">Suits &
+                                                                            Blazers</span></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Blazers</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Suit Jackets</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Suit Pants</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Suits</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Vests</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Tailor-made Suits</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Cover-Ups</a></li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="mega-menu-col col-lg-5">
+                                                        <div class="header-banner2">
+                                                            <img src="public/assets/imgs/banner/menu-banner-4.jpg"
+                                                                alt="menu_banner1">
+                                                            <div class="banne_info">
+                                                                <h6>10% Off</h6>
+                                                                <h4>New Arrival</h4>
+                                                                <a href="#">Shop now</a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="has-children">
+                                            <a href="shop-grid-right.html"><i class="evara-font-smartphone"></i>
+                                                Cellphones</a>
+                                            <div class="dropdown-menu">
+                                                <ul class="mega-menu d-lg-flex">
+                                                    <li class="mega-menu-col col-lg-7">
+                                                        <ul class="d-lg-flex">
+                                                            <li class="mega-menu-col col-lg-6">
+                                                                <ul>
+                                                                    <li><span class="submenu-title">Hot &
+                                                                            Trending</span></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Cellphones</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">iPhones</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Refurbished Phones</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Mobile Phone</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Mobile Phone Parts</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Phone Bags & Cases</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Communication Equipments</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Walkie Talkie</a></li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mega-menu-col col-lg-6">
+                                                                <ul>
+                                                                    <li><span class="submenu-title">Accessories</span>
+                                                                    </li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Screen Protectors</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Wire Chargers</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Wireless Chargers</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Car Chargers</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Power Bank</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Armbands</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Dust Plug</a></li>
+                                                                    <li><a class="dropdown-item nav-link nav_item"
+                                                                            href="#">Signal Boosters</a></li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="mega-menu-col col-lg-5">
+                                                        <div class="header-banner2">
+                                                            <img src="public/assets/imgs/banner/menu-banner-5.jpg"
+                                                                alt="menu_banner1">
+                                                            <div class="banne_info">
+                                                                <h6>10% Off</h6>
+                                                                <h4>New Arrival</h4>
+                                                                <a href="#">Shop now</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="header-banner2">
+                                                            <img src="public/assets/imgs/banner/menu-banner-6.jpg"
+                                                                alt="menu_banner2">
+                                                            <div class="banne_info">
+                                                                <h6>15% Off</h6>
+                                                                <h4>Hot Deals</h4>
+                                                                <a href="#">Shop now</a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li><a href="shop-grid-right.html"><i class="evara-font-desktop"></i>Computer &
+                                                Office</a></li>
+                                        <li><a href="shop-grid-right.html"><i class="evara-font-cpu"></i>Consumer
+                                                Electronics</a></li>
+                                        <li><a href="shop-grid-right.html"><i class="evara-font-diamond"></i>Jewelry &
+                                                Accessories</a></li>
+                                        <li><a href="shop-grid-right.html"><i class="evara-font-home"></i>Home &
+                                                Garden</a></li>
+                                        <li><a href="shop-grid-right.html"><i
+                                                    class="evara-font-high-heels"></i>Shoes</a></li>
+                                        <li><a href="shop-grid-right.html"><i class="evara-font-teddy-bear"></i>Mother &
+                                                Kids</a></li>
+                                        <li><a href="shop-grid-right.html"><i class="evara-font-kite"></i>Outdoor
+                                                fun</a></li>
+                                        <li>
+                                            <ul class="more_slide_open" style="display: none;">
+                                                <li><a href="shop-grid-right.html"><i
+                                                            class="evara-font-desktop"></i>Beauty, Health</a></li>
+                                                <li><a href="shop-grid-right.html"><i class="evara-font-cpu"></i>Bags
+                                                        and Shoes</a></li>
+                                                <li><a href="shop-grid-right.html"><i
+                                                            class="evara-font-diamond"></i>Consumer Electronics</a></li>
+                                                <li><a href="shop-grid-right.html"><i
+                                                            class="evara-font-home"></i>Automobiles & Motorcycles</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <div class="more_categories">Show more...</div>
+                                </div>
+                            </div>
+                            <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
+                                <nav>
+                                    <ul>
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="/shop">Shop</a></li>
+                                        <li><a href="/myAccount">My Account</a></li>
+                                        <li><a href="page-about.html">About</a></li>
+                                        <li> <a href="page-contact.html">Contact</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="hotline d-none d-lg-block">
+                            <p><i class="fi-rs-headset"></i><span>Hotline</span> 1900 - 888 </p>
+                        </div>
+                        <p class="mobile-promotion">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to
+                            40%</p>
+                        <div class="header-action-right d-block d-lg-none">
                             <div class="header-action-2">
                                 <div class="header-action-icon-2">
                                     <a href="shop-wishlist.html">
-                                        <img class="svgInject" alt="Evara" src="public/assets/imgs/theme/icons/icon-heart.svg">
+                                        <img alt="Evara" src="public/assets/imgs/theme/icons/icon-heart.svg">
+                                        <span class="pro-count white">4</span>
                                     </a>
                                 </div>
                                 <div class="header-action-icon-2">
                                     <a class="mini-cart-icon" href="shop-cart.html">
                                         <img alt="Evara" src="public/assets/imgs/theme/icons/icon-cart.svg">
+                                        <span class="pro-count white">2</span>
                                     </a>
+                                    <div class="cart-dropdown-wrap cart-dropdown-hm2">
+                                        <ul>
+                                            <li>
+                                                <div class="shopping-cart-img">
+                                                    <a href="shop-product-right.html"><img alt="Evara"
+                                                            src="public/assets/imgs/shop/thumbnail-3.jpg"></a>
+                                                </div>
+                                                <div class="shopping-cart-title">
+                                                    <h4><a href="shop-product-right.html">Plain Striola Shirts</a></h4>
+                                                    <h3><span>1 × </span>$800.00</h3>
+                                                </div>
+                                                <div class="shopping-cart-delete">
+                                                    <a href="#"><i class="fi-rs-cross-small"></i></a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="shopping-cart-img">
+                                                    <a href="shop-product-right.html"><img alt="Evara"
+                                                            src="public/assets/imgs/shop/thumbnail-4.jpg"></a>
+                                                </div>
+                                                <div class="shopping-cart-title">
+                                                    <h4><a href="shop-product-right.html">Macbook Pro 2022</a></h4>
+                                                    <h3><span>1 × </span>$3500.00</h3>
+                                                </div>
+                                                <div class="shopping-cart-delete">
+                                                    <a href="#"><i class="fi-rs-cross-small"></i></a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="shopping-cart-footer">
+                                            <div class="shopping-cart-total">
+                                                <h4>Total <span>$383.00</span></h4>
+                                            </div>
+                                            <div class="shopping-cart-button">
+                                                <a href="shop-cart.html">View cart</a>
+                                                <a href="shop-checkout.html">Checkout</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="header-action-icon-2 d-block d-lg-none">
+                                    <div class="burger-icon burger-icon-white">
+                                        <span class="burger-icon-top"></span>
+                                        <span class="burger-icon-mid"></span>
+                                        <span class="burger-icon-bottom"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="header-bottom header-bottom-bg-color sticky-bar">
-            <div class="container">
-                <div class="header-wrap header-space-between position-relative">
-                    <div class="logo logo-width-1 d-block d-lg-none">
+        </header>
+        <div class="mobile-header-active mobile-header-wrapper-style">
+            <div class="mobile-header-wrapper-inner">
+                <div class="mobile-header-top">
+                    <div class="mobile-header-logo">
                         <a href="index.html"><img src="public/assets/imgs/theme/logo.svg" alt="logo"></a>
                     </div>
-                    <div class="header-nav d-none d-lg-flex">
-                        <div class="main-categori-wrap d-none d-lg-block">
-                            <a class="categori-button-active" href="#">
+                    <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
+                        <button class="close-style search-close">
+                            <i class="icon-top"></i>
+                            <i class="icon-bottom"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mobile-header-content-area">
+                    <div class="mobile-search search-style-3 mobile-header-border">
+                        <form action="#">
+                            <input type="text" placeholder="Search for items…">
+                            <button type="submit"><i class="fi-rs-search"></i></button>
+                        </form>
+                    </div>
+                    <div class="mobile-menu-wrap mobile-header-border">
+                        <div class="main-categori-wrap mobile-header-border">
+                            <a class="categori-button-active-2" href="#">
                                 <span class="fi-rs-apps"></span> Browse Categories
                             </a>
-                            <div class="categori-dropdown-wrap categori-dropdown-active-large">
+                            <div class="categori-dropdown-wrap categori-dropdown-active-small">
                                 <ul>
-                                    <li class="has-children">
-                                        <a href="shop-grid-right.html"><i class="evara-font-dress"></i>Women's Clothing</a>
-                                        <div class="dropdown-menu">
-                                            <ul class="mega-menu d-lg-flex">
-                                                <li class="mega-menu-col col-lg-7">
-                                                    <ul class="d-lg-flex">
-                                                        <li class="mega-menu-col col-lg-6">
-                                                            <ul>
-                                                                <li><span class="submenu-title">Hot & Trending</span></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Dresses</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Blouses & Shirts</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Hoodies & Sweatshirts</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Women's Sets</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Suits & Blazers</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Bodysuits</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Tanks & Camis</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Coats & Jackets</a></li>
-                                                            </ul>
-                                                        </li>
-                                                        <li class="mega-menu-col col-lg-6">
-                                                            <ul>
-                                                                <li><span class="submenu-title">Bottoms</span></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Leggings</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Skirts</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Shorts</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Jeans</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Pants & Capris</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Bikini Sets</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Cover-Ups</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Swimwear</a></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li class="mega-menu-col col-lg-5">
-                                                    <div class="header-banner2">
-                                                        <img src="public/assets/imgs/banner/menu-banner-2.jpg" alt="menu_banner1">
-                                                        <div class="banne_info">
-                                                            <h6>10% Off</h6>
-                                                            <h4>New Arrival</h4>
-                                                            <a href="#">Shop now</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="header-banner2">
-                                                        <img src="public/assets/imgs/banner/menu-banner-3.jpg" alt="menu_banner2">
-                                                        <div class="banne_info">
-                                                            <h6>15% Off</h6>
-                                                            <h4>Hot Deals</h4>
-                                                            <a href="#">Shop now</a>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                    <li><a href="shop-grid-right.html"><i class="evara-font-dress"></i>Women's
+                                            Clothing</a></li>
+                                    <li><a href="shop-grid-right.html"><i class="evara-font-tshirt"></i>Men's
+                                            Clothing</a></li>
+                                    <li> <a href="shop-grid-right.html"><i class="evara-font-smartphone"></i>
+                                            Cellphones</a></li>
+                                    <li><a href="shop-grid-right.html"><i class="evara-font-desktop"></i>Computer &
+                                            Office</a></li>
+                                    <li><a href="shop-grid-right.html"><i class="evara-font-cpu"></i>Consumer
+                                            Electronics</a></li>
+                                    <li><a href="shop-grid-right.html"><i class="evara-font-home"></i>Home & Garden</a>
                                     </li>
-                                    <li class="has-children">
-                                        <a href="shop-grid-right.html"><i class="evara-font-tshirt"></i>Men's Clothing</a>
-                                        <div class="dropdown-menu">
-                                            <ul class="mega-menu d-lg-flex">
-                                                <li class="mega-menu-col col-lg-7">
-                                                    <ul class="d-lg-flex">
-                                                        <li class="mega-menu-col col-lg-6">
-                                                            <ul>
-                                                                <li><span class="submenu-title">Jackets & Coats</span></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Down Jackets</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Jackets</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Parkas</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Faux Leather Coats</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Trench</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Wool & Blends</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Vests & Waistcoats</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Leather Coats</a></li>
-                                                            </ul>
-                                                        </li>
-                                                        <li class="mega-menu-col col-lg-6">
-                                                            <ul>
-                                                                <li><span class="submenu-title">Suits & Blazers</span></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Blazers</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Suit Jackets</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Suit Pants</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Suits</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Vests</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Tailor-made Suits</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Cover-Ups</a></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li class="mega-menu-col col-lg-5">
-                                                    <div class="header-banner2">
-                                                        <img src="public/assets/imgs/banner/menu-banner-4.jpg" alt="menu_banner1">
-                                                        <div class="banne_info">
-                                                            <h6>10% Off</h6>
-                                                            <h4>New Arrival</h4>
-                                                            <a href="#">Shop now</a>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                    <li><a href="shop-grid-right.html"><i class="evara-font-high-heels"></i>Shoes</a>
                                     </li>
-                                    <li class="has-children">
-                                        <a href="shop-grid-right.html"><i class="evara-font-smartphone"></i> Cellphones</a>
-                                        <div class="dropdown-menu">
-                                            <ul class="mega-menu d-lg-flex">
-                                                <li class="mega-menu-col col-lg-7">
-                                                    <ul class="d-lg-flex">
-                                                        <li class="mega-menu-col col-lg-6">
-                                                            <ul>
-                                                                <li><span class="submenu-title">Hot & Trending</span></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Cellphones</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">iPhones</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Refurbished Phones</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Mobile Phone</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Mobile Phone Parts</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Phone Bags & Cases</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Communication Equipments</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Walkie Talkie</a></li>
-                                                            </ul>
-                                                        </li>
-                                                        <li class="mega-menu-col col-lg-6">
-                                                            <ul>
-                                                                <li><span class="submenu-title">Accessories</span></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Screen Protectors</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Wire Chargers</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Wireless Chargers</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Car Chargers</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Power Bank</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Armbands</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Dust Plug</a></li>
-                                                                <li><a class="dropdown-item nav-link nav_item" href="#">Signal Boosters</a></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li class="mega-menu-col col-lg-5">
-                                                    <div class="header-banner2">
-                                                        <img src="public/assets/imgs/banner/menu-banner-5.jpg" alt="menu_banner1">
-                                                        <div class="banne_info">
-                                                            <h6>10% Off</h6>
-                                                            <h4>New Arrival</h4>
-                                                            <a href="#">Shop now</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="header-banner2">
-                                                        <img src="public/assets/imgs/banner/menu-banner-6.jpg" alt="menu_banner2">
-                                                        <div class="banne_info">
-                                                            <h6>15% Off</h6>
-                                                            <h4>Hot Deals</h4>
-                                                            <a href="#">Shop now</a>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li><a href="shop-grid-right.html"><i class="evara-font-desktop"></i>Computer & Office</a></li>
-                                    <li><a href="shop-grid-right.html"><i class="evara-font-cpu"></i>Consumer Electronics</a></li>
-                                    <li><a href="shop-grid-right.html"><i class="evara-font-diamond"></i>Jewelry & Accessories</a></li>
-                                    <li><a href="shop-grid-right.html"><i class="evara-font-home"></i>Home & Garden</a></li>
-                                    <li><a href="shop-grid-right.html"><i class="evara-font-high-heels"></i>Shoes</a></li>
-                                    <li><a href="shop-grid-right.html"><i class="evara-font-teddy-bear"></i>Mother & Kids</a></li>
-                                    <li><a href="shop-grid-right.html"><i class="evara-font-kite"></i>Outdoor fun</a></li>
-                                    <li>
-                                        <ul class="more_slide_open" style="display: none;">
-                                            <li><a href="shop-grid-right.html"><i class="evara-font-desktop"></i>Beauty, Health</a></li>
-                                            <li><a href="shop-grid-right.html"><i class="evara-font-cpu"></i>Bags and Shoes</a></li>
-                                            <li><a href="shop-grid-right.html"><i class="evara-font-diamond"></i>Consumer Electronics</a></li>
-                                            <li><a href="shop-grid-right.html"><i class="evara-font-home"></i>Automobiles & Motorcycles</a></li>
-                                        </ul>
+                                    <li><a href="shop-grid-right.html"><i class="evara-font-teddy-bear"></i>Mother &
+                                            Kids</a></li>
+                                    <li><a href="shop-grid-right.html"><i class="evara-font-kite"></i>Outdoor fun</a>
                                     </li>
                                 </ul>
-                                <div class="more_categories">Show more...</div>
                             </div>
                         </div>
-                        <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
-                            <nav>
-                                <ul>
-                                    <li><a  href="/">Home</a></li>
-                                    <li><a href="/shop">Shop</a></li>
-                                    <li><a href="/myAccount">My Account</a></li>
-                                    <li><a href="page-about.html">About</a></li>
-                                    <li> <a href="page-contact.html">Contact</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                    <div class="hotline d-none d-lg-block">
-                        <p><i class="fi-rs-headset"></i><span>Hotline</span> 1900 - 888 </p>
-                    </div>
-                    <p class="mobile-promotion">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%</p>
-                    <div class="header-action-right d-block d-lg-none">
-                        <div class="header-action-2">
-                            <div class="header-action-icon-2">
-                                <a href="shop-wishlist.html">
-                                    <img alt="Evara" src="public/assets/imgs/theme/icons/icon-heart.svg">
-                                    <span class="pro-count white">4</span>
-                                </a>
-                            </div>
-                            <div class="header-action-icon-2">
-                                <a class="mini-cart-icon" href="shop-cart.html">
-                                    <img alt="Evara" src="public/assets/imgs/theme/icons/icon-cart.svg">
-                                    <span class="pro-count white">2</span>
-                                </a>
-                                <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                                    <ul>
-                                        <li>
-                                            <div class="shopping-cart-img">
-                                                <a href="shop-product-right.html"><img alt="Evara" src="public/assets/imgs/shop/thumbnail-3.jpg"></a>
-                                            </div>
-                                            <div class="shopping-cart-title">
-                                                <h4><a href="shop-product-right.html">Plain Striola Shirts</a></h4>
-                                                <h3><span>1 × </span>$800.00</h3>
-                                            </div>
-                                            <div class="shopping-cart-delete">
-                                                <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                            </div>
+                        <!-- mobile menu start -->
+                        <nav>
+                            <ul class="mobile-menu">
+                                <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                        href="index.html">Home</a>
+                                    <ul class="dropdown">
+                                        <li><a href="index.html">Home 1</a></li>
+                                        <li><a href="index-2.html">Home 2</a></li>
+                                        <li><a href="index-3.html">Home 3</a></li>
+                                        <li><a href="index-4.html">Home 4</a></li>
+                                    </ul>
+                                </li>
+                                <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                        href="shop-grid-right.html">shop</a>
+                                    <ul class="dropdown">
+                                        <li><a href="shop-grid-right.html">Shop Grid – Right Sidebar</a></li>
+                                        <li><a href="shop-grid-left.html">Shop Grid – Left Sidebar</a></li>
+                                        <li><a href="shop-list-right.html">Shop List – Right Sidebar</a></li>
+                                        <li><a href="shop-list-left.html">Shop List – Left Sidebar</a></li>
+                                        <li><a href="shop-fullwidth.html">Shop - Wide</a></li>
+                                        <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                                href="#">Single Product</a>
+                                            <ul class="dropdown">
+                                                <li><a href="shop-product-right.html">Product – Right Sidebar</a></li>
+                                                <li><a href="shop-product-left.html">Product – Left Sidebar</a></li>
+                                                <li><a href="shop-product-full.html">Product – No sidebar</a></li>
+                                            </ul>
                                         </li>
-                                        <li>
-                                            <div class="shopping-cart-img">
-                                                <a href="shop-product-right.html"><img alt="Evara" src="public/assets/imgs/shop/thumbnail-4.jpg"></a>
-                                            </div>
-                                            <div class="shopping-cart-title">
-                                                <h4><a href="shop-product-right.html">Macbook Pro 2022</a></h4>
-                                                <h3><span>1 × </span>$3500.00</h3>
-                                            </div>
-                                            <div class="shopping-cart-delete">
-                                                <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                            </div>
+                                        <li><a href="shop-filter.html">Shop – Filter</a></li>
+                                        <li><a href="shop-wishlist.html">Shop – Wishlist</a></li>
+                                        <li><a href="shop-cart.html">Shop – Cart</a></li>
+                                        <li><a href="shop-checkout.html">Shop – Checkout</a></li>
+                                        <li><a href="shop-compare.html">Shop – Compare</a></li>
+                                    </ul>
+                                </li>
+                                <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Mega
+                                        menu</a>
+                                    <ul class="dropdown">
+                                        <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                                href="#">Women's Fashion</a>
+                                            <ul class="dropdown">
+                                                <li><a href="shop-product-right.html">Dresses</a></li>
+                                                <li><a href="shop-product-right.html">Blouses & Shirts</a></li>
+                                                <li><a href="shop-product-right.html">Hoodies & Sweatshirts</a></li>
+                                                <li><a href="shop-product-right.html">Women's Sets</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                                href="#">Men's Fashion</a>
+                                            <ul class="dropdown">
+                                                <li><a href="shop-product-right.html">Jackets</a></li>
+                                                <li><a href="shop-product-right.html">Casual Faux Leather</a></li>
+                                                <li><a href="shop-product-right.html">Genuine Leather</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                                href="#">Technology</a>
+                                            <ul class="dropdown">
+                                                <li><a href="shop-product-right.html">Gaming Laptops</a></li>
+                                                <li><a href="shop-product-right.html">Ultraslim Laptops</a></li>
+                                                <li><a href="shop-product-right.html">Tablets</a></li>
+                                                <li><a href="shop-product-right.html">Laptop Accessories</a></li>
+                                                <li><a href="shop-product-right.html">Tablet Accessories</a></li>
+                                            </ul>
                                         </li>
                                     </ul>
-                                    <div class="shopping-cart-footer">
-                                        <div class="shopping-cart-total">
-                                            <h4>Total <span>$383.00</span></h4>
-                                        </div>
-                                        <div class="shopping-cart-button">
-                                            <a href="shop-cart.html">View cart</a>
-                                            <a href="shop-checkout.html">Checkout</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="header-action-icon-2 d-block d-lg-none">
-                                <div class="burger-icon burger-icon-white">
-                                    <span class="burger-icon-top"></span>
-                                    <span class="burger-icon-mid"></span>
-                                    <span class="burger-icon-bottom"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <div class="mobile-header-active mobile-header-wrapper-style">
-        <div class="mobile-header-wrapper-inner">
-            <div class="mobile-header-top">
-                <div class="mobile-header-logo">
-                    <a href="index.html"><img src="public/assets/imgs/theme/logo.svg" alt="logo"></a>
-                </div>
-                <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
-                    <button class="close-style search-close">
-                        <i class="icon-top"></i>
-                        <i class="icon-bottom"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="mobile-header-content-area">
-                <div class="mobile-search search-style-3 mobile-header-border">
-                    <form action="#">
-                        <input type="text" placeholder="Search for items…">
-                        <button type="submit"><i class="fi-rs-search"></i></button>
-                    </form>
-                </div>
-                <div class="mobile-menu-wrap mobile-header-border">
-                    <div class="main-categori-wrap mobile-header-border">
-                        <a class="categori-button-active-2" href="#">
-                            <span class="fi-rs-apps"></span> Browse Categories
-                        </a>
-                        <div class="categori-dropdown-wrap categori-dropdown-active-small">
-                            <ul>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-dress"></i>Women's Clothing</a></li>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-tshirt"></i>Men's Clothing</a></li>
-                                <li> <a href="shop-grid-right.html"><i class="evara-font-smartphone"></i> Cellphones</a></li>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-desktop"></i>Computer & Office</a></li>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-cpu"></i>Consumer Electronics</a></li>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-home"></i>Home & Garden</a></li>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-high-heels"></i>Shoes</a></li>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-teddy-bear"></i>Mother & Kids</a></li>
-                                <li><a href="shop-grid-right.html"><i class="evara-font-kite"></i>Outdoor fun</a></li>
+                                </li>
+                                <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                        href="blog-category-fullwidth.html">Blog</a>
+                                    <ul class="dropdown">
+                                        <li><a href="blog-category-grid.html">Blog Category Grid</a></li>
+                                        <li><a href="blog-category-list.html">Blog Category List</a></li>
+                                        <li><a href="blog-category-big.html">Blog Category Big</a></li>
+                                        <li><a href="blog-category-fullwidth.html">Blog Category Wide</a></li>
+                                        <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                                href="#">Single Product Layout</a>
+                                            <ul class="dropdown">
+                                                <li><a href="blog-post-left.html">Left Sidebar</a></li>
+                                                <li><a href="blog-post-right.html">Right Sidebar</a></li>
+                                                <li><a href="blog-post-fullwidth.html">No Sidebar</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                        href="#">Pages</a>
+                                    <ul class="dropdown">
+                                        <li><a href="page-about.html">About Us</a></li>
+                                        <li><a href="page-contact.html">Contact</a></li>
+                                        <li><a href="page-account.html">My Account</a></li>
+                                        <li><a href="page-login-register.html">login/register</a></li>
+                                        <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
+                                        <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
+                                        <li><a href="page-terms.html">Terms of Service</a></li>
+                                        <li><a href="page-404.html">404 Page</a></li>
+                                    </ul>
+                                </li>
+                                <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                        href="#">Language</a>
+                                    <ul class="dropdown">
+                                        <li><a href="#">English</a></li>
+                                        <li><a href="#">French</a></li>
+                                        <li><a href="#">German</a></li>
+                                        <li><a href="#">Spanish</a></li>
+                                    </ul>
+                                </li>
                             </ul>
+                        </nav>
+                        <!-- mobile menu end -->
+                    </div>
+                    <div class="mobile-header-info-wrap mobile-header-border">
+                        <div class="single-mobile-header-info mt-30">
+                            <a href="page-contact.html"> Our location </a>
+                        </div>
+                        <div class="single-mobile-header-info">
+                            <a href="page-login-register.html">Log In / Sign Up </a>
+                        </div>
+                        <div class="single-mobile-header-info">
+                            <a href="#">(+01) - 2345 - 6789 </a>
                         </div>
                     </div>
-                    <!-- mobile menu start -->
-                    <nav>
-                        <ul class="mobile-menu">
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="index.html">Home</a>
-                                <ul class="dropdown">
-                                    <li><a href="index.html">Home 1</a></li>
-                                    <li><a href="index-2.html">Home 2</a></li>
-                                    <li><a href="index-3.html">Home 3</a></li>
-                                    <li><a href="index-4.html">Home 4</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="shop-grid-right.html">shop</a>
-                                <ul class="dropdown">
-                                    <li><a href="shop-grid-right.html">Shop Grid – Right Sidebar</a></li>
-                                    <li><a href="shop-grid-left.html">Shop Grid – Left Sidebar</a></li>
-                                    <li><a href="shop-list-right.html">Shop List – Right Sidebar</a></li>
-                                    <li><a href="shop-list-left.html">Shop List – Left Sidebar</a></li>
-                                    <li><a href="shop-fullwidth.html">Shop - Wide</a></li>
-                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Single Product</a>
-                                        <ul class="dropdown">
-                                            <li><a href="shop-product-right.html">Product – Right Sidebar</a></li>
-                                            <li><a href="shop-product-left.html">Product – Left Sidebar</a></li>
-                                            <li><a href="shop-product-full.html">Product – No sidebar</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="shop-filter.html">Shop – Filter</a></li>
-                                    <li><a href="shop-wishlist.html">Shop – Wishlist</a></li>
-                                    <li><a href="shop-cart.html">Shop – Cart</a></li>
-                                    <li><a href="shop-checkout.html">Shop – Checkout</a></li>
-                                    <li><a href="shop-compare.html">Shop – Compare</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Mega menu</a>
-                                <ul class="dropdown">
-                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Women's Fashion</a>
-                                        <ul class="dropdown">
-                                            <li><a href="shop-product-right.html">Dresses</a></li>
-                                            <li><a href="shop-product-right.html">Blouses & Shirts</a></li>
-                                            <li><a href="shop-product-right.html">Hoodies & Sweatshirts</a></li>
-                                            <li><a href="shop-product-right.html">Women's Sets</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Men's Fashion</a>
-                                        <ul class="dropdown">
-                                            <li><a href="shop-product-right.html">Jackets</a></li>
-                                            <li><a href="shop-product-right.html">Casual Faux Leather</a></li>
-                                            <li><a href="shop-product-right.html">Genuine Leather</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Technology</a>
-                                        <ul class="dropdown">
-                                            <li><a href="shop-product-right.html">Gaming Laptops</a></li>
-                                            <li><a href="shop-product-right.html">Ultraslim Laptops</a></li>
-                                            <li><a href="shop-product-right.html">Tablets</a></li>
-                                            <li><a href="shop-product-right.html">Laptop Accessories</a></li>
-                                            <li><a href="shop-product-right.html">Tablet Accessories</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="blog-category-fullwidth.html">Blog</a>
-                                <ul class="dropdown">
-                                    <li><a href="blog-category-grid.html">Blog Category Grid</a></li>
-                                    <li><a href="blog-category-list.html">Blog Category List</a></li>
-                                    <li><a href="blog-category-big.html">Blog Category Big</a></li>
-                                    <li><a href="blog-category-fullwidth.html">Blog Category Wide</a></li>
-                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Single Product Layout</a>
-                                        <ul class="dropdown">
-                                            <li><a href="blog-post-left.html">Left Sidebar</a></li>
-                                            <li><a href="blog-post-right.html">Right Sidebar</a></li>
-                                            <li><a href="blog-post-fullwidth.html">No Sidebar</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="page-about.html">About Us</a></li>
-                                    <li><a href="page-contact.html">Contact</a></li>
-                                    <li><a href="page-account.html">My Account</a></li>
-                                    <li><a href="page-login-register.html">login/register</a></li>
-                                    <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
-                                    <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
-                                    <li><a href="page-terms.html">Terms of Service</a></li>
-                                    <li><a href="page-404.html">404 Page</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Language</a>
-                                <ul class="dropdown">
-                                    <li><a href="#">English</a></li>
-                                    <li><a href="#">French</a></li>
-                                    <li><a href="#">German</a></li>
-                                    <li><a href="#">Spanish</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                    <!-- mobile menu end -->
-                </div>
-                <div class="mobile-header-info-wrap mobile-header-border">
-                    <div class="single-mobile-header-info mt-30">
-                        <a  href="page-contact.html"> Our location </a>
+                    <div class="mobile-social-icon">
+                        <h5 class="mb-15 text-grey-4">Follow Us</h5>
+                        <a href="#"><img src="public/assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
+                        <a href="#"><img src="public/assets/imgs/theme/icons/icon-twitter.svg" alt=""></a>
+                        <a href="#"><img src="public/assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>
+                        <a href="#"><img src="public/assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
+                        <a href="#"><img src="public/assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>
                     </div>
-                    <div class="single-mobile-header-info">
-                        <a href="page-login-register.html">Log In / Sign Up </a>
-                    </div>
-                    <div class="single-mobile-header-info">
-                        <a href="#">(+01) - 2345 - 6789 </a>
-                    </div>
-                </div>
-                <div class="mobile-social-icon">
-                    <h5 class="mb-15 text-grey-4">Follow Us</h5>
-                    <a href="#"><img src="public/assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-                    <a href="#"><img src="public/assets/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-                    <a href="#"><img src="public/assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                    <a href="#"><img src="public/assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                    <a href="#"><img src="public/assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>
                 </div>
             </div>
         </div>
-    </div>
-    <main class="main">
-        <div class="page-header breadcrumb-wrap">
-            <div class="container">
-                <div class="breadcrumb">
-                    <a href="index.html" rel="nofollow">Home</a>
-                    <span></span> Shop
-                    <span></span> Checkout
+        <main class="main">
+            <div class="page-header breadcrumb-wrap">
+                <div class="container">
+                    <div class="breadcrumb">
+                        <a href="index.html" rel="nofollow">Home</a>
+                        <span></span> Shop
+                        <span></span> Checkout
+                    </div>
                 </div>
             </div>
-        </div>
-        <section class="mt-50 mb-50">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 mb-sm-15">
-                        <div class="panel-collapse collapse login_form" id="loginform">
-                            <div class="panel-body">
-                                <p class="mb-30 font-sm">If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing &amp; Shipping section.</p>
-                                <form method="post">
-                                    <div class="form-group">
-                                        <input type="text" name="email" placeholder="Username Or Email">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" name="password" placeholder="Password">
-                                    </div>
-                                    <div class="login_footer form-group">
-                                        <div class="chek-form">
-                                            <div class="custome-checkbox">
-                                                <input class="form-check-input" type="checkbox" name="checkbox" id="remember" value="">
-                                                <label class="form-check-label" for="remember"><span>Remember me</span></label>
+            <section class="mt-50 mb-50">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 mb-sm-15">
+                            <div class="panel-collapse collapse login_form" id="loginform">
+                                <div class="panel-body">
+                                    <p class="mb-30 font-sm">If you have shopped with us before, please enter your
+                                        details below. If you are a new customer, please proceed to the Billing &amp;
+                                        Shipping section.</p>
+                                    <form method="post">
+                                        <div class="form-group">
+                                            <input type="text" name="email" placeholder="Username Or Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="password" placeholder="Password">
+                                        </div>
+                                        <div class="login_footer form-group">
+                                            <div class="chek-form">
+                                                <div class="custome-checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="checkbox"
+                                                        id="remember" value="">
+                                                    <label class="form-check-label" for="remember"><span>Remember
+                                                            me</span></label>
+                                                </div>
+                                            </div>
+                                            <a href="#">Forgot password?</a>
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-md" name="login">Log in</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="toggle_info">
+                                <span><i class="fi-rs-label mr-10"></i><span class="text-muted">Have a coupon?</span> <a
+                                        href="#coupon" data-bs-toggle="collapse" class="collapsed"
+                                        aria-expanded="false">Click here to enter your code</a></span>
+                            </div>
+                            <div class="panel-collapse collapse coupon_form " id="coupon">
+                                <div class="panel-body">
+                                    <p class="mb-30 font-sm">If you have a coupon code, please apply it below.</p>
+                                    <form method="post">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Enter Coupon Code...">
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn  btn-md" name="login">Apply Coupon</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="divider mt-50 mb-50"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-25">
+                                <h4>Billing Details</h4>
+                            </div>
+                            <form action="/selectAddress" method="post">
+                                <!-- Example addresses list -->
+                                <% if (address) { %>
+                                    <% address.address.forEach((element, index) => { %>
+                                        <hr>
+                                        <div class="address-container" id="address_<%= index %>">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="selectedAddress" id="address_radio_<%= index %>" value="<%= element._id %>" <% if (index == 0) { %> checked <% } %>>
+                                                <label class="form-check-label" for="address_radio_<%= index %>">
+                                                    <address>
+                                                        Name: <%= element.name %><br>
+                                                        House Name: <%= element.houseName %><br>
+                                                        Street: <%= element.street %><br>
+                                                        City: <%= element.city %><br>
+                                                        State: <%= element.state %><br>
+                                                        Pin Code: <%= element.pinCode %>
+                                                    </address>
+                                                    <a class="remove-icon" onclick="removeAddress('<%= index %>')">
+                                                        <i class="fa-solid fa-trash fa-xl"></i>
+                                                    </a>
+                                                    <h4>
+                                                        <a href="#" 
+                                                           class="edit-address" 
+                                                           style="color: green;" 
+                                                           onclick="prefillEditForm('<%= element._id %>', '<%= element.name %>', '<%= element.mobile %>', '<%= element.houseName %>', '<%= element.street %>', '<%= element.city %>', '<%= element.state %>', '<%= element.pinCode %>'); $('#editAddressModal').modal('show');">
+                                                           Edit
+                                                        </a>
+                                                    </h4>                                                    
+                                                </label>
                                             </div>
                                         </div>
-                                        <a href="#">Forgot password?</a>
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn btn-md" name="login">Log in</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="toggle_info">
-                            <span><i class="fi-rs-label mr-10"></i><span class="text-muted">Have a coupon?</span> <a href="#coupon" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">Click here to enter your code</a></span>
-                        </div>
-                        <div class="panel-collapse collapse coupon_form " id="coupon">
-                            <div class="panel-body">
-                                <p class="mb-30 font-sm">If you have a coupon code, please apply it below.</p>
-                                <form method="post">
-                                    <div class="form-group">
-                                        <input type="text" placeholder="Enter Coupon Code...">
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn  btn-md" name="login">Apply Coupon</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="divider mt-50 mb-50"></div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-25">
-                            <h4>Billing Details</h4>
-                        </div>
-                        <form action="/selectAddress" method="post">
-                            <!-- Assuming you're submitting the selected address via a form -->
-                            <!-- Check if addresses exist and iterate over them -->
-                            <!-- Example data for addresses, this would be dynamic in a real scenario -->
-                            
-                            <!-- Example address 1 -->
-                            <hr>
-                            <div class="address-container" id="address_1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="selectedAddress" id="address_radio_1" value="1" checked>
-                                    <label class="form-check-label" for="address_radio_1">
-                                        <address>
-                                            Name: John Doe <br>
-                                            Housename: 1234 Main St<br>
-                                            City: Springfield,<br>
-                                            State: IL.<br>
-                                            Pincode: 62704
-                                        </address>
-                                        <a class="remove-icon" onclick="removeAddress('1')">
-                                            <i class="fa-solid fa-trash fa-xl"></i>
-                                        </a>
-                                        <h4>
-                                            <a href="/loadEditAddress?id=1" class="edit-address" style="color: green;">Edit</a>
-                                        </h4>
-                                    </label>
+                                        <hr>
+                                    <% }) %>
+                                <% } %>
+                        
+                                <!-- Add Address Button -->
+                                <div class="address-container">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAddressModal">
+                                        Add Address
+                                    </button>
                                 </div>
-                                <h5></h5>
-                            </div>
-                            <hr>
-                    
-                            <!-- Example address 2 -->
-                            <hr>
-                            <div class="address-container" id="address_2">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="selectedAddress" id="address_radio_2" value="2">
-                                    <label class="form-check-label" for="address_radio_2">
-                                        <address>
-                                            Name: Jane Smith <br>
-                                            Housename: 5678 Elm St<br>
-                                            City: Shelbyville,<br>
-                                            State: IL.<br>
-                                            Pincode: 62565
-                                        </address>
-                                        <a class="remove-icon" onclick="removeAddress('2')">
-                                            <i class="fa-solid fa-trash fa-xl"></i>
-                                        </a>
-                                        <h4>
-                                            <a href="/loadEditAddress?id=2" class="edit-address" style="color: green;">Edit</a>
-                                        </h4>
-                                    </label>
+                        
+                                <!-- If no addresses exist -->
+                                <% if (!address || address.address.length === 0) { %>
+                                    <p>No address found.</p>
+                                <% } %>
+                            </form>
+                        
+                            <!-- Add Address Modal -->
+                            <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="addAddressModalLabel">Add New Address</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                        
+                                        <!-- Modal Body -->
+                                        <div class="modal-body">
+                                            <form id="addAddressForm" method="POST" action="/addAddress">
+                                                <!-- Name Input -->
+                                                <div class="form-group">
+                                                    <label for="name">Name</label>
+                                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
+                                                    <span id="nameError" class="error-message"></span>
+                                                </div>
+                        
+                                                <!-- Mobile Number Input -->
+                                                <div class="form-group">
+                                                    <label for="mobileNumber">Mobile Number</label>
+                                                    <input type="text" class="form-control" id="mobileNumber" name="mobile" placeholder="Enter mobile number">
+                                                    <span id="mobileNumberError" class="error-message"></span>
+                                                </div>
+                        
+                                                <!-- House Name Input -->
+                                                <div class="form-group">
+                                                    <label for="houseName">House Name</label>
+                                                    <input type="text" class="form-control" id="houseName" name="houseName" placeholder="Enter house name">
+                                                    <span id="houseNameError" class="error-message"></span>
+                                                </div>
+                        
+                                                <!-- Street Input -->
+                                                <div class="form-group">
+                                                    <label for="street">Street</label>
+                                                    <input type="text" class="form-control" id="street" name="street" placeholder="Enter street">
+                                                    <span id="streetError" class="error-message"></span>
+                                                </div>
+                        
+                                                <!-- City and State Inputs -->
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="city">City</label>
+                                                        <input type="text" class="form-control" id="city" name="city" placeholder="Enter city">
+                                                        <span id="cityError" class="error-message"></span>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="state">State</label>
+                                                        <input type="text" class="form-control" id="state" name="state" placeholder="Enter state">
+                                                        <span id="stateError" class="error-message"></span>
+                                                    </div>
+                                                </div>
+                        
+                                                <!-- Pin Code Input -->
+                                                <div class="form-group">
+                                                    <label for="pinCode">Pin Code</label>
+                                                    <input type="text" class="form-control" id="pinCode" name="pinCode" placeholder="Enter pin code">
+                                                    <span id="pinCodeError" class="error-message"></span>
+                                                </div>
+                        
+                                                <!-- Modal Footer with Submit Button -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save Address</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                                <h5></h5>
                             </div>
-                            <hr>
-                    
-                            <!-- Check if less than two addresses -->
-                            <div class="address-container">
-                                <input type="button" value="Add Address" onclick="window.location.href='/loadAddAddress'"
-                                    class="add-address" style="background-color:#046963; color: aliceblue; font-weight: bold;">
-                            </div>
-                    
-                            <!-- If no addresses exist -->
-                            <!-- Uncomment the following section if there are no addresses -->
-                            <!--
-                            <p>No address found.</p>
-                            <div class="address-container">
-                                <input type="button" value="Add Address" onclick="window.location.href='/loadAddAddress'"
-                                    class="add-address" style="background-color:#046963; color: aliceblue; font-weight: bold;">
-                            </div>
-                            -->
-                        </form>
-                    </div>                    
-                    <div class="col-md-6">
-                        <div class="order_review">
-                            <div class="mb-20">
-                                <h4>Your Orders</h4>
-                            </div>
-                            <div class="table-responsive order_table text-center">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="2">Product</th>
-                                            <th>Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="image product-thumbnail"><img src="public/assets/imgs/shop/product-1-1.jpg" alt="#"></td>
-                                            <td>
-                                                <h5><a href="shop-product-full.html">Yidarton Women Summer Blue</a></h5> <span class="product-qty">x 2</span>
-                                            </td>
-                                            <td>$180.00</td>
-                                        </tr>
-                                        <tr>
-                                            <th>SubTotal</th>
-                                            <td class="product-subtotal" colspan="2">$280.00</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Shipping</th>
-                                            <td colspan="2"><em>Free Shipping</em></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Total</th>
-                                            <td colspan="2" class="product-subtotal"><span class="font-xl text-brand fw-900">$280.00</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="bt-1 border-color-1 mt-30 mb-30"></div>
-                            <div class="payment_method">
-                                <div class="mb-25">
-                                    <h5>Payment</h5>
+                            <!-- Edit Address Modal -->
+                            <div class="modal fade" id="editAddressModal" tabindex="-1" role="dialog" aria-labelledby="editAddressModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editAddressModalLabel">Edit Address</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <!-- Modal Body -->
+                                        <div class="modal-body">
+                                            <form id="editAddressForm" method="POST" action="/editAddress">
+                                                <input type="hidden" id="editAddressId" name="addressId">
+                                                <!-- Name Input -->
+                                                <div class="form-group">
+                                                    <label for="editName">Name</label>
+                                                    <input type="text" class="form-control" id="editName" name="name" placeholder="Enter name">
+                                                    <span id="editNameError" class="error-message"></span>
+                                                </div>
+
+                                                <!-- Mobile Number Input -->
+                                                <div class="form-group">
+                                                    <label for="editMobileNumber">Mobile Number</label>
+                                                    <input type="text" class="form-control" id="editMobileNumber" name="mobile" placeholder="Enter mobile number">
+                                                    <span id="editMobileNumberError" class="error-message"></span>
+                                                </div>
+
+                                                <!-- House Name Input -->
+                                                <div class="form-group">
+                                                    <label for="editHouseName">House Name</label>
+                                                    <input type="text" class="form-control" id="editHouseName" name="houseName" placeholder="Enter house name">
+                                                    <span id="editHouseNameError" class="error-message"></span>
+                                                </div>
+
+                                                <!-- Street Input -->
+                                                <div class="form-group">
+                                                    <label for="editStreet">Street</label>
+                                                    <input type="text" class="form-control" id="editStreet" name="street" placeholder="Enter street">
+                                                    <span id="editStreetError" class="error-message"></span>
+                                                </div>
+
+                                                <!-- City and State Inputs -->
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="editCity">City</label>
+                                                        <input type="text" class="form-control" id="editCity" name="city" placeholder="Enter city">
+                                                        <span id="editCityError" class="error-message"></span>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="editState">State</label>
+                                                        <input type="text" class="form-control" id="editState" name="state" placeholder="Enter state">
+                                                        <span id="editStateError" class="error-message"></span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Pin Code Input -->
+                                                <div class="form-group">
+                                                    <label for="editPinCode">Pin Code</label>
+                                                    <input type="text" class="form-control" id="editPinCode" name="pinCode" placeholder="Enter pin code">
+                                                    <span id="editPinCodeError" class="error-message"></span>
+                                                </div>
+
+                                                <!-- Modal Footer with Save Button -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="payment_option">
-                                    <!-- <div class="custome-radio">
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="order_review">
+                                <div class="mb-20">
+                                    <h4>Your Orders</h4>
+                                </div>
+                                <div class="table-responsive order_table text-center">
+                                    <% if (cart) { %>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="2">Product</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% cart.cartItems.forEach((element,index)=> { %>
+                                                    <tr>
+                                                        <td class="image product-thumbnail"><img
+                                                                src="public/products/<%= element.productId.image[0] %>"
+                                                                alt="#"></td>
+                                                        <td>
+                                                            <h5><a href="shop-product-full.html">
+                                                                    <%= element.productId.name %>
+                                                                </a></h5> <span class="product-qty">x <%=
+                                                                    element.quantity %></span>
+                                                        </td>
+                                                        <td> ₹<%= element.price %>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>SubTotal</th>
+                                                        <td class="product-subtotal" colspan="2"> ₹ <%= element.quantity
+                                                                * element.price %>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Shipping</th>
+                                                        <td colspan="2"><em>Free Shipping</em></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Total</th>
+                                                        <td colspan="2" class="product-subtotal"><span
+                                                                class="font-xl text-brand fw-900"> ₹ <%=
+                                                                    element.quantity * element.price %></span></td>
+                                                    </tr>
+                                                    <% }) %>
+
+                                            </tbody>
+                                        </table>
+                                        <% } %>
+
+                                </div>
+                                <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+                                <div class="payment_method">
+                                    <div class="mb-25">
+                                        <h5>Payment</h5>
+                                    </div>
+                                    <div class="payment_option">
+                                        <!-- <div class="custome-radio">
                                         <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios3" checked="">
                                         <label class="form-check-label" for="exampleRadios3" data-bs-toggle="collapse" data-target="#bankTranfer" aria-controls="bankTranfer">Direct Bank Transfer</label>
                                         <div class="form-group collapse in" id="bankTranfer">
@@ -703,20 +957,327 @@
                                             <p class="text-muted mt-5">Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode. </p>
                                         </div>
                                     </div> -->
-                                    <div class="custome-radio">
-                                        <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios5" checked="">
-                                        <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse" data-target="#paypal" aria-controls="paypal">Cash On Delivery</label>
-                                        <div class="form-group collapse in" id="paypal">
-                                            <p class="text-muted mt-5">Pay via PayPal; you can pay with your credit card if you don't have a PayPal account.</p>
+                                        <div class="custome-radio">
+                                            <input class="form-check-input" required="" type="radio"
+                                                name="payment_option" id="exampleRadios5" checked="">
+                                            <label class="form-check-label" for="exampleRadios5"
+                                                data-bs-toggle="collapse" data-target="#paypal"
+                                                aria-controls="paypal">Cash On Delivery</label>
+                                            <div class="form-group collapse in" id="paypal">
+                                                <p class="text-muted mt-5">Pay via PayPal; you can pay with your credit
+                                                    card if you don't have a PayPal account.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <button type="button" onclick="placeOrder()"
+                                    class="btn btn-fill-out btn-block mt-30">Place Order</button>
                             </div>
-                            <a href="#" class="btn btn-fill-out btn-block mt-30">Place Order</a>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </main>
-    <%- include('./partials/userFooter')  %>
+            </section>
+        </main>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            function placeOrder() {
+                const addressId = document.querySelector('input[name="selectedAddress"]:checked').value;
+                fetch('/placeOrder', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ addressId })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.success){
+                        Swal.fire({
+                            title: "Order Placed",
+                            text: `${data.message}`,
+                            icon: "success"
+                        }).then(() => {
+                            window.location.href = "/thankYou";
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+            </script>  
+            
+            <!-- addAddress -->
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const form = document.getElementById('addAddressForm');
+                    const houseName = document.getElementById('houseName');
+                    const street = document.getElementById('street');
+                    const city = document.getElementById('city');
+                    const state = document.getElementById('state');
+                    const pinCode = document.getElementById('pinCode');
+                    const name = document.getElementById('name');
+                    const mobileNumber = document.getElementById('mobileNumber');
+
+                    const houseNameError = document.getElementById('houseNameError');
+                    const streetError = document.getElementById('streetError');
+                    const cityError = document.getElementById('cityError');
+                    const stateError = document.getElementById('stateError');
+                    const pinCodeError = document.getElementById('pinCodeError');
+                    const nameError = document.getElementById('nameError');
+                    const mobileNumberError = document.getElementById('mobileNumberError');
+
+                    // Timeout duration in milliseconds (adjust as needed)
+                    const errorMessageTimeout = 3000; // 3 seconds
+
+                    form.addEventListener('submit', function (event) {
+                        let isValid = true;
+
+                        // Regular expressions
+                        const textPattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/; // Allows letters, single spaces or hyphens, no leading/trailing spaces
+                        const pinCodePattern = /^\d{6}$/; // Exactly 6 digits
+                        const mobileNumberPattern = /^[6-9]\d{9}$/; // Starts with 6, 7, 8, or 9 and is exactly 10 digits
+
+                        // Function to test for more than one consecutive space
+                        const hasMultipleSpaces = (value) => {
+                            return /\s{2,}/.test(value);
+                        };
+
+                        // Name validation
+                        if (!textPattern.test(name.value) || hasMultipleSpaces(name.value)) {
+                            isValid = false;
+                            nameError.innerText = 'Invalid Name';
+                            setTimeout(() => { nameError.innerText = ''; }, errorMessageTimeout);
+                        } else {
+                            nameError.innerText = '';
+                        }
+
+                        // Mobile Number validation
+                        if (!mobileNumberPattern.test(mobileNumber.value)) {
+                            isValid = false;
+                            mobileNumberError.innerText = 'Invalid Mobile Number';
+                            setTimeout(() => { mobileNumberError.innerText = ''; }, errorMessageTimeout);
+                        } else {
+                            mobileNumberError.innerText = '';
+                        }
+
+                        // House Name validation
+                        if (!textPattern.test(houseName.value) || hasMultipleSpaces(houseName.value)) {
+                            isValid = false;
+                            houseNameError.innerText = 'Invalid House Name';
+                            setTimeout(() => { houseNameError.innerText = ''; }, errorMessageTimeout);
+                        } else {
+                            houseNameError.innerText = '';
+                        }
+
+                        // Street validation (can have numbers, spaces, and letters)
+                        if (!textPattern.test(street.value) || hasMultipleSpaces(street.value)) {
+                            isValid = false;
+                            streetError.innerText = 'Invalid Street';
+                            setTimeout(() => { streetError.innerText = ''; }, errorMessageTimeout);
+                        } else {
+                            streetError.innerText = '';
+                        }
+
+                        // City validation
+                        if (!textPattern.test(city.value) || hasMultipleSpaces(city.value)) {
+                            isValid = false;
+                            cityError.innerText = 'Invalid City';
+                            setTimeout(() => { cityError.innerText = ''; }, errorMessageTimeout);
+                        } else {
+                            cityError.innerText = '';
+                        }
+
+                        // State validation
+                        if (!textPattern.test(state.value) || hasMultipleSpaces(state.value)) {
+                            isValid = false;
+                            stateError.innerText = 'Invalid State';
+                            setTimeout(() => { stateError.innerText = ''; }, errorMessageTimeout);
+                        } else {
+                            stateError.innerText = '';
+                        }
+
+                        // Pin Code validation
+                        if (!pinCodePattern.test(pinCode.value)) {
+                            isValid = false;
+                            pinCodeError.innerText = 'Invalid Pin Code (should be 6 digits)';
+                            setTimeout(() => { pinCodeError.innerText = ''; }, errorMessageTimeout);
+                        } else {
+                            pinCodeError.innerText = '';
+                        }
+
+                        if (!isValid) {
+                            event.preventDefault();
+                        }
+                    });
+                });
+            </script>
+            <!-- editAddress -->
+            <script>
+                function prefillEditForm(id, name, mobile, houseName, street, city, state, pinCode) {
+                    document.getElementById('editAddressId').value = id;
+                    document.getElementById('editName').value = name;
+                    document.getElementById('editMobileNumber').value = mobile;
+                    document.getElementById('editHouseName').value = houseName;
+                    document.getElementById('editStreet').value = street;
+                    document.getElementById('editCity').value = city;
+                    document.getElementById('editState').value = state;
+                    document.getElementById('editPinCode').value = pinCode;
+                }
+            
+                function deleteAddress(id) {
+                    if (confirm('Are you sure you want to delete this address?')) {
+                        fetch(`/deleteAddress/${id}`, {
+                            method: 'DELETE'
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                location.reload();
+                            } else {
+                                alert('Failed to delete the address');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Failed to delete the address');
+                        });
+                    }
+                }
+            
+                document.addEventListener('DOMContentLoaded', function () {
+                    const editForm = document.getElementById('editAddressForm');
+            
+                    const editFields = {
+                        name: document.getElementById('editName'),
+                        mobile: document.getElementById('editMobileNumber'),
+                        houseName: document.getElementById('editHouseName'),
+                        street: document.getElementById('editStreet'),
+                        city: document.getElementById('editCity'),
+                        state: document.getElementById('editState'),
+                        pinCode: document.getElementById('editPinCode'),
+                        errors: {
+                            name: document.getElementById('editNameError'),
+                            mobile: document.getElementById('editMobileNumberError'),
+                            houseName: document.getElementById('editHouseNameError'),
+                            street: document.getElementById('editStreetError'),
+                            city: document.getElementById('editCityError'),
+                            state: document.getElementById('editStateError'),
+                            pinCode: document.getElementById('editPinCodeError')
+                        }
+                    };
+            
+                    const textPattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
+                    const pinCodePattern = /^\d{6}$/;
+                    const mobileNumberPattern = /^[6-9]\d{9}$/;
+            
+                    const hasMultipleSpaces = (value) => {
+                        return /\s{2,}/.test(value);
+                    };
+            
+                    const validateEditForm = (fields) => {
+                        let isValid = true;
+            
+                        // Name validation
+                        if (!textPattern.test(fields.name.value) || hasMultipleSpaces(fields.name.value)) {
+                            isValid = false;
+                            fields.errors.name.innerText = 'Invalid Name';
+                        } else {
+                            fields.errors.name.innerText = '';
+                        }
+            
+                        // Mobile Number validation
+                        if (!mobileNumberPattern.test(fields.mobile.value)) {
+                            isValid = false;
+                            fields.errors.mobile.innerText = 'Invalid Mobile Number';
+                        } else {
+                            fields.errors.mobile.innerText = '';
+                        }
+            
+                        // House Name validation
+                        if (!textPattern.test(fields.houseName.value) || hasMultipleSpaces(fields.houseName.value)) {
+                            isValid = false;
+                            fields.errors.houseName.innerText = 'Invalid House Name';
+                        } else {
+                            fields.errors.houseName.innerText = '';
+                        }
+            
+                        // Street validation (can have numbers, spaces, and letters)
+                        if (!textPattern.test(fields.street.value) || hasMultipleSpaces(fields.street.value)) {
+                            isValid = false;
+                            fields.errors.street.innerText = 'Invalid Street';
+                        } else {
+                            fields.errors.street.innerText = '';
+                        }
+            
+                        // City validation
+                        if (!textPattern.test(fields.city.value) || hasMultipleSpaces(fields.city.value)) {
+                            isValid = false;
+                            fields.errors.city.innerText = 'Invalid City';
+                        } else {
+                            fields.errors.city.innerText = '';
+                        }
+            
+                        // State validation
+                        if (!textPattern.test(fields.state.value) || hasMultipleSpaces(fields.state.value)) {
+                            isValid = false;
+                            fields.errors.state.innerText = 'Invalid State';
+                        } else {
+                            fields.errors.state.innerText = '';
+                        }
+            
+                        // Pin Code validation
+                        if (!pinCodePattern.test(fields.pinCode.value)) {
+                            isValid = false;
+                            fields.errors.pinCode.innerText = 'Invalid Pin Code (should be 6 digits)';
+                        } else {
+                            fields.errors.pinCode.innerText = '';
+                        }
+            
+                        return isValid;
+                    };
+            
+                    editForm.addEventListener('submit', async function (event) {
+                        event.preventDefault();
+                        if (!validateEditForm(editFields)) {
+                            return;
+                        }
+            
+                        const addressId = document.getElementById('editAddressId').value;
+                        const formData = {
+                            userId: '<%= user._id %>', // Ensure this is correctly set to the logged-in user's ID
+                            addressId: addressId,
+                            name: editFields.name.value,
+                            mobile: editFields.mobile.value,
+                            houseName: editFields.houseName.value,
+                            street: editFields.street.value,
+                            city: editFields.city.value,
+                            state: editFields.state.value,
+                            pinCode: editFields.pinCode.value
+                        };
+            
+                        try {
+                            const response = await fetch('/editAddress', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(formData)
+                            });
+            
+                            const data = await response.json();
+                            if (response.ok) {
+                                alert('Address updated successfully');
+                                location.reload();
+                            } else {
+                                alert('Failed to update address: ' + data.message);
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                            alert('Failed to update address');
+                        }
+                    });
+                });
+            </script>            
+        <%- include('./partials/userFooter') %>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(136, 113, 73, 0.76);
+        }
+        .header {
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 2em;
+            color: #343a40;
+        }
+        .order-info {
+            margin-bottom: 20px;
+        }
+        .order-info p {
+            margin: 0;
+            font-size: 1.1em;
+        }
+        .order-info p span {
+            font-weight: bold;
+        }
+        .items-table th, .items-table td {
+            vertical-align: middle;
+        }
+        .items-table img {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .shipping-address p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Order #<%= order._id %></h1>
+            <p>Date: <%= new Date(order.createdAt).toDateString() %></p>
+        </div>
+        <div class="order-info">
+            <p>Status: <span><%= order.status %></span></p>
+            <p>Total Price: <span>₹<%= (order.totalPrice).toFixed(2) %></span></p>
+        </div>
+        <h2>Items</h2>
+        <table class="table table-striped items-table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% order.cartItems.forEach(item => { %>
+                    <tr>
+                        <td>
+                            <img src="/public/products/<%= item.productId.image[0] %>" alt="<%= item.productId.name %>">
+                            <%= item.productId.name %>
+                        </td>
+                        <td><%= item.quantity %></td>
+                        <td>₹<%= (item.price).toFixed(2) %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <h2>Shipping Address</h2>
+        <div class="shipping-address">
+            <p>Name: <%= order.address[0].name %></p>
+            <p>Mobile: <%= order.address[0].mobile %></p>
+            <p>House: <%= order.address[0].houseName %></p>
+            <p>Street: <%= order.address[0].street %></p>
+            <p>City: <%= order.address[0].city %></p>
+            <p>State: <%= order.address[0].state %></p>
+            <p>Pin Code: <%= order.address[0].pinCode %></p>
+        </div>
+        <a href="/myAccount" class="btn btn-primary mt-3">Back to My Account</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

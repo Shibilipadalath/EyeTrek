@@ -259,7 +259,7 @@
                                         <div class="mb-4">
                                             <select class="form-select" name="category" id="category">
                                                 <% for(let i=0;i<category.length;i++){ %>
-                                                <option><%= category[i].name %></option>
+                                                <option value="<%= category[i]._id %>"><%= category[i].name %></option>
                                                 <% } %>
                                             </select>
                                             <span id="category-error"class="colorForError"></span>

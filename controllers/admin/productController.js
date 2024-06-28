@@ -23,7 +23,7 @@ const addProductPage = async (req, res) => {
 const addProduct = async (req, res) => {
     try {
         const { name, Description, brand, stock, originalPrice, offerPrice, category, } = req.body
-
+        console.log(req.body);
         if (!req.files || req.files.length === 0) {
             return res.status(400).send('No files were uploaded.');
         }
