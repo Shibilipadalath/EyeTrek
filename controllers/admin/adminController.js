@@ -67,7 +67,7 @@ const blockUser = async (req, res) => {
         const block = await User.findByIdAndUpdate(userId, { isBlocked: true }, { new: true });
         if(req.session.userId === userId)
             req.session.userId = null
-        console.log("blocked", block);
+        console.log("blockeddddd", block);
         return res.status(200).json(block);
     } catch (error) {
         console.error(error);
