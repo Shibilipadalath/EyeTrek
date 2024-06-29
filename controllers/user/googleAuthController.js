@@ -1,7 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const mongoose = require('mongoose');
-const User = require('../../models/userModel'); // Adjust the path as needed
+const User = require('../../models/userModel')
 
 require('dotenv').config();
 

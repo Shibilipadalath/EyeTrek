@@ -15,7 +15,6 @@ const isBlocked = async (req, res, next) => {
 
         if (user.isBlocked) {
             req.session.userId = null;
-            // return res.redirect('/userLogout');
             return res.redirect('/')
         } else {
             next();

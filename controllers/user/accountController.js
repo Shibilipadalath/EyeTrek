@@ -16,7 +16,7 @@ const myAccount = async (req, res) => {
 
         // find orders
         const orderDetails = await Order.find({ userId: user._id });
-        console.log(orderDetails); // For debugging
+        console.log(orderDetails);
 
         return res.render('myAccount', { user, addresses, orderDetails });
     } catch (error) {
@@ -44,7 +44,6 @@ const addAddress = async (req, res) => {
                 pinCode
             };
 
-            // Find the user
             await Address.findOneAndUpdate(
                 { userId: userId },
                 { $push: { address: newAddress } },
@@ -122,7 +121,7 @@ const updateDetails = async (req, res) => {
         console.log("req body=======", name, mobile);
         console.log(`Received name: ${name}, mobile: ${mobile}`);
 
-        const user = await User.findOne({ _id: req.session.userId }); // Assuming `req.session.userId` contains the authenticated user ID
+        const user = await User.findOne({ _id: req.session.userId })
         console.log(user);
         if (!user) {
             console.log('User not found');
@@ -147,13 +146,12 @@ const updatePassword = async (req, res) => {
         console.log(password, npassword, cpassword);
 
 
-        // Fetch the user from the database
         const user = await User.findOne({ _id: req.session.userId });
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Check if the current password is correct
+        // checking current password
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
         if (!isPasswordCorrect) {
             return res.status(400).json({ message: 'Current password is incorrect' });
@@ -164,7 +162,6 @@ const updatePassword = async (req, res) => {
         user.password = hashedPassword;
         await user.save();
 
-        // Respond with success message
         return res.redirect('/myAccount')
     } catch (error) {
         console.error('Server error:', error);

@@ -98,13 +98,12 @@ const updateEditProduct = async (req, res) => {
         const imagePath = req.files ? req.files.map(file => file.filename) : [];
         console.log(imagePath, "images");
 
-        // Find the existing product by ID
         const product = await Product.findById(id);
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
+        
 
-        // Update the product fields with new data
         product.name = name;
         product.description = Description;
         product.brand = brand;
@@ -113,17 +112,15 @@ const updateEditProduct = async (req, res) => {
         product.offerPrice = offerPrice;
         product.category = category;
 
-
-
-        // Handle new image uploads
+        //new image
         if (imagePath.length > 0) {
             if (!product.image) {
-                product.image = []; // Initialize images array if it doesn't exist
+                product.image = []; 
             }
-            product.image.push(...imagePath); // Add new images to existing array
+            product.image.push(...imagePath)
         }
 
-        // Save the updated product
+        
         const savedProduct = await product.save();
         if (savedProduct) {
             console.log('Product has been updated');

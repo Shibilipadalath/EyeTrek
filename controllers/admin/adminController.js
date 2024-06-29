@@ -25,14 +25,13 @@ const adminLogout = async (req, res) => {
         req.session.destroy((err) => {
             if (err) {
                 console.error('Error occurred during user logout:', err);
-                return res.status(500).send('Internal Server Error'); // Handle the error as appropriate
+                return res.status(500).send('Internal Server Error');
             }
             return res.redirect('/admin');
         });
     } catch (error) {
         console.error('Unexpected error during user logout:', error);
-        return res.status(500).send('Internal Server Error'); // Handle the error as appropriate
-    }
+        return res.status(500).send('Internal Server Error')    }
 }
 
 const adminHome = async (req, res) => {

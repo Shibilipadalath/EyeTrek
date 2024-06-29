@@ -165,7 +165,7 @@ const updateCartQuantity = async (req, res) => {
             return total + item.productId.offerPrice * item.quantity;
         }, 0);
 
-        // Calculate the updated subtotal for the specific item
+        // Calculate sub total
         const subtotal = cartItem.productId.offerPrice * cartItem.quantity;
 
         res.json({ quantity: cartItem.quantity, subtotal: subtotal.toFixed(2), totalPrice: totalPrice.toFixed(2) });
