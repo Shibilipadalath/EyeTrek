@@ -159,6 +159,75 @@ const resendOtp = async (req, res) => {
 };
 
 
+const forgotPassword=async(req,res)=>{
+    try {
+        res.render('forgotPassword',{error:''})      
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+    const forgotPasswordVerify = async (req, res) => {
+    const email = req.body.email;
+    console.log(email);
+
+    try {
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.render('forgotPassword', { error: 'The email does not exist' });
+        }
+
+        let otp = otpGenerator.generate(4, {
+            upperCaseAlphabets: false,
+            lowerCaseAlphabets: false,
+            specialChars: false
+        });
+        console.log('forgotPassword otp', otp);
+        req.session.forgotOtp = otp;
+        req.session.email = email;
+
+        let mailSender = mailController.mailSender;
+        await mailSender(email, 'Forgot Password Verification Email', `<h3>Confirm your OTP</h3><h5>Here is your OTP: <b>${otp}</b></h5>`);
+        res.render('forgotOtpPage', { error: '' });
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+const forgotOtpVerify = async (req, res) => {
+    const { digit1, digit2, digit3, digit4 } = req.body;
+    const otp = digit1 + digit2 + digit3 + digit4;
+    
+    console.log('new OTP FOR forgot password',otp);
+    if (otp === req.session.forgotOtp) {
+        res.render('newPassword', { error: '' });
+    } else {
+        res.render('forgotOtpPage', { error: 'Invalid OTP' });
+    }
+};
+
+const resetPassword = async (req, res) => {
+    const { newPassword, confirmPassword } = req.body;
+
+    if (newPassword !== confirmPassword) {
+        return res.render('newPassword', { error: 'Passwords do not match' });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    try {
+        const email = req.session.email;
+        await User.findOneAndUpdate({ email }, { password: hashedPassword });
+        res.redirect('/login');
+    } catch (error) {
+        console.error(error);
+        res.render('newPassword', { error: 'Something went wrong, please try again' });
+    }
+};
+
+
 
 
 module.exports = {
@@ -169,5 +238,9 @@ module.exports = {
     signupPage,
     userSignUp,
     otpVerification,
-    resendOtp
+    resendOtp,
+    forgotPassword,
+    forgotPasswordVerify,
+    forgotOtpVerify,
+    resetPassword
 }

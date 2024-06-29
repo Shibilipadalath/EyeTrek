@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EyeTrek OTP Verification</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/favicon.svg">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            overflow: hidden;
+        }
+
+        .otp_wrap {
+            width: 100%;
+            max-width: 1200px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .heading_s1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .form-group input {
+            width: 50px;
+            /* Adjust width as needed */
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 18px;
+            margin: 0 5px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #000000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #000000;
+        }
+
+        .resend_link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+            display: none;
+            /* Hide initially */
+        }
+
+        .countdown-timer {
+            color: red;
+            text-align: center;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+
+        span {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="otp_wrap">
+        <div class="heading_s1">
+            <h3>OTP Verification</h3>
+            <% if (error) { %>
+                <span>
+                    <%= error %>
+                </span>
+            <% } %>
+        </div>
+        <form action="/forgotOtpVerify" method="post">
+            <!-- OTP input fields -->
+            <div class="form-group otp-inputs">
+                <input type="text" name="digit1" maxlength="1" placeholder="-" required>
+                <input type="text" name="digit2" maxlength="1" placeholder="-" required>
+                <input type="text" name="digit3" maxlength="1" placeholder="-" required>
+                <input type="text" name="digit4" maxlength="1" placeholder="-" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn">Verify OTP</button>
+            </div>
+            <!-- Resend OTP link and countdown timer -->
+            <a href="/resendOtp" class="resend_link" id="resendOtpLink">Resend OTP</a>
+            <div class="countdown-timer" id="countdownTimer"></div>
+        </form>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputs = document.querySelectorAll('.form-group.otp-inputs input');
+            const countdownTimer = document.getElementById('countdownTimer');
+            const resendOtpLink = document.getElementById('resendOtpLink');
+
+            inputs.forEach((input, index) => {
+                input.addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/\D/g, '');
+
+                    // Move focus to the next input
+                    if (index < inputs.length - 1 && e.target.value) {
+                        inputs[index + 1].focus();
+                    }
+                });
+
+                // Handle backspace to move focus backward
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && index > 0 && !e.target.value) {
+                        inputs[index - 1].focus();
+                    }
+                });
+            });
+
+            // Countdown timer logic
+            function startCountdown(duration) {
+                var timer = duration, minutes, seconds;
+                var interval = setInterval(function () {
+                    minutes = parseInt(timer / 60, 10);
+                    seconds = parseInt(timer % 60, 10);
+
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                    countdownTimer.textContent = "Resend OTP in " + minutes + ":" + seconds;
+
+                    if (--timer < 0) {
+                        clearInterval(interval);
+                        countdownTimer.style.display = 'none';
+                        resendOtpLink.style.display = 'block';
+                    }
+                }, 1000);
+            }
+
+            var countdownDuration = 30; // 30 sec
+            startCountdown(countdownDuration);
+        });
+    </script>
+</body>
+
+</html>

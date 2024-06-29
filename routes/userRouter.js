@@ -29,6 +29,10 @@ userRoute.get('/signUp', userAuth.isLogout, userController.signupPage)
 userRoute.post('/signUp', userAuth.isLogout, userController.userSignUp)
 userRoute.post('/verify-otp', userAuth.isLogout, userController.otpVerification)
 userRoute.get('/resendOtp', userAuth.isLogout, userController.resendOtp)
+userRoute.get('/forgotPassword', userAuth.isLogout, userController.forgotPassword)
+userRoute.post('/forgotPassword', userAuth.isLogout, userController.forgotPasswordVerify)
+userRoute.post('/forgotOtpVerify', userAuth.isLogout, userController.forgotOtpVerify)
+userRoute.post('/resetPassword', userAuth.isLogout, userController.resetPassword);
 
 
 
