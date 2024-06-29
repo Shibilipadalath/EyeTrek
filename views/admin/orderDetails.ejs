@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EyeTrek Admin</title>
+    <!-- Bootstrap CSS -->
+    <link rel="shortcut icon" type="image/x-icon" href="/public/adminAsset/imgs/theme/favicon.svg">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .order-info, .order-products, .update-status {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .order-info h2, .order-products h2, .update-status h2 {
+            margin-bottom: 20px;
+        }
+        .product img {
+            max-width: 100px;
+            margin-right: 20px;
+        }
+        .product {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .badge-status {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+        .update-status select, .update-status button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-primary">Order Details</h1>
+        <div class="order-info">
+            <h2 class="text-secondary">Order Information</h2>
+            <p><strong>Order ID:</strong> <%= order._id %></p>
+            <p><strong>User:</strong> <%= order.userId.name %> (<%= order.userId.email %>)</p>
+            <p><strong>Total Price:</strong> &#8377;<%= order.totalPrice.toFixed(2) %></p>
+            <p><strong>Payment Method:</strong> <%= order.paymentMethod %></p>
+            <p><strong>Payment Status:</strong> <%= order.paymentStatus %></p>
+            <p><strong>Status:</strong> 
+                <span class="badge badge-status <%= order.status === 'Pending' ? 'badge-warning' : 
+                    order.status === 'Processing' ? 'badge-info' : 
+                    order.status === 'Shipped' ? 'badge-primary' : 
+                    order.status === 'Delivered' ? 'badge-success' : 
+                    order.status === 'Cancelled' ? 'badge-danger' : 
+                    order.status === 'Returned' ? 'badge-secondary' : 
+                    'badge-dark' %>">
+                    <%= order.status %>
+                </span>
+            </p>
+            <p><strong>Created At:</strong> <%= new Date(order.createdAt).toLocaleString() %></p>
+            <p><strong>Address:</strong></p>
+            <% order.address.forEach(addr => { %>
+                <p>
+                    <%= addr.name %>, <%= addr.mobile %><br>
+                    <%= addr.houseName %>, <%= addr.street %><br>
+                    <%= addr.city %>, <%= addr.state %> - <%= addr.pinCode %>
+                </p>
+            <% }) %>
+        </div>
+        <div class="order-products">
+            <h2 class="text-secondary">Products</h2>
+            <% order.cartItems.forEach(item => { %>
+                <div class="product">
+                    <img src="/public/products/<%= item.productId.image[0] %>" alt="<%= item.productId.name %>">
+                    <div>
+                        <p><strong>Name:</strong> <%= item.productId.name %></p>
+                        <p><strong>Quantity:</strong> <%= item.quantity %></p>
+                        <p><strong>Price:</strong> &#8377;<%= item.price.toFixed(2) %></p>
+                    </div>
+                </div>
+            <% }) %>
+            <div style="text-align: right;"><a href="/admin/orderPage" class="btn btn-secondary mt-3">Back to Orders</a></div>
+            
+        </div>
+        
+        <div class="update-status">
+            <h2 class="text-secondary">Update Order Status</h2>
+            <form action="/admin/orders/<%= order._id %>/status" method="POST">
+                <select name="status" class="form-control">
+                    <option value="Pending" <%= order.status === 'Pending' ? 'selected' : '' %>>Pending</option>
+                    <option value="Processing" <%= order.status === 'Processing' ? 'selected' : '' %>>Processing</option>
+                    <option value="Shipped" <%= order.status === 'Shipped' ? 'selected' : '' %>>Shipped</option>
+                    <option value="Delivered" <%= order.status === 'Delivered' ? 'selected' : '' %>>Delivered</option>
+                    <option value="Cancelled" <%= order.status === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
+                    <option value="Returned" <%= order.status === 'Returned' ? 'selected' : '' %>>Returned</option>
+                    <option value="Refunded" <%= order.status === 'Refunded' ? 'selected' : '' %>>Refunded</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Update Status</button>
+            </form>
+        </div>
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

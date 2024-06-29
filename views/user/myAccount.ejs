@@ -421,7 +421,7 @@
                                                                         <% orderDetails.forEach((order,index) => { %>
                                                                             <tr>
                                                                                 <td><%= index+1 %></td>
-                                                                                <td><%= new Date(order.createdAt).toDateString() %></td>
+                                                                                <td> <%= new Date(order.createdAt).toLocaleString() %></td>
                                                                                 <td><%= order.status %></td>
                                                                                 <td>₹<%= (order.totalPrice).toFixed(2) %> for <%= order.cartItems.length %> item(s)</td>
                                                                                 <td><a href="/order/<%= order._id %>" class="btn-small d-block">View</a></td>

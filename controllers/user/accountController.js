@@ -1,6 +1,6 @@
 const User = require('../../models/userModel')
 const Address = require('../../models/addressModel')
-const Order=require('../../models/orderModel')
+const Order = require('../../models/orderModel')
 const bcrypt = require('bcrypt');
 // const { trusted } = require('mongoose');
 
@@ -173,7 +173,7 @@ const updatePassword = async (req, res) => {
 }
 const checkPassword = async (req, res) => {
     try {
-        const { password} = req.body;
+        const { password } = req.body;
         const user = await User.findOne({ _id: req.session.userId });
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
@@ -182,16 +182,16 @@ const checkPassword = async (req, res) => {
         // Check if the current password is correct
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
         if (!isPasswordCorrect) {
-            return res.status(400).json({ message: 'Current password is incorrect',success:false });
+            return res.status(400).json({ message: 'Current password is incorrect', success: false });
         }
-        return res.status(500).json({ message: 'Current password is correct',success:true });
+        return res.status(500).json({ message: 'Current password is correct', success: true });
 
     } catch (error) {
         console.log(error);
     }
 }
 
-const viewOrder=async(req,res)=>{
+const viewOrder = async (req, res) => {
     try {
         const orderId = req.params.id;
         const order = await Order.findById(orderId).populate('cartItems.productId').exec();
@@ -206,6 +206,29 @@ const viewOrder=async(req,res)=>{
     }
 }
 
+const cancelOrder = async (req, res) => {
+    try {
+        const orderId = req.params.orderId;
+        console.log('orderId................', orderId);
+        const order = await Order.findById(orderId);
+
+        if (!order) {
+            return res.status(404).send('Order not found');
+        }
+
+        if (['Pending', 'Processing', 'Shipped', 'ORDER PLACED'].includes(order.status)) {
+            order.status = 'Cancelled';
+            await order.save();
+            return res.redirect(`/order/${orderId}`);
+        } else {
+            return res.status(400).send('Order cannot be cancelled');
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Server error');
+    }
+}
+
 
 
 module.exports = {
@@ -216,5 +239,6 @@ module.exports = {
     updateDetails,
     updatePassword,
     checkPassword,
-    viewOrder
+    viewOrder,
+    cancelOrder
 }

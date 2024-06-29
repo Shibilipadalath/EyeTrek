@@ -9,8 +9,8 @@ const bcrypt = require('bcrypt')
 const homePage = async (req, res) => {
     try {
 
-        const activedProducts = await Product.find({isActive:true}).limit(6).populate('category')
-        const product = activedProducts.filter((item)=> item.category.isActive === true)
+        const activedProducts = await Product.find({ isActive: true }).limit(6).populate('category')
+        const product = activedProducts.filter((item) => item.category.isActive === true)
         const userExist = await User.findOne({ _id: req.session.userId })
         res.render('home', { product, userExist })
     } catch (error) {
@@ -92,14 +92,14 @@ const userSignUp = async (req, res) => {
         if (userChecker) {
             return res.render('createAccount', { signUpAlert: 'Email already exist' })
         } else {
-            let otp = otpGenerator.generate(6, {
+            let otp = otpGenerator.generate(4, {
                 upperCaseAlphabets: false,
                 lowerCaseAlphabets: false,
                 specialChars: false
             })
-            console.log(otp)
+            console.log('otp', otp)
             req.session.otp = otp
-            
+
             let mailSender = mailController.mailSender
             await mailSender(email, 'Verification Email', `<h3>Confirm your OTP</h3><h5>Here is your OTP: <b>${otp}</b></h5>`);
             res.render('otpPage', { error: '' })
@@ -113,9 +113,10 @@ const userSignUp = async (req, res) => {
 
 const otpVerification = async (req, res) => {
     try {
-        const otpFromUser = req.body.otp
+        const otpFromUser = req.body.digit1 + req.body.digit2 + req.body.digit3 + req.body.digit4
         const sentOtp = req.session.otp
-        const userDetails = req.session.userDetails
+        const userDetails = req.session.userDetails;
+
         if (otpFromUser === sentOtp) {
             const sPassword = await securedPassword(userDetails.password)
             const user = new User({
@@ -123,21 +124,39 @@ const otpVerification = async (req, res) => {
                 email: userDetails.email,
                 mobile: userDetails.mobile,
                 password: sPassword
-            })
+            });
+
             await user.save()
             res.render('login', { error: '' })
         } else {
-            res.render('otpPage', { error: 'invalid OTP' })
+            res.render('otpPage', { error: 'Invalid OTP' })
         }
     } catch (error) {
         console.error(error);
+        res.render('otpPage', { error: 'An error occurred. Please try again.' })
     }
 }
 
+const resendOtp = async (req, res) => {
+    try {
+        const email = req.session.userDetails.email;
+        let otp = otpGenerator.generate(4, {
+            upperCaseAlphabets: false,
+            lowerCaseAlphabets: false,
+            specialChars: false
+        });
+        console.log(otp);
+        req.session.otp = otp;
 
+        let mailSender = mailController.mailSender;
+        await mailSender(email, 'Verification Email', `<h3>Confirm your OTP</h3><h5>Here is your OTP: <b>${otp}</b></h5>`);
+        res.render('otpPage', { error: '', resendMessage: 'A new OTP has been sent to your email.' })
 
-
-
+    } catch (error) {
+        console.error(error);
+        res.render('otpPage', { error: 'Error sending OTP. Please try again.', resendMessage: '' })
+    }
+};
 
 
 
@@ -150,4 +169,5 @@ module.exports = {
     signupPage,
     userSignUp,
     otpVerification,
+    resendOtp
 }

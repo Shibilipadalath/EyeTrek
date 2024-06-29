@@ -1,4 +1,5 @@
 const User = require('../../models/userModel')
+const Order = require('../../models/orderModel')
 
 const loadAdmin = async (req, res) => {
     res.render('adminLogin', { error: '' })
@@ -93,9 +94,46 @@ const unBlockUser = async (req, res) => {
 
 const orderPage = async (req, res) => {
     try {
-        return res.render('orderManagement')
+        const orders = await Order.find().populate('userId').populate('cartItems.productId')
+        
+        res.render('orderManagement', { orders });
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching orders:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+const orderDetailsPage=async(req,res)=>{
+    try {
+        const orderId = req.params.id;
+        const order = await Order.findById(orderId).populate('userId').populate('cartItems.productId');
+
+        if (!order) {
+            return res.status(404).send('Order not found');
+        }
+
+        res.render('orderDetails', { order });
+    } catch (error) {
+        console.error('Error fetching order details:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+const updateOrderStatus=async(req,res)=>{
+    try {
+        const orderId = req.params.id;
+        const { status } = req.body;
+
+        const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true });
+
+        if (!order) {
+            return res.status(404).send('Order not found');
+        }
+
+        res.redirect(`/admin/orders/${orderId}`);
+    } catch (error) {
+        console.error('Error updating order status:', error);
+        res.status(500).send('Internal Server Error');
     }
 }
 
@@ -110,5 +148,7 @@ module.exports = {
     blockUser,
     unBlockUser,
     adminLogout,
-    orderPage
+    orderPage,
+    orderDetailsPage,
+    updateOrderStatus
 }
