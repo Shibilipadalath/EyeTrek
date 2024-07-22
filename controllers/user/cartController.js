@@ -5,7 +5,6 @@ const Address = require('../../models/addressModel')
 const Order = require('../../models/orderModel')
 
 
-
 const cartPage = async (req, res) => {
     try {
         const userId = req.session.userId;
@@ -18,20 +17,19 @@ const cartPage = async (req, res) => {
 
         const cart = await Cart.findOne({ userId }).populate({
             path: 'cartItems.productId',
-            model: 'Product' // Assuming your product model is named 'Product'
+            model: 'Product'
         });
 
         if (!cart) {
             return res.render('cart', { cart: null, productsWithQuantity: [], user, totalPrice: '0.00' });
         }
 
-        // Extracting products from the populated cart along with their quantities
+        
         const productsWithQuantity = cart.cartItems.map(item => ({
             product: item.productId,
             quantity: item.quantity
         }));
 
-        // Calculate the total price
         const totalPrice = productsWithQuantity.reduce((total, item) => {
             const price = parseFloat(item.product.offerPrice);
             const quantity = parseInt(item.quantity, 10);
@@ -54,8 +52,8 @@ const addToCart = async (req, res) => {
     try {
         const productId = req.query.id;
         const userId = req.session.userId;
-        console.log('Session in addToCart:', req.session); // Debugging log
-        console.log('User ID:', req.session); // Debugging log
+        console.log('Session in addToCart:', req.session);
+        console.log('User ID:', req.session);
 
         if (!userId) {
             return res.status(401).json({ success: false, error: 'User not authenticated' });
@@ -102,17 +100,14 @@ const removeFromCart = async (req, res) => {
             return res.status(401).send('User not authenticated');
         }
 
-        // Find the user's cart
         const cart = await Cart.findOne({ userId });
 
         if (!cart) {
             return res.status(404).send('Cart not found');
         }
 
-        // Remove the product from the cart
         cart.cartItems = cart.cartItems.filter(item => item.productId.toString() !== productId);
 
-        // Save the updated cart
         await cart.save();
 
         return res.status(200).send('Product removed from cart');
@@ -160,12 +155,10 @@ const updateCartQuantity = async (req, res) => {
 
         await cart.save();
 
-        // Calculate the updated total price
         const totalPrice = cart.cartItems.reduce((total, item) => {
             return total + item.productId.offerPrice * item.quantity;
         }, 0);
 
-        // Calculate sub total
         const subtotal = cartItem.productId.offerPrice * cartItem.quantity;
 
         res.json({ quantity: cartItem.quantity, subtotal: subtotal.toFixed(2), totalPrice: totalPrice.toFixed(2) });
@@ -190,27 +183,6 @@ const checkOutPage = async (req, res) => {
     }
 }
 
-const thankYou = async (req, res) => {
-    try {
-        const userId = req.session.userId
-        const latestOrder = await Order.findOne({ userId }).sort({ createdAt: -1 }).exec()
-
-
-        res.render('thankPage', { order: latestOrder })
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error');
-    }
-}
-
-
-
-
-
-
-
-
-
 
 module.exports = {
     cartPage,
@@ -218,5 +190,4 @@ module.exports = {
     removeFromCart,
     updateCartQuantity,
     checkOutPage,
-    thankYou
 }

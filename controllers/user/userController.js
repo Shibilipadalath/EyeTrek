@@ -8,7 +8,6 @@ const bcrypt = require('bcrypt')
 
 const homePage = async (req, res) => {
     try {
-
         const activedProducts = await Product.find({ isActive: true }).limit(6).populate('category')
         const product = activedProducts.filter((item) => item.category.isActive === true)
         const userExist = await User.findOne({ _id: req.session.userId })
@@ -227,6 +226,21 @@ const resetPassword = async (req, res) => {
     }
 };
 
+const searchProducts = async (req, res) => {
+    try {
+        const query = req.query.query;
+        if (query) {
+            const regex = new RegExp(query, 'i'); // 'i' for case-insensitive search
+            const products = await Product.find({ name: { $regex: regex } }, 'name image');
+            res.json(products);
+        } else {
+            res.json([]);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+};
 
 
 
@@ -242,5 +256,6 @@ module.exports = {
     forgotPassword,
     forgotPasswordVerify,
     forgotOtpVerify,
-    resetPassword
+    resetPassword,
+    searchProducts
 }

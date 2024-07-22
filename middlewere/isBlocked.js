@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 const isBlocked = async (req, res, next) => {
     try {
         const userId = req.session.userId;
-        console.log('userid', userId);
+        // console.log('userid', userId);
 
         if (!userId) {
             return res.redirect('/')

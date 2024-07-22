@@ -215,6 +215,7 @@ new DataTable('#example', {
                                 <thead>
                                     <tr>
                                         <th>Product</th>
+                                        <th>Stock</th>
                                         <th>Price</th>
                                         <th>Status</th>
                                         <th></th>
@@ -233,6 +234,7 @@ new DataTable('#example', {
                                                 </div>
                                             </a>
                                         </td>
+                                        <td class="align-middle"><%= product[i].stock %></td>
                                         <td class="align-middle">&#8377;<%= product[i].offerPrice %></td>
                                         <td class="align-middle">
                                             <% if(product[i].isActive===true){ %>

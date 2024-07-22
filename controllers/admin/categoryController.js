@@ -45,6 +45,8 @@ const categoryEditing = async (req, res) => {
         console.error(error)
     }
 }
+
+
 const categoryUpdate = async (req, res) => {
     try {
         const categoryId = req.query.id;

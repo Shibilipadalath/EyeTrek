@@ -21,7 +21,7 @@ async function(req, accessToken, refreshToken, profile, done) {
       if (user.isBlocked) {
         return done(null, null);
       }
-      req.session.user_email = user.email;
+      req.session.userId= user.email;
       return done(null, user);
     } else {
       user = new User({
@@ -31,7 +31,7 @@ async function(req, accessToken, refreshToken, profile, done) {
         profilePhoto: profile.photos[0].value,
       });
       await user.save();
-      req.session.user_email = profile.emails[0].value;
+      req.session.userId = profile.emails[0].value;
       return done(null, user);
     }
   } catch (error) {

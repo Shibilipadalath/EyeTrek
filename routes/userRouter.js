@@ -2,6 +2,7 @@ const express = require("express")
 const userController = require("../controllers/user/userController")
 const productDetailsController = require("../controllers/user/productController")
 const cartController = require('../controllers/user/cartController')
+const wishListController = require('../controllers/user/wishListController')
 const accountController = require('../controllers/user/accountController')
 const userAuth = require('../middlewere/userAuth')
 const userBlock = require('../middlewere/isBlocked')
@@ -33,6 +34,7 @@ userRoute.get('/forgotPassword', userAuth.isLogout, userController.forgotPasswor
 userRoute.post('/forgotPassword', userAuth.isLogout, userController.forgotPasswordVerify)
 userRoute.post('/forgotOtpVerify', userAuth.isLogout, userController.forgotOtpVerify)
 userRoute.post('/resetPassword', userAuth.isLogout, userController.resetPassword);
+userRoute.get('/search', userController.searchProducts);
 
 
 
@@ -51,7 +53,7 @@ userRoute.post('/updateCartQuantity', userBlock.isBlocked, userAuth.isLogin, car
 //chenckOut
 
 userRoute.get('/checkOut', userBlock.isBlocked, userAuth.isLogin, cartController.checkOutPage)
-userRoute.get('/thankYou', userBlock.isBlocked, userAuth.isLogin, cartController.thankYou)
+
 
 //account
 
@@ -64,10 +66,23 @@ userRoute.post('/updatePassword', userBlock.isBlocked, userAuth.isLogin, account
 userRoute.post('/checkPassword', userBlock.isBlocked, userAuth.isLogin, accountController.checkPassword);
 userRoute.get('/order/:id', userBlock.isBlocked, userAuth.isLogin, accountController.viewOrder);
 userRoute.post('/orders/:orderId/cancel', userBlock.isBlocked, userAuth.isLogin, accountController.cancelOrder);
+userRoute.post('/orders/:orderId/return', userBlock.isBlocked, userAuth.isLogin, accountController.returnOrder);
 
 
 //order
+
+
 userRoute.post('/placeOrder', userBlock.isBlocked, userAuth.isLogin, orderController.placeOrder)
+userRoute.post('/onlinepay', userBlock.isBlocked, userAuth.isLogin, orderController.onlinePay)
+
+userRoute.get('/thankYou', userBlock.isBlocked, userAuth.isLogin, orderController.thankYou)
+
+
+//wishList
+
+userRoute.get('/wishListPage', userBlock.isBlocked, userAuth.isLogin, wishListController.wishListPage);
+userRoute.post('/wishList', userBlock.isBlocked, userAuth.isLogin, wishListController.addToWishList);
+userRoute.delete('/removeFromWishlist',userBlock.isBlocked, userAuth.isLogin, wishListController.removeFromWishlist);
 
 
 module.exports = userRoute

@@ -15,7 +15,7 @@ const myAccount = async (req, res) => {
         const addresses = addressData ? addressData.address : [];
 
         // find orders
-        const orderDetails = await Order.find({ userId: user._id });
+        const orderDetails = await Order.find({ userId: user._id }).sort({createdAt:-1})
         console.log(orderDetails);
 
         return res.render('myAccount', { user, addresses, orderDetails });
@@ -226,6 +226,29 @@ const cancelOrder = async (req, res) => {
     }
 }
 
+const returnOrder = async (req, res) => {
+    try {
+        const orderId = req.params.orderId;
+        console.log('orderId................', orderId);
+        const order = await Order.findById(orderId);
+
+        if (!order) {
+            return res.status(404).send('Order not found');
+        }
+
+        if (order.status === 'Delivered') {
+            order.status = 'Returned';
+            await order.save();
+            return res.redirect(`/order/${orderId}`);
+        } else {
+            return res.status(400).send('Order cannot be returned');
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Server error');
+    }
+}
+
 
 
 module.exports = {
@@ -237,5 +260,6 @@ module.exports = {
     updatePassword,
     checkPassword,
     viewOrder,
-    cancelOrder
+    cancelOrder,
+    returnOrder
 }

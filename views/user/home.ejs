@@ -1,4 +1,34 @@
 ﻿<%- include('./partials/userHeader')  %>
+
+<!-- search -->
+<style>
+    .search-suggestions {
+        border: 1px solid #ccc;
+        max-height: 200px;
+        overflow-y: auto;
+        position: absolute;
+        background-color: #fff;
+        width: 200%;
+        z-index: 1000;
+        display: none;
+    }
+    .search-suggestions div {
+        padding: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+    .search-suggestions div:hover {
+        background-color: #f0f0f0;
+    }
+    .search-suggestions img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+</style>
+
 <body>
     <!-- Quick view -->
     <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
@@ -155,8 +185,7 @@
                                <% }else{ %>
                                 <li><i class="fi-rs-user"></i><a href="/login">Log In </a>/<a href="/signUp">Sign Up</a></li>
                                 <%}%>
-                            </ul>
-                            
+                            </ul>                           
                         </div>
                     </div>
                 </div>
@@ -170,27 +199,17 @@
                     </div>
                     <div class="header-right">
                         <div class="search-style-2">
-                            <form action="#">
-                                <select class="select-active">
-                                    <option>All Categories</option>
-                                    <option>Women's</option>
-                                    <option>Men's</option>
-                                    <option>Cellphones</option>
-                                    <option>Computer</option>
-                                    <option>Electronics</option>
-                                    <option> Accessories</option>
-                                    <option>Home & Garden</option>
-                                    <option>Luggage</option>
-                                    <option>Shoes</option>
-                                    <option>Mother & Kids</option>
-                                </select>
-                                <input type="text" placeholder="Search for items...">
-                            </form>
+                            <!-- search -->
+
+                            <div style="position: relative; width: 300px;">
+                                <input type="text" id="search-query" placeholder="Search for items..." autocomplete="off" style="width: 200%;">
+                                <div id="search-suggestions" class="search-suggestions"></div>
+                            </div>                                                                       
                         </div>
                         <div class="header-action-right">
                             <div class="header-action-2">
                                 <div class="header-action-icon-2">
-                                    <a href="#">
+                                    <a href="/wishListPage">
                                         <img class="svgInject" alt="Evara" src="public/assets/imgs/theme/icons/icon-heart.svg">
                                     </a>
                                 </div>
@@ -629,36 +648,35 @@
                                         <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
-                                                    <a href="/productDetails?productId=<%=product[i]._id %>">
+                                                    <a href="/productDetails?productId=<%= product[i]._id %>">
                                                         <img class="default-img" src="public/products/<%= product[i].image[0] %>" alt="">
                                                         <img class="hover-img" src="public/products/<%= product[i].image[1] %>" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="product-action-1">
-                                                     <a aria-label="Add To Wishlist" class="action-btn hover-up" href="#"><i class="fi-rs-heart"></i></a>
+                                                    <a aria-label="Add To Wishlist" class="action-btn hover-up" onclick="addToWishlist('<%= product[i]._id %>')">
+                                                        <i class="fi-rs-heart"></i>
+                                                    </a>
                                                 </div>
-                                                <div class="product-badges product-badges-position product-badges-mrg">
-                                                </div>
+                                                <div class="product-badges product-badges-position product-badges-mrg"></div>
                                             </div>
                                             <div class="product-content-wrap">
                                                 <div class="product-category">
-                                                    <a href="/productDetails?productId=<%=product[i]._id %>"><%= product[i].category.name %></a>
+                                                    <a href="/productDetails?productId=<%= product[i]._id %>"><%= product[i].category.name %></a>
                                                 </div>
-                                                <h2><a href="/productDetails?productId=<%=product[i]._id %>"><%= product[i].name %></a></h2>
-                                                <div class="rating-result" title="90%">
-                                                    
-                                                </div>
+                                                <h2><a href="/productDetails?productId=<%= product[i]._id %>"><%= product[i].name %></a></h2>
+                                                <div class="rating-result" title="90%"></div>
                                                 <div class="product-price">
                                                     <span>&#8377;<%= product[i].offerPrice %> </span>
                                                     <span class="old-price">&#8377;<%= product[i].originalPrice %></span>
                                                 </div>
+                                                <% if(userExist){%>
                                                 <div class="product-action-1 show">
                                                     <a aria-label="Add To Cart" class="action-btn hover-up" onclick="addToCart('<%= product[i]._id %>')"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
+                                                <% } %>
                                             </div>
-                                            
-                                        </div>
-                                        
+                                        </div>                                                                                                                
                                     </div>
                                     <% } %>
                                         <% } %>
@@ -779,4 +797,112 @@
         }
         
     </script>
-        <%- include('./partials/userFooter')  %>
+    <!-- wishList -->
+    <script>
+        function addToWishlist(productId) {
+            fetch('/wishList', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ productId })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.redirect) {
+                    window.location.href = data.redirect; // Redirect to login page
+                } else if (data.message) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: data.message,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                } else if (data.error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: data.error,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'An error occurred while adding the product to the wishlist.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        }
+    </script>
+    <!-- search -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-query');
+            const suggestionsContainer = document.getElementById('search-suggestions');
+    
+            searchInput.addEventListener('input', async () => {
+                const query = searchInput.value;
+                if (query.length > 0) {
+                    try {
+                        const response = await fetch(`/search?query=${query}`);
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        const suggestions = await response.json();
+                        displaySuggestions(suggestions);
+                    } catch (error) {
+                        console.error('Fetch error:', error);
+                    }
+                } else {
+                    suggestionsContainer.innerHTML = '';
+                    suggestionsContainer.style.display = 'none';
+                }
+            });
+    
+            suggestionsContainer.addEventListener('click', (e) => {
+                if (e.target && e.target.nodeName === "DIV") {
+                    const selectedQuery = e.target.querySelector('.suggestion-name').textContent;
+                    searchInput.value = selectedQuery;
+                    suggestionsContainer.innerHTML = '';
+                    suggestionsContainer.style.display = 'none';
+                    // Optionally trigger a search or redirect
+                    window.location.href = `/productDetails?productId=${e.target.getAttribute('data-id')}`;
+                }
+            });
+    
+            function displaySuggestions(suggestions) {
+                suggestionsContainer.innerHTML = '';
+                if (suggestions.length > 0) {
+                    suggestionsContainer.style.display = 'block';
+                    suggestions.forEach(suggestion => {
+                        const suggestionDiv = document.createElement('div');
+                        suggestionDiv.setAttribute('data-id', suggestion._id);
+    
+                        const img = document.createElement('img');
+                        img.src = `public/products/${suggestion.image[0]}`; // Adjust the path as needed
+    
+                        const nameSpan = document.createElement('span');
+                        nameSpan.textContent = suggestion.name;
+                        nameSpan.classList.add('suggestion-name');
+    
+                        suggestionDiv.appendChild(img);
+                        suggestionDiv.appendChild(nameSpan);
+                        suggestionsContainer.appendChild(suggestionDiv);
+                    });
+                } else {
+                    suggestionsContainer.style.display = 'none';
+                }
+            }
+        });
+    </script>                 
+    <%- include('./partials/userFooter')  %> 
+</body>

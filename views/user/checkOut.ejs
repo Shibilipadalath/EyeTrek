@@ -2,6 +2,8 @@
 <html class="no-js" lang="en">
 
 <%- include('./partials/userHeader') %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
 
     <style>
         .error-message {
@@ -689,53 +691,55 @@
                             <form action="/selectAddress" method="post">
                                 <!-- Example addresses list -->
                                 <% if (address) { %>
-                                    <% address.address.forEach((element, index) => { %>
+                                    <% address.address.forEach((element, index)=> { %>
                                         <hr>
                                         <div class="address-container" id="address_<%= index %>">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="selectedAddress" id="address_radio_<%= index %>" value="<%= element._id %>" <% if (index == 0) { %> checked <% } %>>
-                                                <label class="form-check-label" for="address_radio_<%= index %>">
-                                                    <address>
-                                                        Name: <%= element.name %><br>
-                                                        House Name: <%= element.houseName %><br>
-                                                        Street: <%= element.street %><br>
-                                                        City: <%= element.city %><br>
-                                                        State: <%= element.state %><br>
-                                                        Pin Code: <%= element.pinCode %>
-                                                    </address>
-                                                    <a class="remove-icon" onclick="removeAddress('<%= index %>')">
-                                                        <i class="fa-solid fa-trash fa-xl"></i>
-                                                    </a>
-                                                    <h4>
-                                                        <a href="#" 
-                                                           class="edit-address" 
-                                                           style="color: green;" 
-                                                           onclick="prefillEditForm('<%= element._id %>', '<%= element.name %>', '<%= element.mobile %>', '<%= element.houseName %>', '<%= element.street %>', '<%= element.city %>', '<%= element.state %>', '<%= element.pinCode %>'); $('#editAddressModal').modal('show');">
-                                                           Edit
+                                                <input class="form-check-input" type="radio" name="selectedAddress"
+                                                    id="address_radio_<%= index %>" value="<%= element._id %>" <% if
+                                                    (index==0) { %> checked <% } %>>
+                                                    <label class="form-check-label" for="address_radio_<%= index %>">
+                                                        <address>
+                                                            Name: <%= element.name %><br>
+                                                                House Name: <%= element.houseName %><br>
+                                                                    Street: <%= element.street %><br>
+                                                                        City: <%= element.city %><br>
+                                                                            State: <%= element.state %><br>
+                                                                                Pin Code: <%= element.pinCode %>
+                                                        </address>
+                                                        <a class="remove-icon" onclick="removeAddress('<%= index %>')">
+                                                            <i class="fa-solid fa-trash fa-xl"></i>
                                                         </a>
-                                                    </h4>                                                    
-                                                </label>
+                                                        <h4>
+                                                            <a href="#" class="edit-address" style="color: green;"
+                                                                onclick="prefillEditForm('<%= element._id %>', '<%= element.name %>', '<%= element.mobile %>', '<%= element.houseName %>', '<%= element.street %>', '<%= element.city %>', '<%= element.state %>', '<%= element.pinCode %>'); $('#editAddressModal').modal('show');">
+                                                                Edit
+                                                            </a>
+                                                        </h4>
+                                                    </label>
                                             </div>
                                         </div>
                                         <hr>
-                                    <% }) %>
-                                <% } %>
-                        
-                                <!-- Add Address Button -->
-                                <div class="address-container">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAddressModal">
-                                        Add Address
-                                    </button>
-                                </div>
-                        
-                                <!-- If no addresses exist -->
-                                <% if (!address || address.address.length === 0) { %>
-                                    <p>No address found.</p>
-                                <% } %>
+                                        <% }) %>
+                                            <% } %>
+
+                                                <!-- Add Address Button -->
+                                                <div class="address-container">
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#addAddressModal">
+                                                        Add Address
+                                                    </button>
+                                                </div>
+
+                                                <!-- If no addresses exist -->
+                                                <% if (!address || address.address.length===0) { %>
+                                                    <p>No address found.</p>
+                                                    <% } %>
                             </form>
-                        
+
                             <!-- Add Address Modal -->
-                            <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog"
+                                aria-labelledby="addAddressModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <!-- Modal Header -->
@@ -745,62 +749,70 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                        
+
                                         <!-- Modal Body -->
                                         <div class="modal-body">
                                             <form id="addAddressForm" method="POST" action="/addAddress">
                                                 <!-- Name Input -->
                                                 <div class="form-group">
                                                     <label for="name">Name</label>
-                                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
+                                                    <input type="text" class="form-control" id="name" name="name"
+                                                        placeholder="Enter name">
                                                     <span id="nameError" class="error-message"></span>
                                                 </div>
-                        
+
                                                 <!-- Mobile Number Input -->
                                                 <div class="form-group">
                                                     <label for="mobileNumber">Mobile Number</label>
-                                                    <input type="text" class="form-control" id="mobileNumber" name="mobile" placeholder="Enter mobile number">
+                                                    <input type="text" class="form-control" id="mobileNumber"
+                                                        name="mobile" placeholder="Enter mobile number">
                                                     <span id="mobileNumberError" class="error-message"></span>
                                                 </div>
-                        
+
                                                 <!-- House Name Input -->
                                                 <div class="form-group">
                                                     <label for="houseName">House Name</label>
-                                                    <input type="text" class="form-control" id="houseName" name="houseName" placeholder="Enter house name">
+                                                    <input type="text" class="form-control" id="houseName"
+                                                        name="houseName" placeholder="Enter house name">
                                                     <span id="houseNameError" class="error-message"></span>
                                                 </div>
-                        
+
                                                 <!-- Street Input -->
                                                 <div class="form-group">
                                                     <label for="street">Street</label>
-                                                    <input type="text" class="form-control" id="street" name="street" placeholder="Enter street">
+                                                    <input type="text" class="form-control" id="street" name="street"
+                                                        placeholder="Enter street">
                                                     <span id="streetError" class="error-message"></span>
                                                 </div>
-                        
+
                                                 <!-- City and State Inputs -->
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
                                                         <label for="city">City</label>
-                                                        <input type="text" class="form-control" id="city" name="city" placeholder="Enter city">
+                                                        <input type="text" class="form-control" id="city" name="city"
+                                                            placeholder="Enter city">
                                                         <span id="cityError" class="error-message"></span>
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label for="state">State</label>
-                                                        <input type="text" class="form-control" id="state" name="state" placeholder="Enter state">
+                                                        <input type="text" class="form-control" id="state" name="state"
+                                                            placeholder="Enter state">
                                                         <span id="stateError" class="error-message"></span>
                                                     </div>
                                                 </div>
-                        
+
                                                 <!-- Pin Code Input -->
                                                 <div class="form-group">
                                                     <label for="pinCode">Pin Code</label>
-                                                    <input type="text" class="form-control" id="pinCode" name="pinCode" placeholder="Enter pin code">
+                                                    <input type="text" class="form-control" id="pinCode" name="pinCode"
+                                                        placeholder="Enter pin code">
                                                     <span id="pinCodeError" class="error-message"></span>
                                                 </div>
-                        
+
                                                 <!-- Modal Footer with Submit Button -->
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-primary">Save Address</button>
                                                 </div>
                                             </form>
@@ -809,7 +821,8 @@
                                 </div>
                             </div>
                             <!-- Edit Address Modal -->
-                            <div class="modal fade" id="editAddressModal" tabindex="-1" role="dialog" aria-labelledby="editAddressModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="editAddressModal" tabindex="-1" role="dialog"
+                                aria-labelledby="editAddressModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <!-- Modal Header -->
@@ -827,28 +840,32 @@
                                                 <!-- Name Input -->
                                                 <div class="form-group">
                                                     <label for="editName">Name</label>
-                                                    <input type="text" class="form-control" id="editName" name="name" placeholder="Enter name">
+                                                    <input type="text" class="form-control" id="editName" name="name"
+                                                        placeholder="Enter name">
                                                     <span id="editNameError" class="error-message"></span>
                                                 </div>
 
                                                 <!-- Mobile Number Input -->
                                                 <div class="form-group">
                                                     <label for="editMobileNumber">Mobile Number</label>
-                                                    <input type="text" class="form-control" id="editMobileNumber" name="mobile" placeholder="Enter mobile number">
+                                                    <input type="text" class="form-control" id="editMobileNumber"
+                                                        name="mobile" placeholder="Enter mobile number">
                                                     <span id="editMobileNumberError" class="error-message"></span>
                                                 </div>
 
                                                 <!-- House Name Input -->
                                                 <div class="form-group">
                                                     <label for="editHouseName">House Name</label>
-                                                    <input type="text" class="form-control" id="editHouseName" name="houseName" placeholder="Enter house name">
+                                                    <input type="text" class="form-control" id="editHouseName"
+                                                        name="houseName" placeholder="Enter house name">
                                                     <span id="editHouseNameError" class="error-message"></span>
                                                 </div>
 
                                                 <!-- Street Input -->
                                                 <div class="form-group">
                                                     <label for="editStreet">Street</label>
-                                                    <input type="text" class="form-control" id="editStreet" name="street" placeholder="Enter street">
+                                                    <input type="text" class="form-control" id="editStreet"
+                                                        name="street" placeholder="Enter street">
                                                     <span id="editStreetError" class="error-message"></span>
                                                 </div>
 
@@ -856,12 +873,14 @@
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
                                                         <label for="editCity">City</label>
-                                                        <input type="text" class="form-control" id="editCity" name="city" placeholder="Enter city">
+                                                        <input type="text" class="form-control" id="editCity"
+                                                            name="city" placeholder="Enter city">
                                                         <span id="editCityError" class="error-message"></span>
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label for="editState">State</label>
-                                                        <input type="text" class="form-control" id="editState" name="state" placeholder="Enter state">
+                                                        <input type="text" class="form-control" id="editState"
+                                                            name="state" placeholder="Enter state">
                                                         <span id="editStateError" class="error-message"></span>
                                                     </div>
                                                 </div>
@@ -869,13 +888,15 @@
                                                 <!-- Pin Code Input -->
                                                 <div class="form-group">
                                                     <label for="editPinCode">Pin Code</label>
-                                                    <input type="text" class="form-control" id="editPinCode" name="pinCode" placeholder="Enter pin code">
+                                                    <input type="text" class="form-control" id="editPinCode"
+                                                        name="pinCode" placeholder="Enter pin code">
                                                     <span id="editPinCodeError" class="error-message"></span>
                                                 </div>
 
                                                 <!-- Modal Footer with Save Button -->
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-primary">Save</button>
                                                 </div>
                                             </form>
@@ -942,195 +963,345 @@
                                     <div class="mb-25">
                                         <h5>Payment</h5>
                                     </div>
-                                    <div class="payment_option">
-                                        <!-- <div class="custome-radio">
-                                        <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios3" checked="">
-                                        <label class="form-check-label" for="exampleRadios3" data-bs-toggle="collapse" data-target="#bankTranfer" aria-controls="bankTranfer">Direct Bank Transfer</label>
-                                        <div class="form-group collapse in" id="bankTranfer">
-                                            <p class="text-muted mt-5">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration. </p>
+                                    <div class="custome-radio">
+                                        <input class="form-check-input" required="" type="radio" name="payment_option"
+                                            value="Razorpay" id="exampleRadios4">
+                                        <label class="form-check-label" for="exampleRadios4" data-bs-toggle="collapse"
+                                            data-target="#checkPayment" aria-controls="checkPayment">Razorpay</label>
+                                        <div class="form-group collapse in" id="checkPayment">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="custome-radio">
+                                        <input class="form-check-input" required="" type="radio" name="payment_option"
+                                            value="Wallet" id="exampleRadios6">
+                                        <label class="form-check-label" for="exampleRadios6" data-bs-toggle="collapse"
+                                            data-target="#checkPayment" aria-controls="checkPayment">Wallet</label>
+                                        <div class="form-group collapse in" id="checkPayment">
+
                                         </div>
                                     </div>
                                     <div class="custome-radio">
-                                        <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios4" checked="">
-                                        <label class="form-check-label" for="exampleRadios4" data-bs-toggle="collapse" data-target="#checkPayment" aria-controls="checkPayment">Check Payment</label>
-                                        <div class="form-group collapse in" id="checkPayment">
-                                            <p class="text-muted mt-5">Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode. </p>
-                                        </div>
-                                    </div> -->
-                                        <div class="custome-radio">
-                                            <input class="form-check-input" required="" type="radio"
-                                                name="payment_option" id="exampleRadios5" checked="">
-                                            <label class="form-check-label" for="exampleRadios5"
-                                                data-bs-toggle="collapse" data-target="#paypal"
-                                                aria-controls="paypal">Cash On Delivery</label>
-                                            <div class="form-group collapse in" id="paypal">
-                                                <p class="text-muted mt-5">Pay via PayPal; you can pay with your credit
-                                                    card if you don't have a PayPal account.</p>
-                                            </div>
+                                        <input class="form-check-input" required="" type="radio" name="payment_option"
+                                            value="Cash on delivery" id="exampleRadios5">
+                                        <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse"
+                                            data-target="#paypal" aria-controls="paypal">Cash on Delivery</label>
+                                        <div class="form-group collapse in" id="paypal">
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" onclick="placeOrder()"
-                                    class="btn btn-fill-out btn-block mt-30">Place Order</button>
                             </div>
+                            <button type="button" onclick="placeOrder()" class="btn btn-fill-out btn-block mt-30">Place
+                                Order</button>
                         </div>
                     </div>
+                </div>
                 </div>
             </section>
         </main>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
         <script>
             function placeOrder() {
+
+                console.log("place order worked");
+                let selectedRadioButton = document.querySelector('input[name="payment_option"]:checked');
+                if (!selectedRadioButton) {
+                    alert("Please select a Payment Method.");
+                    return false; // Prevent the form from being submitted
+                }
+
                 const addressId = document.querySelector('input[name="selectedAddress"]:checked').value;
-                fetch('/placeOrder', {
+                const selectedRadioButtons = selectedRadioButton.value;
+                console.log(addressId,"ssssssssss")
+               
+                // const selectedAddress1 = document.querySelector('input[name="selectedAddress"]:checked');
+                // if (!selectedAddress1) {
+                //     toastr.info("Please select an address.");
+                //     return false; // Prevent the form from being submitted
+                // }
+
+                // const selectedAddress = selectedAddress1.value;
+                
+                const orderData = {
+                    paymentMethod: selectedRadioButtons,
+                    addressId: addressId,
+                    // couponCode: couponCode,
+
+                };
+
+                let url = '';
+                if (selectedRadioButtons === 'Razorpay') {
+
+                    url = '/onlinepay';
+                    let orderId = ''
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(orderData),
+                    })
+                        .then((response) => response.json())
+                        .then(data => {
+                            orderId = data.order.orderId;
+                            const options = {
+                                "key": 'rzp_test_mkeaiN7D6EJHVs', // Replace with your Razorpay key ID
+                                "amount": data.order2.amount, // Check if the amount is correct based on your totalAmount
+                                "currency": 'INR', // Change the currency to match your requirements
+                                "name": 'EYE TREK',
+                                "description": 'Purchase Description',
+                                "image": "/public.png",
+                                "order_id": data.order2.id,
+                                "handler": function (response) {
+                                    console.log(response, "respossadasd")
+                                    if (response.razorpay_payment_id) {
+                                        // If payment is successful, update payment status to "Received"
+                                        orderData.paymentStatus = "Success";
+                                        // Save the order again with updated payment status
+                                        fetch(`/saveOrder?id=${orderId}`, { // Pass the orderId as a query parameter
+
+                                            method: 'PATCH',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({ orderId}), // Send updated orderData
+                                        })
+                                            .then(() => {
+                                                Swal.fire({
+                                                    position: "center",
+                                                    icon: "success",
+                                                    title: "Payment successful!",
+                                                    showConfirmButton: false,
+                                                    timer: 2000
+                                                }).then(() => {
+                                                    window.location.href = '/thankYou';
+                                                });
+                                            })
+                                            .catch(error => {
+                                                console.error('Error:', error);
+                                                Swal.fire({
+                                                    icon: "error",
+                                                    title: "Oops...",
+                                                    text: "Something went wrong!",
+                                                });
+                                            });
+                                    } else {
+                                        Swal.fire({
+                                            icon: "error",
+                                            title: "Payment failed!",
+                                            text: "Something went wrong with the payment. Please try again or choose a different payment method.",
+                                        });
+                                    }
+                                    removeItem();
+                                },
+                                "prefill": {
+                                    "name": 'shibili',
+                                    "email": 'shibili@example.com',
+                                    "contact": '9999999999',
+                                },
+                                "theme": {
+                                    "color": '#8B008B'
+                                    , "profile_picture": "/public.png"
+                                },
+                            };
+                            const razorpayInstance = new Razorpay(options);
+                            razorpayInstance.open();
+                        })
+
+                        .catch(error => {
+                            console.error('Error:', error);
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Something went wrong!",
+                            });
+                        });
+                } else {
+                    // If payment method is not Razorpay, make a fetch request to '/placeorder' endpoint
+                    url = '/placeOrder';
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(orderData),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.message === "Insufficient wallet balance") {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    text: "Insufficient wallet balance!",
+                                });
+                            } else {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "success",
+                                    title: "Order Placed",
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                }).then(() => {
+                                    window.location.href = '/thankYou';
+                                });
+                                removeItem();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Something went wrong!",
+                            });
+                        });
+                }
+            }
+
+            function removeItem() {
+                fetch('/clearCart', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ addressId })
+                    body: JSON.stringify({}),
                 })
-                .then(res => res.json())
-                .then(data => {
-                    if(data.success){
-                        Swal.fire({
-                            title: "Order Placed",
-                            text: `${data.message}`,
-                            icon: "success"
-                        }).then(() => {
-                            window.location.href = "/thankYou";
-                        });
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-            }
-            </script>  
-            
-            <!-- addAddress -->
-
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    const form = document.getElementById('addAddressForm');
-                    const houseName = document.getElementById('houseName');
-                    const street = document.getElementById('street');
-                    const city = document.getElementById('city');
-                    const state = document.getElementById('state');
-                    const pinCode = document.getElementById('pinCode');
-                    const name = document.getElementById('name');
-                    const mobileNumber = document.getElementById('mobileNumber');
-
-                    const houseNameError = document.getElementById('houseNameError');
-                    const streetError = document.getElementById('streetError');
-                    const cityError = document.getElementById('cityError');
-                    const stateError = document.getElementById('stateError');
-                    const pinCodeError = document.getElementById('pinCodeError');
-                    const nameError = document.getElementById('nameError');
-                    const mobileNumberError = document.getElementById('mobileNumberError');
-
-                    // Timeout duration in milliseconds (adjust as needed)
-                    const errorMessageTimeout = 3000; // 3 seconds
-
-                    form.addEventListener('submit', function (event) {
-                        let isValid = true;
-
-                        // Regular expressions
-                        const textPattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/; // Allows letters, single spaces or hyphens, no leading/trailing spaces
-                        const pinCodePattern = /^\d{6}$/; // Exactly 6 digits
-                        const mobileNumberPattern = /^[6-9]\d{9}$/; // Starts with 6, 7, 8, or 9 and is exactly 10 digits
-
-                        // Function to test for more than one consecutive space
-                        const hasMultipleSpaces = (value) => {
-                            return /\s{2,}/.test(value);
-                        };
-
-                        // Name validation
-                        if (!textPattern.test(name.value) || hasMultipleSpaces(name.value)) {
-                            isValid = false;
-                            nameError.innerText = 'Invalid Name';
-                            setTimeout(() => { nameError.innerText = ''; }, errorMessageTimeout);
-                        } else {
-                            nameError.innerText = '';
-                        }
-
-                        // Mobile Number validation
-                        if (!mobileNumberPattern.test(mobileNumber.value)) {
-                            isValid = false;
-                            mobileNumberError.innerText = 'Invalid Mobile Number';
-                            setTimeout(() => { mobileNumberError.innerText = ''; }, errorMessageTimeout);
-                        } else {
-                            mobileNumberError.innerText = '';
-                        }
-
-                        // House Name validation
-                        if (!textPattern.test(houseName.value) || hasMultipleSpaces(houseName.value)) {
-                            isValid = false;
-                            houseNameError.innerText = 'Invalid House Name';
-                            setTimeout(() => { houseNameError.innerText = ''; }, errorMessageTimeout);
-                        } else {
-                            houseNameError.innerText = '';
-                        }
-
-                        // Street validation (can have numbers, spaces, and letters)
-                        if (!textPattern.test(street.value) || hasMultipleSpaces(street.value)) {
-                            isValid = false;
-                            streetError.innerText = 'Invalid Street';
-                            setTimeout(() => { streetError.innerText = ''; }, errorMessageTimeout);
-                        } else {
-                            streetError.innerText = '';
-                        }
-
-                        // City validation
-                        if (!textPattern.test(city.value) || hasMultipleSpaces(city.value)) {
-                            isValid = false;
-                            cityError.innerText = 'Invalid City';
-                            setTimeout(() => { cityError.innerText = ''; }, errorMessageTimeout);
-                        } else {
-                            cityError.innerText = '';
-                        }
-
-                        // State validation
-                        if (!textPattern.test(state.value) || hasMultipleSpaces(state.value)) {
-                            isValid = false;
-                            stateError.innerText = 'Invalid State';
-                            setTimeout(() => { stateError.innerText = ''; }, errorMessageTimeout);
-                        } else {
-                            stateError.innerText = '';
-                        }
-
-                        // Pin Code validation
-                        if (!pinCodePattern.test(pinCode.value)) {
-                            isValid = false;
-                            pinCodeError.innerText = 'Invalid Pin Code (should be 6 digits)';
-                            setTimeout(() => { pinCodeError.innerText = ''; }, errorMessageTimeout);
-                        } else {
-                            pinCodeError.innerText = '';
-                        }
-
-                        if (!isValid) {
-                            event.preventDefault();
-                        }
+                    .then(response => {
+                        // Handle the response if needed
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
                     });
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.getElementById('addAddressForm');
+                const houseName = document.getElementById('houseName');
+                const street = document.getElementById('street');
+                const city = document.getElementById('city');
+                const state = document.getElementById('state');
+                const pinCode = document.getElementById('pinCode');
+                const name = document.getElementById('name');
+                const mobileNumber = document.getElementById('mobileNumber');
+
+                const houseNameError = document.getElementById('houseNameError');
+                const streetError = document.getElementById('streetError');
+                const cityError = document.getElementById('cityError');
+                const stateError = document.getElementById('stateError');
+                const pinCodeError = document.getElementById('pinCodeError');
+                const nameError = document.getElementById('nameError');
+                const mobileNumberError = document.getElementById('mobileNumberError');
+
+                // Timeout duration in milliseconds (adjust as needed)
+                const errorMessageTimeout = 3000; // 3 seconds
+
+                form.addEventListener('submit', function (event) {
+                    let isValid = true;
+
+                    // Regular expressions
+                    const textPattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/; // Allows letters, single spaces or hyphens, no leading/trailing spaces
+                    const pinCodePattern = /^\d{6}$/; // Exactly 6 digits
+                    const mobileNumberPattern = /^[6-9]\d{9}$/; // Starts with 6, 7, 8, or 9 and is exactly 10 digits
+
+                    // Function to test for more than one consecutive space
+                    const hasMultipleSpaces = (value) => {
+                        return /\s{2,}/.test(value);
+                    };
+
+                    // Name validation
+                    if (!textPattern.test(name.value) || hasMultipleSpaces(name.value)) {
+                        isValid = false;
+                        nameError.innerText = 'Invalid Name';
+                        setTimeout(() => { nameError.innerText = ''; }, errorMessageTimeout);
+                    } else {
+                        nameError.innerText = '';
+                    }
+
+                    // Mobile Number validation
+                    if (!mobileNumberPattern.test(mobileNumber.value)) {
+                        isValid = false;
+                        mobileNumberError.innerText = 'Invalid Mobile Number';
+                        setTimeout(() => { mobileNumberError.innerText = ''; }, errorMessageTimeout);
+                    } else {
+                        mobileNumberError.innerText = '';
+                    }
+
+                    // House Name validation
+                    if (!textPattern.test(houseName.value) || hasMultipleSpaces(houseName.value)) {
+                        isValid = false;
+                        houseNameError.innerText = 'Invalid House Name';
+                        setTimeout(() => { houseNameError.innerText = ''; }, errorMessageTimeout);
+                    } else {
+                        houseNameError.innerText = '';
+                    }
+
+                    // Street validation (can have numbers, spaces, and letters)
+                    if (!textPattern.test(street.value) || hasMultipleSpaces(street.value)) {
+                        isValid = false;
+                        streetError.innerText = 'Invalid Street';
+                        setTimeout(() => { streetError.innerText = ''; }, errorMessageTimeout);
+                    } else {
+                        streetError.innerText = '';
+                    }
+
+                    // City validation
+                    if (!textPattern.test(city.value) || hasMultipleSpaces(city.value)) {
+                        isValid = false;
+                        cityError.innerText = 'Invalid City';
+                        setTimeout(() => { cityError.innerText = ''; }, errorMessageTimeout);
+                    } else {
+                        cityError.innerText = '';
+                    }
+
+                    // State validation
+                    if (!textPattern.test(state.value) || hasMultipleSpaces(state.value)) {
+                        isValid = false;
+                        stateError.innerText = 'Invalid State';
+                        setTimeout(() => { stateError.innerText = ''; }, errorMessageTimeout);
+                    } else {
+                        stateError.innerText = '';
+                    }
+
+                    // Pin Code validation
+                    if (!pinCodePattern.test(pinCode.value)) {
+                        isValid = false;
+                        pinCodeError.innerText = 'Invalid Pin Code (should be 6 digits)';
+                        setTimeout(() => { pinCodeError.innerText = ''; }, errorMessageTimeout);
+                    } else {
+                        pinCodeError.innerText = '';
+                    }
+
+                    if (!isValid) {
+                        event.preventDefault();
+                    }
                 });
-            </script>
-            <!-- editAddress -->
-            <script>
-                function prefillEditForm(id, name, mobile, houseName, street, city, state, pinCode) {
-                    document.getElementById('editAddressId').value = id;
-                    document.getElementById('editName').value = name;
-                    document.getElementById('editMobileNumber').value = mobile;
-                    document.getElementById('editHouseName').value = houseName;
-                    document.getElementById('editStreet').value = street;
-                    document.getElementById('editCity').value = city;
-                    document.getElementById('editState').value = state;
-                    document.getElementById('editPinCode').value = pinCode;
-                }
-            
-                function deleteAddress(id) {
-                    if (confirm('Are you sure you want to delete this address?')) {
-                        fetch(`/deleteAddress/${id}`, {
-                            method: 'DELETE'
-                        })
+            });
+        </script>
+        <script>
+            function prefillEditForm(id, name, mobile, houseName, street, city, state, pinCode) {
+                document.getElementById('editAddressId').value = id;
+                document.getElementById('editName').value = name;
+                document.getElementById('editMobileNumber').value = mobile;
+                document.getElementById('editHouseName').value = houseName;
+                document.getElementById('editStreet').value = street;
+                document.getElementById('editCity').value = city;
+                document.getElementById('editState').value = state;
+                document.getElementById('editPinCode').value = pinCode;
+            }
+
+            function deleteAddress(id) {
+                if (confirm('Are you sure you want to delete this address?')) {
+                    fetch(`/deleteAddress/${id}`, {
+                        method: 'DELETE'
+                    })
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
@@ -1143,141 +1314,141 @@
                             console.error('Error:', error);
                             alert('Failed to delete the address');
                         });
-                    }
                 }
-            
-                document.addEventListener('DOMContentLoaded', function () {
-                    const editForm = document.getElementById('editAddressForm');
-            
-                    const editFields = {
-                        name: document.getElementById('editName'),
-                        mobile: document.getElementById('editMobileNumber'),
-                        houseName: document.getElementById('editHouseName'),
-                        street: document.getElementById('editStreet'),
-                        city: document.getElementById('editCity'),
-                        state: document.getElementById('editState'),
-                        pinCode: document.getElementById('editPinCode'),
-                        errors: {
-                            name: document.getElementById('editNameError'),
-                            mobile: document.getElementById('editMobileNumberError'),
-                            houseName: document.getElementById('editHouseNameError'),
-                            street: document.getElementById('editStreetError'),
-                            city: document.getElementById('editCityError'),
-                            state: document.getElementById('editStateError'),
-                            pinCode: document.getElementById('editPinCodeError')
-                        }
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const editForm = document.getElementById('editAddressForm');
+
+                const editFields = {
+                    name: document.getElementById('editName'),
+                    mobile: document.getElementById('editMobileNumber'),
+                    houseName: document.getElementById('editHouseName'),
+                    street: document.getElementById('editStreet'),
+                    city: document.getElementById('editCity'),
+                    state: document.getElementById('editState'),
+                    pinCode: document.getElementById('editPinCode'),
+                    errors: {
+                        name: document.getElementById('editNameError'),
+                        mobile: document.getElementById('editMobileNumberError'),
+                        houseName: document.getElementById('editHouseNameError'),
+                        street: document.getElementById('editStreetError'),
+                        city: document.getElementById('editCityError'),
+                        state: document.getElementById('editStateError'),
+                        pinCode: document.getElementById('editPinCodeError')
+                    }
+                };
+
+                const textPattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
+                const pinCodePattern = /^\d{6}$/;
+                const mobileNumberPattern = /^[6-9]\d{9}$/;
+
+                const hasMultipleSpaces = (value) => {
+                    return /\s{2,}/.test(value);
+                };
+
+                const validateEditForm = (fields) => {
+                    let isValid = true;
+
+                    // Name validation
+                    if (!textPattern.test(fields.name.value) || hasMultipleSpaces(fields.name.value)) {
+                        isValid = false;
+                        fields.errors.name.innerText = 'Invalid Name';
+                    } else {
+                        fields.errors.name.innerText = '';
+                    }
+
+                    // Mobile Number validation
+                    if (!mobileNumberPattern.test(fields.mobile.value)) {
+                        isValid = false;
+                        fields.errors.mobile.innerText = 'Invalid Mobile Number';
+                    } else {
+                        fields.errors.mobile.innerText = '';
+                    }
+
+                    // House Name validation
+                    if (!textPattern.test(fields.houseName.value) || hasMultipleSpaces(fields.houseName.value)) {
+                        isValid = false;
+                        fields.errors.houseName.innerText = 'Invalid House Name';
+                    } else {
+                        fields.errors.houseName.innerText = '';
+                    }
+
+                    // Street validation (can have numbers, spaces, and letters)
+                    if (!textPattern.test(fields.street.value) || hasMultipleSpaces(fields.street.value)) {
+                        isValid = false;
+                        fields.errors.street.innerText = 'Invalid Street';
+                    } else {
+                        fields.errors.street.innerText = '';
+                    }
+
+                    // City validation
+                    if (!textPattern.test(fields.city.value) || hasMultipleSpaces(fields.city.value)) {
+                        isValid = false;
+                        fields.errors.city.innerText = 'Invalid City';
+                    } else {
+                        fields.errors.city.innerText = '';
+                    }
+
+                    // State validation
+                    if (!textPattern.test(fields.state.value) || hasMultipleSpaces(fields.state.value)) {
+                        isValid = false;
+                        fields.errors.state.innerText = 'Invalid State';
+                    } else {
+                        fields.errors.state.innerText = '';
+                    }
+
+                    // Pin Code validation
+                    if (!pinCodePattern.test(fields.pinCode.value)) {
+                        isValid = false;
+                        fields.errors.pinCode.innerText = 'Invalid Pin Code (should be 6 digits)';
+                    } else {
+                        fields.errors.pinCode.innerText = '';
+                    }
+
+                    return isValid;
+                };
+
+                editForm.addEventListener('submit', async function (event) {
+                    event.preventDefault();
+                    if (!validateEditForm(editFields)) {
+                        return;
+                    }
+
+                    const addressId = document.getElementById('editAddressId').value;
+                    const formData = {
+                        userId: '<%= user._id %>', // Ensure this is correctly set to the logged-in user's ID
+                        addressId: addressId,
+                        name: editFields.name.value,
+                        mobile: editFields.mobile.value,
+                        houseName: editFields.houseName.value,
+                        street: editFields.street.value,
+                        city: editFields.city.value,
+                        state: editFields.state.value,
+                        pinCode: editFields.pinCode.value
                     };
-            
-                    const textPattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
-                    const pinCodePattern = /^\d{6}$/;
-                    const mobileNumberPattern = /^[6-9]\d{9}$/;
-            
-                    const hasMultipleSpaces = (value) => {
-                        return /\s{2,}/.test(value);
-                    };
-            
-                    const validateEditForm = (fields) => {
-                        let isValid = true;
-            
-                        // Name validation
-                        if (!textPattern.test(fields.name.value) || hasMultipleSpaces(fields.name.value)) {
-                            isValid = false;
-                            fields.errors.name.innerText = 'Invalid Name';
+
+                    try {
+                        const response = await fetch('/editAddress', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(formData)
+                        });
+
+                        const data = await response.json();
+                        if (response.ok) {
+                            alert('Address updated successfully');
+                            location.reload();
                         } else {
-                            fields.errors.name.innerText = '';
+                            alert('Failed to update address: ' + data.message);
                         }
-            
-                        // Mobile Number validation
-                        if (!mobileNumberPattern.test(fields.mobile.value)) {
-                            isValid = false;
-                            fields.errors.mobile.innerText = 'Invalid Mobile Number';
-                        } else {
-                            fields.errors.mobile.innerText = '';
-                        }
-            
-                        // House Name validation
-                        if (!textPattern.test(fields.houseName.value) || hasMultipleSpaces(fields.houseName.value)) {
-                            isValid = false;
-                            fields.errors.houseName.innerText = 'Invalid House Name';
-                        } else {
-                            fields.errors.houseName.innerText = '';
-                        }
-            
-                        // Street validation (can have numbers, spaces, and letters)
-                        if (!textPattern.test(fields.street.value) || hasMultipleSpaces(fields.street.value)) {
-                            isValid = false;
-                            fields.errors.street.innerText = 'Invalid Street';
-                        } else {
-                            fields.errors.street.innerText = '';
-                        }
-            
-                        // City validation
-                        if (!textPattern.test(fields.city.value) || hasMultipleSpaces(fields.city.value)) {
-                            isValid = false;
-                            fields.errors.city.innerText = 'Invalid City';
-                        } else {
-                            fields.errors.city.innerText = '';
-                        }
-            
-                        // State validation
-                        if (!textPattern.test(fields.state.value) || hasMultipleSpaces(fields.state.value)) {
-                            isValid = false;
-                            fields.errors.state.innerText = 'Invalid State';
-                        } else {
-                            fields.errors.state.innerText = '';
-                        }
-            
-                        // Pin Code validation
-                        if (!pinCodePattern.test(fields.pinCode.value)) {
-                            isValid = false;
-                            fields.errors.pinCode.innerText = 'Invalid Pin Code (should be 6 digits)';
-                        } else {
-                            fields.errors.pinCode.innerText = '';
-                        }
-            
-                        return isValid;
-                    };
-            
-                    editForm.addEventListener('submit', async function (event) {
-                        event.preventDefault();
-                        if (!validateEditForm(editFields)) {
-                            return;
-                        }
-            
-                        const addressId = document.getElementById('editAddressId').value;
-                        const formData = {
-                            userId: '<%= user._id %>', // Ensure this is correctly set to the logged-in user's ID
-                            addressId: addressId,
-                            name: editFields.name.value,
-                            mobile: editFields.mobile.value,
-                            houseName: editFields.houseName.value,
-                            street: editFields.street.value,
-                            city: editFields.city.value,
-                            state: editFields.state.value,
-                            pinCode: editFields.pinCode.value
-                        };
-            
-                        try {
-                            const response = await fetch('/editAddress', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(formData)
-                            });
-            
-                            const data = await response.json();
-                            if (response.ok) {
-                                alert('Address updated successfully');
-                                location.reload();
-                            } else {
-                                alert('Failed to update address: ' + data.message);
-                            }
-                        } catch (error) {
-                            console.error('Error:', error);
-                            alert('Failed to update address');
-                        }
-                    });
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Failed to update address');
+                    }
                 });
-            </script>            
+            });
+        </script>
         <%- include('./partials/userFooter') %>

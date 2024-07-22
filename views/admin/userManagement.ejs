@@ -2,7 +2,7 @@
 <style>
     
     #example {
-      width: 1400px;
+      width: 1250px;
       height: auto;
       /* You can adjust the height as needed */
     }
@@ -187,6 +187,7 @@ new DataTable('#example', {
                                     <tr>
                                         <th>#</th>
                                         <th>User Name</th>
+                                        <th>Email</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -196,6 +197,7 @@ new DataTable('#example', {
                                     <tr>
                                         <td class="align-middle"><%= i+1 %></td>
                                         <td class="align-middle"><%= user[i].userName %></td>
+                                        <td class="align-middle"><%= user[i].email %></td>
                                         <td class="align-middle">
                                             <% if(user[i].isBlocked===false){ %>
                                                 <span class="badge rounded-pill alert-success">Active</span>

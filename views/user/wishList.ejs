@@ -1,180 +1,15 @@
-﻿<!DOCTYPE html>
-<html class="no-js" lang="en">
-
-<%- include('./partials/userHeader')  %>
-
-<!-- search -->
-<style>
-    .search-suggestions {
-        border: 1px solid #ccc;
-        max-height: 200px;
-        overflow-y: auto;
-        position: absolute;
-        background-color: #fff;
-        width: 200%;
-        z-index: 1000;
-        display: none;
-    }
-    .search-suggestions div {
-        padding: 10px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-    }
-    .search-suggestions div:hover {
-        background-color: #f0f0f0;
-    }
-    .search-suggestions img {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        margin-right: 10px;
-    }
-</style>
+﻿<%- include('./partials/userHeader')  %>
 
 <body>
-    <!-- Quick view -->
-    <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">              
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>       
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12 col-xs-12">
-                            <div class="detail-gallery">
-                                <span class="zoom-icon"><i class="fi-rs-search"></i></span>
-                                <!-- MAIN SLIDES -->
-                                <div class="product-image-slider">
-                                    <figure class="border-radius-10">
-                                        <img src="public/assets/imgs/shop/product-16-2.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="public/assets/imgs/shop/product-16-1.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="public/assets/imgs/shop/product-16-3.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="public/assets/imgs/shop/product-16-4.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="public/assets/imgs/shop/product-16-5.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="public/assets/imgs/shop/product-16-6.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="public/assets/imgs/shop/product-16-7.jpg" alt="product image">
-                                    </figure>
-                                </div>
-                                <!-- THUMBNAILS -->
-                                <div class="slider-nav-thumbnails pl-15 pr-15">
-                                    <div><img src="public/assets/imgs/shop/thumbnail-3.jpg" alt="product image"></div>
-                                    <div><img src="public/assets/imgs/shop/thumbnail-4.jpg" alt="product image"></div>
-                                    <div><img src="public/assets/imgs/shop/thumbnail-5.jpg" alt="product image"></div>
-                                    <div><img src="public/assets/imgs/shop/thumbnail-6.jpg" alt="product image"></div>
-                                    <div><img src="public/assets/imgs/shop/thumbnail-7.jpg" alt="product image"></div>
-                                    <div><img src="public/assets/imgs/shop/thumbnail-8.jpg" alt="product image"></div>
-                                    <div><img src="public/assets/imgs/shop/thumbnail-9.jpg" alt="product image"></div>
-                                </div>
-                            </div>
-                            <!-- End Gallery -->
-                            <div class="social-icons single-share">
-                                <ul class="text-grey-5 d-inline-block">
-                                    <li><strong class="mr-10">Share this:</strong></li>
-                                    <li class="social-facebook"><a href="#"><img src="public/assets/imgs/theme/icons/icon-facebook.svg" alt=""></a></li>
-                                    <li class="social-twitter"> <a href="#"><img src="public/assets/imgs/theme/icons/icon-twitter.svg" alt=""></a></li>
-                                    <li class="social-instagram"><a href="#"><img src="public/assets/imgs/theme/icons/icon-instagram.svg" alt=""></a></li>
-                                    <li class="social-linkedin"><a href="#"><img src="public/assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-12 col-xs-12">
-                            <div class="detail-info">
-                                <h3 class="title-detail mt-30">Colorful Pattern Shirts HD450</h3>
-                                <div class="product-detail-rating">
-                                    <div class="pro-details-brand">
-                                        <span> Brands: <a href="shop-grid-right.html">Bootstrap</a></span>
-                                    </div>
-                                    <div class="product-rate-cover text-end">
-                                        <div class="product-rate d-inline-block">
-                                            <div class="product-rating" style="width:90%">
-                                            </div>
-                                        </div>
-                                        <span class="font-small ml-5 text-muted"> (25 reviews)</span>
-                                    </div>
-                                </div>
-                                <div class="clearfix product-price-cover">
-                                    <div class="product-price primary-color float-left">
-                                        <ins><span class="text-brand">$120.00</span></ins>
-                                        <ins><span class="old-price font-md ml-15">$200.00</span></ins>
-                                        <span class="save-price  font-md color3 ml-15">25% Off</span>
-                                    </div>
-                                </div>
-                                <div class="bt-1 border-color-1 mt-15 mb-15"></div>
-                                <div class="short-desc mb-30">
-                                    <p class="font-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam rem officia, corrupti reiciendis minima nisi modi,!</p>
-                                </div>
-                                
-                                <div class="attr-detail attr-color mb-15">
-                                    <strong class="mr-10">Color</strong>
-                                    <ul class="list-filter color-filter">
-                                        <li><a href="#" data-color="Red"><span class="product-color-red"></span></a></li>
-                                        <li><a href="#" data-color="Yellow"><span class="product-color-yellow"></span></a></li>
-                                        <li class="active"><a href="#" data-color="White"><span class="product-color-white"></span></a></li>
-                                        <li><a href="#" data-color="Orange"><span class="product-color-orange"></span></a></li>
-                                        <li><a href="#" data-color="Cyan"><span class="product-color-cyan"></span></a></li>
-                                        <li><a href="#" data-color="Green"><span class="product-color-green"></span></a></li>
-                                        <li><a href="#" data-color="Purple"><span class="product-color-purple"></span></a></li>
-                                    </ul>
-                                </div>
-                                <div class="attr-detail attr-size">
-                                    <strong class="mr-10">Size</strong>
-                                    <ul class="list-filter size-filter font-small">
-                                        <li><a href="#">S</a></li>
-                                        <li class="active"><a href="#">M</a></li>
-                                        <li><a href="#">L</a></li>
-                                        <li><a href="#">XL</a></li>
-                                        <li><a href="#">XXL</a></li>
-                                    </ul>
-                                </div>
-                                <div class="bt-1 border-color-1 mt-30 mb-30"></div>
-                                <div class="detail-extralink">
-                                    <div class="detail-qty border radius">
-                                        <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                        <span class="qty-val">1</span>
-                                        <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                    </div>
-                                    <div class="product-extra-link2">
-                                        <button type="submit" class="button button-add-to-cart">Add to cart</button>
-                                        <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-                                        <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
-                                    </div>
-                                </div>
-                                <ul class="product-meta font-xs color-grey mt-50">
-                                    <li class="mb-5">SKU: <a href="#">FWM15VKT</a></li>
-                                    <li class="mb-5">Tags: <a href="#" rel="tag">Cloth</a>, <a href="#" rel="tag">Women</a>, <a href="#" rel="tag">Dress</a> </li>
-                                    <li>Availability:<span class="in-stock text-success ml-5">8 Items In Stock</span></li>
-                                </ul>
-                            </div>
-                            <!-- Detail Info -->
-                        </div>
-                    </div>
-                </div>        
-        </div>
-        </div>
-    </div>
     <header class="header-area header-style-1 header-height-2">
         <div class="header-top header-top-ptb-1 d-none d-lg-block">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-xl-3 col-lg-4">
-                        <div class="header-info">
-                           
-                        </div>
+                        
                     </div>
                     <div class="col-xl-6 col-lg-4">
-                        
+                       
                     </div>
                     <div class="col-xl-3 col-lg-4">
                         <div class="header-info header-info-right">
@@ -183,13 +18,12 @@
                                     <a class="language-dropdown-active" href="/myAccount"> Account <i ></i></a>
                                     
                                 </li>
-                                <% if(user) { %>
-                                    <span><%= user.userName %></span>&nbsp;&nbsp;&nbsp;<a href="/userLogout">logout</a>
+                                <% if(userExist && !userExist.isBlocked) { %>
+                                    <span><%= userExist.userName %></span>&nbsp;&nbsp;&nbsp;<a href="/userLogout">logout</a>
                                <% }else{ %>
                                 <li><i class="fi-rs-user"></i><a href="/login">Log In </a>/<a href="/signUp">Sign Up</a></li>
                                 <%}%>
                             </ul>
-                            
                         </div>
                     </div>
                 </div>
@@ -202,24 +36,24 @@
                         <a href="index.html"><img src="public/assets/imgs/theme/logo.svg" alt="logo"></a>
                     </div>
                     <div class="header-right">
-                        <!-- search -->
-                             
-                        <div style="position: relative; width: 300px;">
-                            <input type="text" id="search-query" placeholder="Search for items..." autocomplete="off" style="width: 200%;">
-                            <div id="search-suggestions" class="search-suggestions"></div>
+                        <div class="search-style-2">
+                            <form action="#">
+                                <select class="select-active">
+                                    <option>All Categories</option>
+                                </select>
+                                <input type="text" placeholder="Search for items...">
+                            </form>
                         </div>
                         <div class="header-action-right">
                             <div class="header-action-2">
                                 <div class="header-action-icon-2">
                                     <a href="/wishListPage">
                                         <img class="svgInject" alt="Evara" src="public/assets/imgs/theme/icons/icon-heart.svg">
-                                        <!-- <span class="pro-count blue">4</span> -->
                                     </a>
                                 </div>
                                 <div class="header-action-icon-2">
                                     <a class="mini-cart-icon" href="/cart">
                                         <img alt="Evara" src="public/assets/imgs/theme/icons/icon-cart.svg">
-                                        <!-- <span class="pro-count blue">2</span> -->
                                     </a>
                                 </div>
                             </div>
@@ -419,9 +253,9 @@
                         <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
                             <nav>
                                 <ul>
-                                    <li><a  href="/">Home</a></li>
-                                    <li><a class="active" href="/shop">Shop</a></li>
-                                    <li><a href="/myAccount">Account</a></li>
+                                    <li><a class="active" href="/">Home</a></li>
+                                    <li><a href="/shop">Shop</a></li>
+                                    <li><a href="/myAccount">My Account</a></li>
                                     <li><a href="page-about.html">About</a></li>
                                     <li> <a href="page-contact.html">Contact</a></li>
                                 </ul>
@@ -657,438 +491,151 @@
         <div class="page-header breadcrumb-wrap">
             <div class="container">
                 <div class="breadcrumb">
-                    <a href="/" rel="nofollow">Home</a>
+                    <a href="index.html" rel="nofollow">Home</a>
                     <span></span> Shop
+                    <span></span> Wishlist
                 </div>
             </div>
         </div>
         <section class="mt-50 mb-50">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-9">
-                            <div class="shop-product-fillter">
-                                <% if(product && product.length > 0){ %>
-                                    <% let num = 0; %>
-                                    <% for (let i = 0; i < product.length; i++) { %>
-                                        <% if (product[i].isActive === true) { %>
-                                            <% num = num + 1; %>
-                                        <% } %>
-                                    <% } %>
-                                <div class="totall-product">
-                                    <p> We found <strong class="text-brand"><%= num %></strong> items for you!</p>
-                                </div>
-                            <% } %>                      
-                            <div class="sort-by-product-area">
-                                <div class="sort-by-cover">
-                                    <div class="sort-by-product-wrap">
-                                        <div class="sort-by">
-                                            <span><i class="fi-rs-apps-sort"></i>Sort by:</span>
-                                        </div>
-                                        <div class="sort-by-dropdown-wrap">
-                                            <span> - <i class="fi-rs-angle-small-down"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="sort-by-dropdown">
-                                        <ul>
-                                            <li><a href="/shop?sort=featured">Featured</a></li>
-                                            <li><a href="/shop?sort=priceLowHigh">Price: Low to High</a></li>
-                                            <li><a href="/shop?sort=priceHighLow">Price: High to Low</a></li>
-                                            <li><a href="/shop?sort=nameAZ">Name: A to Z</a></li>
-                                            <li><a href="/shop?sort=nameZA">Name: Z to A</a></li>
-                                            <li><a href="/shop?sort=newArrivals">New Arrivals</a></li>
-                                        </ul>
-                                    </div>                                                                     
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row product-grid-3">
-                            <% if(product){ %>
-                                <% for(let i=0;i<product.length;i++){ %>
-                            <div class="col-lg-4 col-md-4 col-12 col-sm-6">
-                                <div class="product-cart-wrap mb-30">
-                                    <div class="product-img-action-wrap">
-                                        <div class="product-img product-img-zoom">
-                                            <a href="/productDetails?productId=<%=product[i]._id %>">
-                                                <img class="default-img" src="public/products/<%=product[i].image[0] %>" alt="">
-                                                <img class="hover-img" src="public/products/<%=product[i].image[1] %>" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="product-action-1">
-                                            <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal">
-                                            <i class="fi-rs-search"></i></a>
-                                            <a aria-label="Add To Wishlist" class="action-btn hover-up" onclick="addToWishlist('<%= product[i]._id %>')">
-                                                <i class="fi-rs-heart"></i>
-                                            </a>
-                                            <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-category">
-                                            <a href="/productDetails?productId=<%=product[i]._id %>"><%= product[i].category.name%></a>
-                                        </div>
-                                        <h2><a href="/productDetails?productId=<%=product[i]._id %>"><%= product[i].name %></a></h2>
-                                        <div class="rating-result" title="90%">
-                                            <span>
-                                                <span>95%</span>
-                                            </span>
-                                        </div>
-                                        <div class="product-price">
-                                            <span>&#8377;<%=product[i].offerPrice  %></span>
-                                            <span class="old-price">&#8377;<%=product[i].originalPrice  %></span>
-                                        </div>
-                                        <% if(user){ %>
-                                        <div class="product-action-1 show">
-                                            <a aria-label="Add To Cart" class="action-btn hover-up" onclick="addToCart('<%= product[i]._id %>')"><i class="fi-rs-shopping-bag-add"></i></a>
-                                        </div>
-                                        <% } %>
-                                    </div>
-                                </div>
-                            </div>
-                            <% } %>
-                            <% } %>
-                        </div>
-                        <!--pagination-->
-                        <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-start">
-                                    <% for (let i = 1; i <= totalPages; i++) { %>
-                                        <li class="page-item <%= (i === currentPage) ? 'active' : '' %>">
-                                            <a class="page-link" href="/shop?page=<%= i %>&sort=<%= sort %>"><%= i %></a>
-                                        </li>
-                                    <% } %>
-                                </ul>
-                            </nav>
-                        </div>                        
-                    </div>
-                    <div class="col-lg-3 primary-sidebar sticky-sidebar">
-                        <div class="row">
-                            <div class="col-lg-12 col-mg-6"></div>
-                            <div class="col-lg-12 col-mg-6"></div>
-                        </div>
-                        <!-- category filtering -->
-                        <div class="widget-category mb-30">
-                            <h5 class="section-title style-1 mb-30 wow fadeIn animated">Category</h5>
-                            <ul class="categories">
-                                <% categories.forEach(category => { %>
-                                    <li><a href="#" data-category-id="<%= category._id %>"><%= category.name %></a></li>
-                                <% }) %>
-                            </ul>
-                        </div>
-                        <script>
-                            document.addEventListener('DOMContentLoaded', () => {
-                                const categoryLinks = document.querySelectorAll('.categories a');
-                        
-                                categoryLinks.forEach(link => {
-                                    link.addEventListener('click', (e) => {
-                                        e.preventDefault();
-                                        const categoryId = e.target.getAttribute('data-category-id');
-                                        window.location.href = `/shop?category=${categoryId}`;
-                                    });
-                                });
-                            });
-                        </script>
-                                                
-                        
-                        <div class="banner-img wow fadeIn mb-45 animated d-lg-block d-none">
-                            <img src="public/assets/imgs/banner/banner-11.jpg" alt="">
-                            <div class="banner-text">
-                                <span>Women Zone</span>
-                                <h4>Save 17% on <br>Office Dress</h4>
-                                <a href="shop-grid-right.html">Shop Now <i class="fi-rs-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-    <footer class="main">
-        <section class="newsletter p-30 text-white wow fadeIn animated">
             <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-7 mb-md-3 mb-lg-0">
-                        <div class="row align-items-center">
-                            <div class="col flex-horizontal-center">
-                                <img class="icon-email" src="public/assets/imgs/theme/icons/icon-email.svg" alt="">
-                                <h4 class="font-size-20 mb-0 ml-3">Sign up to Newsletter</h4>
-                            </div>
-                            <div class="col my-4 my-md-0 des">
-                                <h5 class="font-size-15 ml-4 mb-0">...and receive <strong>$25 coupon for first shopping.</strong></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-5">
-                        <!-- Subscribe Form -->
-                        <form class="form-subcriber d-flex wow fadeIn animated">
-                            <input type="email" class="form-control bg-white font-small" placeholder="Enter your email">
-                            <button class="btn bg-dark text-white" type="submit">Subscribe</button>
-                        </form>
-                        <!-- End Subscribe Form -->
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="section-padding footer-mid">
-            <div class="container pt-15 pb-20">
                 <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="widget-about font-md mb-md-5 mb-lg-0">
-                            <div class="logo logo-width-1 wow fadeIn animated">
-                                <a href="index.html"><img src="public/assets/imgs/theme/logo.svg" alt="logo"></a>
-                            </div>
-                            <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">Contact</h5>
-                            <p class="wow fadeIn animated">
-                                <strong>Address: </strong>562 Wellington Road, Street 32, San Francisco
-                            </p>
-                            <p class="wow fadeIn animated">
-                                <strong>Phone: </strong>+01 2222 365 /(+91) 01 2345 6789
-                            </p>
-                            <p class="wow fadeIn animated">
-                                <strong>Hours: </strong>10:00 - 18:00, Mon - Sat
-                            </p>
-                            <h5 class="mb-10 mt-30 fw-600 text-grey-4 wow fadeIn animated">Follow Us</h5>
-                            <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
-                                <a href="#"><img src="public/assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-                                <a href="#"><img src="public/assets/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-                                <a href="#"><img src="public/assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                                <a href="#"><img src="public/assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                                <a href="#"><img src="public/assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3">
-                        <h5 class="widget-title wow fadeIn animated">About</h5>
-                        <ul class="footer-list wow fadeIn animated mb-sm-5 mb-md-0">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Delivery Information</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms &amp; Conditions</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Support Center</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-2  col-md-3">
-                        <h5 class="widget-title wow fadeIn animated">My Account</h5>
-                        <ul class="footer-list wow fadeIn animated">
-                            <li><a href="#">Sign In</a></li>
-                            <li><a href="#">View Cart</a></li>
-                            <li><a href="#">My Wishlist</a></li>
-                            <li><a href="#">Track My Order</a></li>
-                            <li><a href="#">Help</a></li>
-                            <li><a href="#">Order</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-4">
-                        <h5 class="widget-title wow fadeIn animated">Install App</h5>
-                        <div class="row">
-                            <div class="col-md-8 col-lg-12">
-                                <p class="wow fadeIn animated">From App Store or Google Play</p>
-                                <div class="download-app wow fadeIn animated">
-                                    <a href="#" class="hover-up mb-sm-4 mb-lg-0"><img class="active" src="public/assets/imgs/theme/app-store.jpg" alt=""></a>
-                                    <a href="#" class="hover-up"><img src="public/assets/imgs/theme/google-play.jpg" alt=""></a>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
-                                <p class="mb-20 wow fadeIn animated">Secured Payment Gateways</p>
-                                <img class="wow fadeIn animated" src="public/assets/imgs/theme/payment-method.png" alt="">
-                            </div>
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table shopping-summery text-center">
+                                <thead>
+                                    <tr class="main-heading">
+                                        <th scope="col" colspan="2">Product</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Stock Status</th>
+                                        <th scope="col">Action</th>
+                                        <th scope="col">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if (products.length > 0) { %>
+                                        <% products.forEach(product => { %>
+                                            <tr>
+                                                <td class="image product-thumbnail"><img src="/public/products/<%= product.image[0] %>" alt="#"></td>
+                                                <td class="product-des product-name">
+                                                    <h5 class="product-name"><a href="shop-product-right.html"><%= product.name %></a></h5>
+                                                    <p class="font-xs"><%= product.description %></p>
+                                                </td>
+                                                <td class="price" data-title="Price"><span>₹<%= product.offerPrice %> </span></td>
+                                                <td class="text-center" data-title="Stock">
+                                                    <% if (product.stock > 0) { %>
+                                                        <span class="color3 font-weight-bold">In Stock</span>
+                                                    <% } else { %>
+                                                        <span class="text-danger font-weight-bold">Out of stock</span>
+                                                    <% } %>
+                                                </td>
+                                                <td class="text-right" data-title="Cart">
+                                                    <% if (product.stock > 0) { %>
+                                                        <button class="btn btn-sm" onclick="addToCart('<%= product._id %>')"><i class="fi-rs-shopping-bag mr-5"></i>Add to cart</button>
+                                                    <% } else { %>
+                                                        <button class="btn btn-sm btn-secondary"><i class="fi-rs-headset mr-5"></i>Contact Us</button>
+                                                    <% } %>
+                                                </td>
+                                                <td class="action" data-title="Remove">
+                                                    <button class="btn btn-sm btn-danger" onclick="removeFromWishlist('<%= product._id %>')">
+                                                        <i class="fi-rs-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="6">No products in wishlist</td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <div class="container pb-20 wow fadeIn animated">
-            <div class="row">
-                <div class="col-12 mb-20">
-                    <div class="footer-bottom"></div>
-                </div>
-                <div class="col-lg-6">
-                    <p class="float-md-left font-sm text-muted mb-0">&copy; 2022, <strong class="text-brand">Evara</strong> - HTML Ecommerce Template </p>
-                </div>
-                <div class="col-lg-6">
-                    <p class="text-lg-end text-start font-sm text-muted mb-0">
-                        Designed by <a href="http://alithemes.com" target="_blank">Alithemes.com</a>. All rights reserved
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Preloader Start -->
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="text-center">
-                    <h5 class="mb-5">Now Loading</h5>
-                    <div class="loader">
-                        <div class="bar bar1"></div>
-                        <div class="bar bar2"></div>
-                        <div class="bar bar3"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Vendor JS-->
-    <script src="public/assets/js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="public/assets/js/vendor/jquery-3.6.0.min.js"></script>
-    <script src="public/assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
-    <script src="public/assets/js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="public/assets/js/plugins/slick.js"></script>
-    <script src="public/assets/js/plugins/jquery.syotimer.min.js"></script>
-    <script src="public/assets/js/plugins/wow.js"></script>
-    <script src="public/assets/js/plugins/jquery-ui.js"></script>
-    <script src="public/assets/js/plugins/perfect-scrollbar.js"></script>
-    <script src="public/assets/js/plugins/magnific-popup.js"></script>
-    <script src="public/assets/js/plugins/select2.min.js"></script>
-    <script src="public/assets/js/plugins/waypoints.js"></script>
-    <script src="public/assets/js/plugins/counterup.js"></script>
-    <script src="public/assets/js/plugins/jquery.countdown.min.js"></script>
-    <script src="public/assets/js/plugins/images-loaded.js"></script>
-    <script src="public/assets/js/plugins/isotope.js"></script>
-    <script src="public/assets/js/plugins/scrollup.js"></script>
-    <script src="public/assets/js/plugins/jquery.vticker-min.js"></script>
-    <script src="public/assets/js/plugins/jquery.theia.sticky.js"></script>
-    <script src="public/assets/js/plugins/jquery.elevatezoom.js"></script>
-    <!-- Template  JS -->
-    <script src="public/assets/js/maind134.js?v=3.4"></script>
-    <script>
-        function addToCart(productId) {
-            fetch(`/addToCart?id=${productId}`,{method: "GET"})
-            .then(res=>{return res.json()})
-            .then(data=>{
-                if(data.success){
+        <script>
+            function addToCart(productId) {
+                fetch(`/addToCart?id=${productId}`,{method: "GET"})
+                .then(res=>{return res.json()})
+                .then(data=>{
+                    if(data.success){
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }else{
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: data.message,
+                        });
+                    }
+                  
+                })
+                .catch(error=>{
                     Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: data.message,
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }else{
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: data.message,
-                    });
-                }
-              
-            })
-            .catch(error=>{
-                Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: `Error adding item to cart: ${error}`,
-                    });
-            })
-        }
-        
-    </script>
-    <!-- wishList -->
-    <script>
-        function addToWishlist(productId) {
-            fetch('/wishList', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ productId })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.redirect) {
-                    window.location.href = data.redirect; // Redirect to login page
-                } else if (data.message) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: data.message,
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    });
-                } else if (data.error) {
+                            icon: "error",
+                            title: "Oops...",
+                            text: `Error adding item to cart: ${error}`,
+                        });
+                })
+            }
+
+        </script>
+        <script>
+            function removeFromWishlist(productId) {
+                fetch('/removeFromWishlist', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ productId })
+                })
+                .then(response => {
+                    if (response.status === 401) {
+                        window.location.href = '/login'; // Redirect to login page if unauthorized
+                    } else if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.message) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            location.reload(); // Reload the page to reflect changes
+                        });
+                    } else if (data.error) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.error,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                     Swal.fire({
                         title: 'Error!',
-                        text: data.error,
+                        text: 'An error occurred while removing the product from the wishlist.',
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'An error occurred while adding the product to the wishlist.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
                 });
-            });
-        }
-    </script>
-    <!-- search -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const searchInput = document.getElementById('search-query');
-            const suggestionsContainer = document.getElementById('search-suggestions');
-    
-            searchInput.addEventListener('input', async () => {
-                const query = searchInput.value;
-                if (query.length > 0) {
-                    try {
-                        const response = await fetch(`/search?query=${query}`);
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        const suggestions = await response.json();
-                        displaySuggestions(suggestions);
-                    } catch (error) {
-                        console.error('Fetch error:', error);
-                    }
-                } else {
-                    suggestionsContainer.innerHTML = '';
-                    suggestionsContainer.style.display = 'none';
-                }
-            });
-    
-            suggestionsContainer.addEventListener('click', (e) => {
-                if (e.target && e.target.nodeName === "DIV") {
-                    const selectedQuery = e.target.querySelector('.suggestion-name').textContent;
-                    searchInput.value = selectedQuery;
-                    suggestionsContainer.innerHTML = '';
-                    suggestionsContainer.style.display = 'none';
-                    // Optionally trigger a search or redirect
-                    window.location.href = `/productDetails?productId=${e.target.getAttribute('data-id')}`;
-                }
-            });
-    
-            function displaySuggestions(suggestions) {
-                suggestionsContainer.innerHTML = '';
-                if (suggestions.length > 0) {
-                    suggestionsContainer.style.display = 'block';
-                    suggestions.forEach(suggestion => {
-                        const suggestionDiv = document.createElement('div');
-                        suggestionDiv.setAttribute('data-id', suggestion._id);
-    
-                        const img = document.createElement('img');
-                        img.src = `public/products/${suggestion.image[0]}`; // Adjust the path as needed
-    
-                        const nameSpan = document.createElement('span');
-                        nameSpan.textContent = suggestion.name;
-                        nameSpan.classList.add('suggestion-name');
-    
-                        suggestionDiv.appendChild(img);
-                        suggestionDiv.appendChild(nameSpan);
-                        suggestionsContainer.appendChild(suggestionDiv);
-                    });
-                } else {
-                    suggestionsContainer.style.display = 'none';
-                }
             }
-        });
-    </script> 
 
+
+        </script>
+    </main>
+    <%- include('./partials/userFooter')  %>
 </body>
