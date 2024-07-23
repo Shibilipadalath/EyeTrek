@@ -345,9 +345,11 @@
                                                     aria-selected="true"><i class="fi-rs-marker mr-10"></i>My
                                                     Address</a>
                                             </li>
-                                            <!-- <li class="nav-item">
-                                            <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>Track Your Order</a>
-                                        </li> -->
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" 
+                                                href="#wallet" role="tab" aria-controls="track-orders"
+                                                aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>Eye Trek wallet</a>
+                                            </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab"
                                                     href="#account-detail" role="tab" aria-controls="account-detail"
@@ -418,9 +420,9 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <% orderDetails.forEach((order,index) => { %>
+                                                                        <% orderDetails.forEach((order, index) => { %>
                                                                             <tr>
-                                                                                <td><%= index+1 %></td>
+                                                                                <td><%= (orderPage - 1) * 5 + index + 1 %></td>
                                                                                 <td> <%= new Date(order.createdAt).toLocaleString() %></td>
                                                                                 <td><%= order.status %></td>
                                                                                 <td>₹<%= (order.totalPrice).toFixed(2) %> for <%= order.cartItems.length %> item(s)</td>
@@ -432,45 +434,104 @@
                                                             <% } else { %>
                                                                 <p>No orders found.</p>
                                                             <% } %>
-                                                        </div>                                                        
-                                                    </div>
+                                                        </div>
+                                                        <!-- Pagination for Orders -->
+                                                        <% if (totalOrderPages > 1) { %>
+                                                            <nav aria-label="Page navigation">
+                                                                <ul class="pagination justify-content-center">
+                                                                    <% if (orderPage > 1) { %>
+                                                                        <li class="page-item">
+                                                                            <a class="page-link" href="?orderPage=<%= orderPage - 1 %>">Previous</a>
+                                                                        </li>
+                                                                    <% } %>
+                                                                    <% for (let i = 1; i <= totalOrderPages; i++) { %>
+                                                                        <li class="page-item <%= orderPage === i ? 'active' : '' %>">
+                                                                            <a class="page-link" href="?orderPage=<%= i %>"><%= i %></a>
+                                                                        </li>
+                                                                    <% } %>
+                                                                    <% if (orderPage < totalOrderPages) { %>
+                                                                        <li class="page-item">
+                                                                            <a class="page-link" href="?orderPage=<%= orderPage + 1 %>">Next</a>
+                                                                        </li>
+                                                                    <% } %>
+                                                                </ul>
+                                                            </nav>
+                                                        <% } %>
+                                                    </div>                                                   
                                                 </div>
                                             </div>
-                                            <div class="tab-pane fade" id="track-orders" role="tabpanel"
-                                                aria-labelledby="track-orders-tab">
+
+                                            <!-- wallet -->
+
+                                            <div class="tab-pane fade" id="wallet" role="tabpanel" aria-labelledby="track-orders-tab">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5 class="mb-0">Orders tracking</h5>
+                                                        <h5 class="mb-0">Wallet Management</h5>
                                                     </div>
                                                     <div class="card-body contact-from-area">
-                                                        <p>To track your order please enter your OrderID in the box
-                                                            below and press "Track" button. This was given to you on
-                                                            your receipt and in the confirmation email you should have
-                                                            received.</p>
-                                                        <div class="row">
-                                                            <div class="col-lg-8">
-                                                                <form class="contact-form-style mt-30 mb-50" action="#"
-                                                                    method="post">
-                                                                    <div class="input-style mb-20">
-                                                                        <label>Order ID</label>
-                                                                        <input name="order-id"
-                                                                            placeholder="Found in your order confirmation email"
-                                                                            type="text" class="square">
-                                                                    </div>
-                                                                    <div class="input-style mb-20">
-                                                                        <label>Billing email</label>
-                                                                        <input name="billing-email"
-                                                                            placeholder="Email you used during checkout"
-                                                                            type="email" class="square">
-                                                                    </div>
-                                                                    <button class="submit submit-auto-width"
-                                                                        type="submit">Track</button>
-                                                                </form>
+                                                        <p>Your current balance: ₹<%= Userwallet ? Userwallet.balance : 0 %></p>
+                                                        <form id="add-money-form">
+                                                            <div class="input-style mb-20">
+                                                                <label>Amount to Add</label>
+                                                                <input name="amount" id="amount" placeholder="Enter amount" type="number" class="square" required>
                                                             </div>
+                                                            <button type="button" class="submit submit-auto-width" id="rzp-button">Add Money</button>
+                                                        </form>
+                                                        <hr>
+                                                        <h5 class="mt-3">Transaction History</h5>
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Date</th>
+                                                                        <th>Amount</th>
+                                                                        <th>Type</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="transaction-history">
+                                                                    <% if (Userwallet && Userwallet.history && Userwallet.history.length > 0) { %>
+                                                                        <% Userwallet.history.forEach((transaction) => { %>
+                                                                            <tr>
+                                                                                <td><%= new Date(transaction.createdAt).toLocaleString() %></td>
+                                                                                <td>₹<%= transaction.amount.toFixed(2) %></td>
+                                                                                <td><%= transaction.type %></td>
+                                                                            </tr>
+                                                                        <% }) %>
+                                                                    <% } else { %>
+                                                                        <tr>
+                                                                            <td colspan="3">No transactions found.</td>
+                                                                        </tr>
+                                                                    <% } %>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
+                                                        <!-- Pagination for Transactions -->
+                                                        <% if (totalTransactionPages > 1) { %>
+                                                            <nav aria-label="Page navigation">
+                                                                <ul class="pagination justify-content-center">
+                                                                    <% if (transactionPage > 1) { %>
+                                                                        <li class="page-item">
+                                                                            <a class="page-link" href="?transactionPage=<%= transactionPage - 1 %>">Previous</a>
+                                                                        </li>
+                                                                    <% } %>
+                                                                    <% for (let i = 1; i <= totalTransactionPages; i++) { %>
+                                                                        <li class="page-item <%= transactionPage === i ? 'active' : '' %>">
+                                                                            <a class="page-link" href="?transactionPage=<%= i %>"><%= i %></a>
+                                                                        </li>
+                                                                    <% } %>
+                                                                    <% if (transactionPage < totalTransactionPages) { %>
+                                                                        <li class="page-item">
+                                                                            <a class="page-link" href="?transactionPage=<%= transactionPage + 1 %>">Next</a>
+                                                                        </li>
+                                                                    <% } %>
+                                                                </ul>
+                                                            </nav>
+                                                        <% } %>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                
+                                        </div>
+
                                             <div class="tab-pane fade" id="address" role="tabpanel"
                                                 aria-labelledby="address-tab">
                                                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -1222,6 +1283,75 @@
                         })
                 }
             }
+        </script>
+
+        <!-- wallet -->
+
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script>
+            document.getElementById('rzp-button').onclick = async function(e) {
+                e.preventDefault();
+                const amount = document.getElementById('amount').value;
+        
+                // Create an order with Razorpay
+                const response = await fetch('/wallet/add-money', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ amount: amount })
+                });
+        
+                const data = await response.json();
+        
+                if (response.ok) {
+                    // Initialize Razorpay checkout
+                    const options = {
+                        "key":'rzp_test_mkeaiN7D6EJHVs',
+                        "amount": data.amount,
+                        "currency": data.currency,
+                        "name": "Your App Name",
+                        "description": "Add money to wallet",
+                        "order_id": data.orderId,
+                        "handler": async function (response) {
+                            const paymentData = {
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_signature: response.razorpay_signature,
+                                userId: data.userId,
+                                amount: data.amount
+                            };
+        
+                            // Confirm the payment success
+                            const result = await fetch('/wallet/payment-success', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(paymentData)
+                            });
+        
+                            if (result.ok) {
+                                location.reload(); // Reload to update the wallet balance
+                            } else {
+                                alert('Payment failed');
+                            }
+                        },
+                        "prefill": {
+                            "name": "Your User Name",
+                            "email": "user@example.com"
+                        },
+                        "theme": {
+                            "color": "#3399cc"
+                        }
+                    };
+        
+                    const rzp = new Razorpay(options);
+                    rzp.open();
+                } else {
+                    alert('Failed to create Razorpay order');
+                }
+            };
         </script>
 
         <%- include('./partials/userFooter') %>

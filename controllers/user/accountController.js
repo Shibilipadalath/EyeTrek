@@ -1,8 +1,17 @@
 const User = require('../../models/userModel')
 const Address = require('../../models/addressModel')
 const Order = require('../../models/orderModel')
+const Wallet = require('../../models/walletModel')
 const bcrypt = require('bcrypt');
-// const { trusted } = require('mongoose');
+const crypto = require('crypto');
+const Razorpay = require('razorpay');
+
+
+const razorpayInstance = new Razorpay({
+    key_id:process.env.RAZORPAY_ID_KEY,
+    key_secret:process.env.RAZORPAY_SECRET_KEY
+});
+
 
 const myAccount = async (req, res) => {
     try {
@@ -14,17 +23,51 @@ const myAccount = async (req, res) => {
         const addressData = await Address.findOne({ userId: user._id });
         const addresses = addressData ? addressData.address : [];
 
-        // find orders
-        const orderDetails = await Order.find({ userId: user._id }).sort({createdAt:-1})
+        // Pagination for orders
+        const ordersPerPage = 5;
+        const orderPage = parseInt(req.query.orderPage) || 1;
+
+        const totalOrders = await Order.countDocuments({ userId: user._id });
+        const totalOrderPages = Math.ceil(totalOrders / ordersPerPage);
+
+        const orderDetails = await Order.find({ userId: user._id })
+            .sort({ createdAt: -1 })
+            .skip((orderPage - 1) * ordersPerPage)
+            .limit(ordersPerPage);
         console.log(orderDetails);
 
-        return res.render('myAccount', { user, addresses, orderDetails });
+        // Pagination for wallet transactions
+        const transactionsPerPage = 5;
+        const transactionPage = parseInt(req.query.transactionPage) || 1;
+
+        const Userwallet = await Wallet.findOne({ userId: user._id });
+        let paginatedHistory = [];
+        let totalTransactionPages = 1;
+
+        if (Userwallet) {
+            const totalTransactions = Userwallet.history.length;
+            totalTransactionPages = Math.ceil(totalTransactions / transactionsPerPage);
+            const startIndex = (transactionPage - 1) * transactionsPerPage;
+            const endIndex = Math.min(startIndex + transactionsPerPage, totalTransactions);
+            paginatedHistory = Userwallet.history.slice(startIndex, endIndex);
+        }
+
+        console.log(Userwallet);
+        return res.render('myAccount', {
+            user,
+            addresses,
+            orderDetails,
+            totalOrderPages,
+            orderPage,
+            Userwallet: Userwallet ? { ...Userwallet.toObject(), history: paginatedHistory } : null,
+            transactionPage,
+            totalTransactionPages
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).send('Internal Server Error');
     }
 };
-
 
 
 
@@ -249,6 +292,89 @@ const returnOrder = async (req, res) => {
     }
 }
 
+const addMoney = async (req, res) => {
+    try {
+        const { amount } = req.body;
+        const userId = req.session.userId;
+        console.log(amount);
+
+        // Ensure the amount is valid
+        if (!amount || amount <= 0) {
+            return res.status(400).json({ error: 'Invalid amount' });
+        }
+
+        // Create a Razorpay order
+        const options = {
+            amount: amount * 100, // amount in the smallest currency unit (paise)
+            currency: 'INR',
+            receipt: `receipt_${Date.now()}`,
+            payment_capture: '1' // auto capture
+        };
+
+        const order = await razorpayInstance.orders.create(options);
+
+        // Send the order details to the client
+        res.json({
+            orderId: order.id,
+            amount: order.amount,
+            currency: order.currency,
+            userId: userId
+        });
+    } catch (error) {
+        console.error('Error creating Razorpay order:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+const paymentSuccess = async (req, res) => {
+    try {
+        const { razorpay_payment_id, razorpay_order_id, razorpay_signature, userId, amount } = req.body;
+
+        console.log(req.body);
+
+        // Validate the payment using Razorpay's API (Add your secret key)
+        const generatedSignature = crypto.createHmac('sha256', process.env.RAZORPAY_SECRET_KEY)
+            .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+            .digest('hex');
+
+        if (generatedSignature !== razorpay_signature) {
+            return res.status(400).json({ error: 'Invalid signature' });
+        }
+
+        console.log('Payment validation successful');
+
+        // Find the wallet by userId
+        let wallet = await Wallet.findOne({ userId: userId });
+
+        // If wallet does not exist, create one with default balance 0
+        if (!wallet) {
+            wallet = new Wallet({
+                userId: userId,
+                balance: 0,
+                history: []
+            });
+            await wallet.save();
+            console.log("Created new wallet:", wallet);
+        } else {
+            console.log("Found wallet:", wallet);
+        }
+
+        // Update the wallet balance and history
+        wallet.balance += amount / 100; // Convert amount back from paise to rupees
+        wallet.history.push({
+            amount: amount / 100,
+            type: 'credit',
+            description: 'Added money to wallet'
+        });
+
+        await wallet.save();
+
+        res.json({ message: 'Payment successful' });
+    } catch (error) {
+        console.error('Error processing payment:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+    
 
 
 module.exports = {
@@ -261,5 +387,7 @@ module.exports = {
     checkPassword,
     viewOrder,
     cancelOrder,
-    returnOrder
+    returnOrder,
+    addMoney,
+    paymentSuccess
 }
