@@ -733,7 +733,7 @@
                                             </span>
                                         </div>
                                         <div class="product-price">
-                                            <span>&#8377;<%=product[i].offerPrice  %></span>
+                                            <span>&#8377;<%= product[i].offerPrice ? product[i].offerPrice.toFixed(2) : product[i].originalPrice.toFixed(2) %></span>
                                             <span class="old-price">&#8377;<%=product[i].originalPrice  %></span>
                                         </div>
                                         <% if(user){ %>

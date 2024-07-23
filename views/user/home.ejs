@@ -667,7 +667,7 @@
                                                 <h2><a href="/productDetails?productId=<%= product[i]._id %>"><%= product[i].name %></a></h2>
                                                 <div class="rating-result" title="90%"></div>
                                                 <div class="product-price">
-                                                    <span>&#8377;<%= product[i].offerPrice %> </span>
+                                                    <span>&#8377;<%= product[i].offerPrice.toFixed(2) %> </span>
                                                     <span class="old-price">&#8377;<%= product[i].originalPrice %></span>
                                                 </div>
                                                 <% if(userExist){%>

@@ -441,9 +441,8 @@
                                             </div>
                                             <div class="clearfix product-price-cover">
                                                 <div class="product-price primary-color float-left">
-                                                    <ins><span class="text-brand">&#8377;<%= product.offerPrice %>
-                                                                </span></ins>
-                                                </div>
+                                                    <ins><span class="text-brand">&#8377;<%= parseFloat(product.offerPrice).toFixed(2) %></span></ins>
+                                                </div>                                                
                                             </div>
                                             <div class="bt-1 border-color-1 mt-15 mb-15"></div>
                                             <div class="short-desc mb-30">
@@ -472,7 +471,7 @@
                                             </div>
                                             <% if(product.stock>0){ %>
                                             <ul class="product-meta font-xs color-grey mt-50">
-                                                <li>Availability:<span class="in-stock text-success ml-5"><%=product.stock %> Items In Stock</span></li>
+                                                <li>Availability:<span class="in-stock text-success ml-5">Items In Stock</span></li>
                                             </ul>
                                             <% }else{ %>
                                                 <ul class="product-meta font-xs color-grey mt-50">

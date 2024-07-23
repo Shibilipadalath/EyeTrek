@@ -93,7 +93,7 @@ const unBlockUser = async (req, res) => {
 
 const orderPage = async (req, res) => {
     try {
-        const orders = await Order.find().populate('userId').populate('cartItems.productId')
+        const orders = await Order.find().populate('userId').populate('cartItems.productId').sort({createdAt:-1})
         
         res.render('orderManagement', { orders });
     } catch (error) {
@@ -101,6 +101,7 @@ const orderPage = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 }
+
 
 const orderDetailsPage=async(req,res)=>{
     try {

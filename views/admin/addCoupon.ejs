@@ -1,0 +1,307 @@
+<%- include('./partials/adminHeader') %>
+<body>
+    <div class="screen-overlay"></div>
+    <aside class="navbar-aside" id="offcanvas_aside">
+        <div class="aside-top">
+            <a href="index.html" class="brand-wrap">
+                <img src="/public/adminAsset/imgs/theme/logo.svg" class="logo" alt="Evara Dashboard">
+            </a>
+            <div>
+                <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i> </button>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu-aside">
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/adminHome"> <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/productList"> <i class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">Products</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/orderPage"> <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Orders</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/userManagement"> <i class="icon material-icons md-store"></i>
+                        <span class="text">Users</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/categoryPage"> <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Category</span>
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <a class="menu-link" href="/admin/offerPage"> <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Offers</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="#"> <i class="icon material-icons md-person"></i>
+                        <span class="text">Account</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="page-account-login.html">User login</a>
+                        <a href="page-account-register.html">User registration</a>
+                        <a href="page-error-404.html">Error 404</a>
+                    </div>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="page-reviews.html"> <i class="icon material-icons md-comment"></i>
+                        <span class="text">Reviews</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="page-brands.html"> <i class="icon material-icons md-stars"></i>
+                        <span class="text">Brands</span> </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" disabled href="#"> <i class="icon material-icons md-pie_chart"></i>
+                        <span class="text">Statistics</span>
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <ul class="menu-aside">
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="#"> <i class="icon material-icons md-settings"></i>
+                        <span class="text">Settings</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="page-settings-1.html">Setting sample 1</a>
+                        <a href="page-settings-2.html">Setting sample 2</a>
+                    </div>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="page-blank.html"> <i class="icon material-icons md-local_offer"></i>
+                        <span class="text"> Starter page </span>
+                    </a>
+                </li>
+            </ul>
+            <br>
+            <br>
+        </nav>
+    </aside>
+    <main class="main-wrap">
+        <header class="main-header navbar">
+            <div class="col-search">
+                <form class="searchform">
+                    <div class="input-group">
+                        <input list="search_terms" type="text" class="form-control" placeholder="Search term">
+                        <button class="btn btn-light bg" type="button"> <i class="material-icons md-search"></i></button>
+                    </div> 
+                    <datalist id="search_terms">
+                        <option value="Products">
+                        <option value="New orders">
+                        <option value="Apple iphone">
+                        <option value="Ahmed Hassan">
+                    </datalist>
+                </form>
+            </div>
+            <div class="col-nav">
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon" href="#">
+                            <i class="material-icons md-notifications animation-shake"></i>
+                            <span class="badge rounded-pill">3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false"><i class="material-icons md-public"></i></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
+                            <a class="dropdown-item text-brand" href="#"><img src="/public/adminAsset/imgs/theme/flag-us.png" alt="English">English</a>
+                            <a class="dropdown-item" href="#"><img src="/public/adminAsset/imgs/theme/flag-fr.png" alt="Français">Français</a>
+                            <a class="dropdown-item" href="#"><img src="/public/adminAsset/imgs/theme/flag-jp.png" alt="Français">日本語</a>
+                            <a class="dropdown-item" href="#"><img src="/public/adminAsset/imgs/theme/flag-cn.png" alt="Français">中国人</a>
+                        </div>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="/public/adminAsset/imgs/people/avatar2.jpg" alt="User"></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="/admin/adminLogout"><i class="material-icons md-exit_to_app"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section class="content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Add Coupon</h2>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row" style="justify-content: center">
+                        <div class="col-md-4">
+                            <% if (alert) { %>
+                                <div class="text-danger text-center m-3" id="error">
+                                    <%= alert %>
+                                </div>
+                            <% } %>
+                            <form action="/admin/addCoupon" method="post" onsubmit="return validateForm()">
+                                <div class="mb-4">
+                                    <label for="coupon_code" class="form-label">Coupon code</label>
+                                    <input type="text" placeholder="Type here" name="coupon_code" class="form-control" id="coupon_code" onkeyup="validateCode()" />
+                                    <span id="code-error" class="error-msg"></span>
+                                </div>
+        
+                                <div class="mb-4">
+                                    <label class="form-label">Description</label>
+                                    <textarea placeholder="Type here" name="description" class="form-control" id="coupon_description" rows="4" onkeyup="validateDescription()"></textarea>
+                                    <span id="description-error" class="error-msg"></span>
+                                </div>
+        
+                                <div class="mb-4">
+                                    <label class="form-label">Percentage</label>
+                                    <input placeholder="0" name="percentage" class="form-control" id="percentage" onkeyup="validatePrice()">
+                                    <span id="price-error" class="error-msg"></span>
+                                </div>
+        
+                                <div class="mb-4">
+                                    <label for="min_amount" class="form-label">Minimum Amount</label>
+                                    <input type="text" placeholder="0" name="min_amount" class="form-control" id="min_amount" min="0" onkeyup="validateMinAmount()" />
+                                    <span id="min-amount-error" class="error-msg"></span>
+                                </div>
+        
+                                <div class="mb-4">
+                                    <label for="max_amount" class="form-label">Maximum Discount</label>
+                                    <input type="text" placeholder="0" name="max_amount" class="form-control" id="max_amount" min="0" onkeyup="validateMaxAmount()" />
+                                    <span id="max-amount-error" class="error-msg"></span>
+                                </div>
+        
+                                <div class="mb-4">
+                                    <label for="expiry_date" class="form-label">Expiry Date</label>
+                                    <input type="date" name="expiry_date" class="form-control" id="expiry_date" onchange="validateDate()">
+                                    <span id="date-error" class="error-msg"></span>
+                                </div>
+                                
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">Add Coupon</button>
+                                    <span id="submit-error" class="error-msg"></span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>      
+    </main>
+    <script>
+        function validateCode() {
+          var codeError = document.getElementById("code-error");
+          var code = document.getElementById("coupon_code").value.trim();
+          var uppercaseRegex = /^[A-Z0-9]+$/;
+          if (!uppercaseRegex.test(code)) {
+            codeError.innerHTML = "Coupon code must contain only uppercase letters and numbers";
+            codeError.style.color = "red";
+            return false;
+          }
+          codeError.innerHTML = "";
+          return true;
+        }
+      
+        function validateDescription() {
+          var descriptionError = document.getElementById("description-error");
+          var desc = document.getElementById("coupon_description").value.trim();
+          if (desc.length === 0) {
+            descriptionError.innerHTML = "Description is required";
+            descriptionError.style.color = "red";
+            return false;
+          }
+          descriptionError.innerHTML = "";
+          return true;
+        }
+      
+        function validatePrice() {
+          var priceError = document.getElementById("price-error");
+          var price = document.getElementById("percentage").value.trim();
+          if (price.length === 0 || isNaN(price) || parseFloat(price) <= 0 || parseFloat(price) > 100) {
+            priceError.innerHTML = "Invalid entry";
+            priceError.style.color = "red";
+            return false;
+          }
+          priceError.innerHTML = "";
+          return true;
+        }
+      
+        function validateMinAmount() {
+          var minAmountError = document.getElementById("min-amount-error");
+          var minAmount = document.getElementById("min_amount").value.trim();
+          if (minAmount.length === 0 || isNaN(minAmount) || parseFloat(minAmount) < 0) {
+            minAmountError.innerHTML = "Invalid entry";
+            minAmountError.style.color = "red";
+            return false;
+          }
+          minAmountError.innerHTML = "";
+          return true;
+        }
+      
+        function validateMaxAmount() {
+          var maxAmountError = document.getElementById("max-amount-error");
+          var maxAmount = document.getElementById("max_amount").value.trim();
+          if (maxAmount.length === 0 || isNaN(maxAmount) || parseFloat(maxAmount) < 0) {
+            maxAmountError.innerHTML = "Invalid entry";
+            maxAmountError.style.color = "red";
+            return false;
+          }
+          maxAmountError.innerHTML = "";
+          return true;
+        }
+      
+        function validateDate() {
+          var dateError = document.getElementById("date-error");
+          var dateInput = document.getElementById("expiry_date").value;
+          var currentDate = new Date();
+          var selectedDate = new Date(dateInput);
+          if (selectedDate <= currentDate) {
+            dateError.innerHTML = "Please select a future date";
+            dateError.style.color = "red";
+            return false;
+          }
+          dateError.innerHTML = "";
+          return true;
+        }
+      
+        function validateForm() {
+          var isValid = true;
+          isValid &= validateCode();
+          isValid &= validateDescription();
+          isValid &= validatePrice();
+          isValid &= validateMinAmount();
+          isValid &= validateMaxAmount();
+          isValid &= validateDate();
+          
+          var submitError = document.getElementById("submit-error");
+          if (!isValid) {
+            submitError.innerHTML = "Please enter all the fields correctly to submit";
+            submitError.style.color = "red";
+            return false;
+          } else {
+            submitError.innerHTML = "";
+            return true;
+          }
+        }
+    </script>
+</body>
+<%- include('./partials/adminFooter') %>
+        

@@ -568,7 +568,7 @@
                                                     <!-- Add other product details here -->
                                                     <p><%= productWithQuantity.product.description %></p>
                                                 </td>
-                                                <td class="price" data-title="Price"><span> ₹ <%= productWithQuantity.product.offerPrice %></span></td>
+                                                <td class="price" data-title="Price"><span> ₹ <%= parseFloat(productWithQuantity.product.offerPrice).toFixed(2) %></span></td>
                                                 <td class="text-center" data-title="Quantity">
                                                     <div class="detail-qty border radius m-auto">
                                                         <a class="qty-down" onclick="updateQuantity('<%= productWithQuantity.product._id %>', 'decrease', '<%= i %>')">
@@ -581,7 +581,7 @@
                                                     </div>
                                                 </td>                                                
                                                 <td class="text-right" data-title="Cart">
-                                                    <span id="subtotal-<%= i %>"> &#8377; <%= productWithQuantity.quantity * productWithQuantity.product.offerPrice %></span>
+                                                    <span id="subtotal-<%= i %>"> &#8377; <%= (productWithQuantity.quantity * parseFloat(productWithQuantity.product.offerPrice)).toFixed(2) %></span>
                                                 </td>
                                                 <td class="action" data-title="Remove"><a onclick="deleteProduct('<%= productWithQuantity.product._id %>')" class="text-muted"><i class="fi-rs-trash"></i></a></td>
                                             </tr>

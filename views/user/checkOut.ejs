@@ -932,14 +932,12 @@
                                                                 </a></h5> <span class="product-qty">x <%=
                                                                     element.quantity %></span>
                                                         </td>
-                                                        <td> ₹<%= element.price %>
+                                                        <td> ₹<%= parseFloat(element.price).toFixed(2) %></td>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>SubTotal</th>
-                                                        <td class="product-subtotal" colspan="2"> ₹ <%= element.quantity
-                                                                * element.price %>
-                                                        </td>
+                                                        <td class="product-subtotal" colspan="2"> ₹ <%= (element.quantity * parseFloat(element.price)).toFixed(2) %></td>
                                                     </tr>
                                                     <tr>
                                                         <th>Shipping</th>
@@ -947,9 +945,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th>Total</th>
-                                                        <td colspan="2" class="product-subtotal"><span
-                                                                class="font-xl text-brand fw-900"> ₹ <%=
-                                                                    element.quantity * element.price %></span></td>
+                                                        <td colspan="2" class="product-subtotal"><span class="font-xl text-brand fw-900"> ₹ <%= (element.quantity * parseFloat(element.price)).toFixed(2) %></span></td>
                                                     </tr>
                                                     <% }) %>
 

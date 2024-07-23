@@ -230,7 +230,7 @@ const searchProducts = async (req, res) => {
     try {
         const query = req.query.query;
         if (query) {
-            const regex = new RegExp(query, 'i'); // 'i' for case-insensitive search
+            const regex = new RegExp(query, 'i');
             const products = await Product.find({ name: { $regex: regex } }, 'name image');
             res.json(products);
         } else {

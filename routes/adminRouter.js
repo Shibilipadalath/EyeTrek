@@ -2,6 +2,8 @@ const express = require("express")
 const adminController = require("../controllers/admin/adminController")
 const productController = require('../controllers/admin/productController')
 const categoryController = require("../controllers/admin/categoryController")
+const offerController=require('../controllers/admin/offerController')
+const couponController=require('../controllers/admin/couponController')
 const adminAuth = require('../middlewere/adminAuth')
 
 const MulterImg = require('../config/multer')
@@ -46,6 +48,23 @@ adminRouter.post('/ToggleBlockCategories/:id', adminAuth.isLogin, categoryContro
 adminRouter.get('/orderPage', adminAuth.isLogin, adminController.orderPage)
 adminRouter.get('/orders/:id', adminAuth.isLogin, adminController.orderDetailsPage)
 adminRouter.post('/orders/:id/status', adminAuth.isLogin, adminController.updateOrderStatus)
+
+//offer
+
+adminRouter.get('/offerPage', adminAuth.isLogin, offerController.offerPage);
+adminRouter.get('/createOffer', adminAuth.isLogin, offerController.addOfferPage);
+adminRouter.post('/createOffer', adminAuth.isLogin, offerController.createOffer);
+adminRouter.get('/offerToggle', adminAuth.isLogin, offerController.offerToggle);
+
+//coupon
+
+adminRouter.get('/couponPage', adminAuth.isLogin, couponController.couponList);
+adminRouter.get('/addCoupon', adminAuth.isLogin, couponController.addCouponPage);
+adminRouter.post('/addCoupon', adminAuth.isLogin, couponController.addCoupon);
+adminRouter.get('/editCoupon', adminAuth.isLogin, couponController.editCouponPage);
+adminRouter.post('/editCoupon', adminAuth.isLogin, couponController.editCoupon);
+adminRouter.post('/coupon/unblock', adminAuth.isLogin, couponController.couponUnblock);
+adminRouter.post('/coupon/block', adminAuth.isLogin, couponController.couponBlock);
 
 
 module.exports = adminRouter

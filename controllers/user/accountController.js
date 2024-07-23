@@ -36,7 +36,7 @@ const myAccount = async (req, res) => {
             .limit(ordersPerPage);
         console.log(orderDetails);
 
-        // Pagination for wallet transactions
+        // Pagination for wallet
         const transactionsPerPage = 5;
         const transactionPage = parseInt(req.query.transactionPage) || 1;
 

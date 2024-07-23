@@ -1,0 +1,323 @@
+<%- include('./partials/adminHeader') %>
+<body>
+    <div class="screen-overlay"></div>
+    <aside class="navbar-aside" id="offcanvas_aside">
+        <div class="aside-top">
+            <a href="index.html" class="brand-wrap">
+                <img src="/public/adminAsset/imgs/theme/logo.svg" class="logo" alt="Evara Dashboard">
+            </a>
+            <div>
+                <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i> </button>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu-aside">
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/adminHome"> <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/productList"> <i class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">Products</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/orderPage"> <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Orders</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/userManagement"> <i class="icon material-icons md-store"></i>
+                        <span class="text">Users</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/categoryPage"> <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Category</span>
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <a class="menu-link" href="/admin/offerPage"> <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Offers</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="#"> <i class="icon material-icons md-person"></i>
+                        <span class="text">Account</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="page-account-login.html">User login</a>
+                        <a href="page-account-register.html">User registration</a>
+                        <a href="page-error-404.html">Error 404</a>
+                    </div>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="page-reviews.html"> <i class="icon material-icons md-comment"></i>
+                        <span class="text">Reviews</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="page-brands.html"> <i class="icon material-icons md-stars"></i>
+                        <span class="text">Brands</span> </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" disabled href="#"> <i class="icon material-icons md-pie_chart"></i>
+                        <span class="text">Statistics</span>
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <ul class="menu-aside">
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="#"> <i class="icon material-icons md-settings"></i>
+                        <span class="text">Settings</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="page-settings-1.html">Setting sample 1</a>
+                        <a href="page-settings-2.html">Setting sample 2</a>
+                    </div>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="page-blank.html"> <i class="icon material-icons md-local_offer"></i>
+                        <span class="text"> Starter page </span>
+                    </a>
+                </li>
+            </ul>
+            <br>
+            <br>
+        </nav>
+    </aside>
+    <main class="main-wrap">
+        <header class="main-header navbar">
+            <div class="col-search">
+                <form class="searchform">
+                    <div class="input-group">
+                        <input list="search_terms" type="text" class="form-control" placeholder="Search term">
+                        <button class="btn btn-light bg" type="button"> <i class="material-icons md-search"></i></button>
+                    </div> 
+                    <datalist id="search_terms">
+                        <option value="Products">
+                        <option value="New orders">
+                        <option value="Apple iphone">
+                        <option value="Ahmed Hassan">
+                    </datalist>
+                </form>
+            </div>
+            <div class="col-nav">
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon" href="#">
+                            <i class="material-icons md-notifications animation-shake"></i>
+                            <span class="badge rounded-pill">3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false"><i class="material-icons md-public"></i></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
+                            <a class="dropdown-item text-brand" href="#"><img src="/public/adminAsset/imgs/theme/flag-us.png" alt="English">English</a>
+                            <a class="dropdown-item" href="#"><img src="/public/adminAsset/imgs/theme/flag-fr.png" alt="Français">Français</a>
+                            <a class="dropdown-item" href="#"><img src="/public/adminAsset/imgs/theme/flag-jp.png" alt="Français">日本語</a>
+                            <a class="dropdown-item" href="#"><img src="/public/adminAsset/imgs/theme/flag-cn.png" alt="Français">中国人</a>
+                        </div>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="/public/adminAsset/imgs/people/avatar2.jpg" alt="User"></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="/admin/adminLogout"><i class="material-icons md-exit_to_app"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section class="content-main">
+            <div class="row">
+                <div class="col-6">
+                    <div class="content-header">
+                        <h2 class="content-title">Add Offers</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <% if (locals.alert) { %>
+                            <div class="text-danger text-center m-3" id="error">
+                                <%= locals.alert %>
+                            </div>
+                        <% } %>
+                        <form action="/admin/createOffer" method="POST" onsubmit="return validateOfferForm()">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-4">
+                                            <div class="form-group">
+                                                <label for="name" class="form-label">Name</label>
+                                                <input type="text" class="form-control" id="name" name="name">
+                                                <span id="offerNameError" class="error-message" style="color: red"></span>
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="discountOn" class="form-label">Discount On</label>
+                                                <select class="form-select" id="discountOn" name="discountOn" onchange="handleDiscountOn()">
+                                                    <option value="">Select Offer On</option>
+                                                    <option value="category">Category</option>
+                                                    <option value="product">Products</option>
+                                                </select>
+                                                <span id="categoryError" class="error-message" style="color: red"></span>
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <div class="form-group">
+                                                    <label for="expireOn" class="form-label">Expire On (dd-mm-yy)</label>
+                                                    <input type="date" id="expireOn" class="form-control me-2" name="expireOn">
+                                                </div>
+                                                <span id="expireDateError" class="error-message" style="color: red"></span>
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="discountedProduct" class="form-label">Product</label>
+                                                <select class="form-select" id="discountedProduct" name="discountedProduct">
+                                                    <option value="">Select Product</option>
+                                                    <% products.forEach(product => { %>
+                                                        <option value="<%= product._id %>">
+                                                            <%= product.name %>
+                                                        </option>
+                                                    <% }); %>
+                                                </select>
+                                                <span id="discountedProductError" class="error-message" style="color: red"></span>
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="discountedCategory" class="form-label">Category</label>
+                                                <select class="form-select" id="discountedCategory" name="discountedCategory">
+                                                    <option value="">Select Category</option>
+                                                    <% categories.forEach(category => { %>
+                                                        <option value="<%= category._id %>">
+                                                            <%= category.name %>
+                                                        </option>
+                                                    <% }); %>
+                                                </select>
+                                                <span id="categoryError" class="error-message" style="color: red"></span>
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="discountType" class="form-label">Discount Type</label>
+                                                <select class="form-select" id="discountType" name="discountType">
+                                                    <option value="">Select Discount Type</option>
+                                                    <option value="percentage">Percentage</option>
+                                                    <option value="fixedAmount">Fixed Amount</option>
+                                                </select>
+                                                <span id="discountTypeError" class="error-message" style="color: red"></span>
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <div class="form-group">
+                                                    <label for="discountValue" class="form-label">Discount Value</label>
+                                                    <input type="text" class="form-control" id="discountValue" name="discountValue">
+                                                    <span id="discountValueError" class="error-message" style="color: red"></span>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="mb-4">
+                                                        <button type="submit" value="Add Offer" class="add-offer-button btn btn-primary mt-4">Add Offer</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- .row end// -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script>
+        function handleDiscountOn() {
+            const discountedCategorySelect = document.getElementById('discountedCategory');
+            const discountedProductSelect = document.getElementById('discountedProduct');
+            if (event.target.value === 'product') {
+                discountedCategorySelect.disabled = true;
+                discountedProductSelect.disabled = false;
+            } else {
+                discountedProductSelect.disabled = true;
+                discountedCategorySelect.disabled = false;
+            }
+        }
+    
+        function validateOfferForm() {
+            let isValid = true;
+            
+            // Clear previous error messages
+            document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+    
+            // Validate Name
+            const name = document.getElementById('name').value.trim();
+            if (name === '') {
+                document.getElementById('offerNameError').textContent = 'Offer name is required.';
+                isValid = false;
+            }
+    
+            // Validate Discount On
+            const discountOn = document.getElementById('discountOn').value;
+            if (discountOn === '') {
+                document.getElementById('categoryError').textContent = 'Please select what the discount is applied to.';
+                isValid = false;
+            }
+    
+            // Validate Expire On
+            const expireOn = document.getElementById('expireOn').value;
+            if (expireOn === '') {
+                document.getElementById('expireDateError').textContent = 'Expire date is required.';
+                isValid = false;
+            }
+    
+            // Validate Discounted Product
+            const discountedProduct = document.getElementById('discountedProduct').value;
+            if (discountOn === 'product' && discountedProduct === '') {
+                document.getElementById('discountedProductError').textContent = 'Please select a product.';
+                isValid = false;
+            }
+    
+            // Validate Discounted Category
+            const discountedCategory = document.getElementById('discountedCategory').value;
+            if (discountOn === 'category' && discountedCategory === '') {
+                document.getElementById('categoryError').textContent = 'Please select a category.';
+                isValid = false;
+            }
+    
+            // Validate Discount Type
+            const discountType = document.getElementById('discountType').value;
+            if (discountType === '') {
+                document.getElementById('discountTypeError').textContent = 'Please select discount type.';
+                isValid = false;
+            }
+    
+            // Validate Discount Value
+            const discountValue = document.getElementById('discountValue').value.trim();
+            if (discountValue === '' || isNaN(discountValue) || parseFloat(discountValue) <= 0) {
+                document.getElementById('discountValueError').textContent = 'Enter a valid discount value.';
+                isValid = false;
+            }
+    
+            return isValid;
+        }
+    </script>
+    
+</body>
+<%- include('./partials/adminFooter') %>
+        

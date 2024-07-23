@@ -8,9 +8,30 @@ const wishListPage = async (req, res) => {
         if (!userExist) {
             return res.status(404).send('User not found');
         }
+
+        const wishlist = await Wishlist.findOne({ userId: req.session.userId }).populate({
+            path: 'products',
+            populate: {
+                path: 'category',
+                select: 'isActive'
+            },
+            match: { isActive: true }
+        });
+
+        console.log(wishlist);
+
         
-        const wishlist = await Wishlist.findOne({ userId: req.session.userId }).populate('products');
-        const products = wishlist ? wishlist.products : [];
+        if (!wishlist) {
+            return res.render('wishList', { userExist, products: [] });
+        }
+
+        const activeCategories = new Set(
+            wishlist.products.map(product => product.category).filter(category => category.isActive).map(cat => cat._id)
+        );
+
+        const products = wishlist.products.filter(product =>
+            activeCategories.has(product.category._id)
+        );
 
         res.render('wishList', { userExist, products });
     } catch (error) {
@@ -18,6 +39,7 @@ const wishListPage = async (req, res) => {
         res.status(500).send('Server Error');
     }
 };
+
 
 const addToWishList = async (req, res) => {
     try {
