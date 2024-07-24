@@ -35,762 +35,611 @@
     <!-- Bootstrap JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <body>
-        <header class="header-area header-style-5">
-            <div class="header-top header-top-ptb-1 d-none d-lg-block">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-xl-3 col-lg-4">
-                            <div class="header-info">
-
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-4">
+<body>
+    <header class="header-area header-style-5">
+        <div class="header-top header-top-ptb-1 d-none d-lg-block">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-3 col-lg-4">
+                        <div class="header-info">
 
                         </div>
-                        <div class="col-xl-3 col-lg-4">
-                            <div class="header-info header-info-right">
-                                <ul>
-                                    <li>
-                                        <a class="language-dropdown-active" href="/myAccount"> Account <i></i></a>
+                    </div>
+                    <div class="col-xl-6 col-lg-4">
 
-                                    </li>
-                                    <% if(user) { %>
-                                        <span>
-                                            <%= user.userName %>
-                                        </span>&nbsp;&nbsp;&nbsp;<a href="/userLogout">logout</a>
-                                        <% }else{ %>
-                                            <li><i class="fi-rs-user"></i><a href="/login">Log In </a>/<a
-                                                    href="/signUp">Sign Up</a></li>
-                                            <%}%>
-                                </ul>
+                    </div>
+                    <div class="col-xl-3 col-lg-4">
+                        <div class="header-info header-info-right">
+                            <ul>
+                                <li>
+                                    <a class="language-dropdown-active" href="/myAccount"> Account <i></i></a>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="header-bottom sticky-bar sticky-white-bg">
-                <div class="container">
-                    <div class="header-wrap header-space-between position-relative">
-                        <div class="logo logo-width-1">
-                            <a href="index.html"><img src="public/assets/imgs/theme/logo.svg" alt="logo"></a>
-                        </div>
-                        <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
-                            <nav>
-                                <ul>
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="/shop">Shop</a></li>
-                                    <li><a class="active" href="/myAccount">My Account</a></li>
-                                    <li><a href="page-about.html">About</a></li>
-                                    <li> <a href="page-contact.html">Contact</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <div class="header-action-right">
-                            <div class="search-style-2">
-                                <form action="#">
-                                    <select class="select-active">
-                                        <option>Search in</option>
-                                        <option>Women's Clothing</option>
-                                        <option>Men's Clothing</option>
-                                        <option>Cellphones</option>
-                                        <option>Computer & Office</option>
-                                        <option>Consumer Electronics</option>
-                                        <option>Jewelry & Accessories</option>
-                                        <option>Home & Garden</option>
-                                        <option>Luggage & Bags</option>
-                                        <option>Shoes</option>
-                                        <option>Mother & Kids</option>
-                                    </select>
-                                    <input type="text" placeholder="Search for items…">
-                                </form>
-                            </div>
-                            <div class="header-action-2">
-                                <div class="header-action-icon-2">
-                                    <a href="shop-wishlist.html">
-                                        <img class="svgInject" alt="Evara"
-                                            src="public/assets/imgs/theme/icons/icon-heart.svg">
-                                    </a>
-                                </div>
-                                <div class="header-action-icon-2">
-                                    <a class="mini-cart-icon" href="/cart">
-                                        <img alt="Evara" src="public/assets/imgs/theme/icons/icon-cart.svg">
-                                    </a>
-                                </div>
-                                <div class="header-action-icon d-block d-lg-none">
-                                    <div class="burger-icon">
-                                        <span class="burger-icon-top"></span>
-                                        <span class="burger-icon-mid"></span>
-                                        <span class="burger-icon-bottom"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <div class="mobile-header-active mobile-header-wrapper-style">
-            <div class="mobile-header-wrapper-inner">
-                <div class="mobile-header-top">
-                    <div class="mobile-header-logo">
-                        <a href="index.html"><img src="public/assets/imgs/theme/logo.svg" alt="logo"></a>
-                    </div>
-                    <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
-                        <button class="close-style search-close">
-                            <i class="icon-top"></i>
-                            <i class="icon-bottom"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="mobile-header-content-area">
-                    <div class="mobile-search search-style-3 mobile-header-border">
-                        <form action="#">
-                            <input type="text" placeholder="Search for items…">
-                            <button type="submit"><i class="fi-rs-search"></i></button>
-                        </form>
-                    </div>
-                    <div class="mobile-menu-wrap mobile-header-border">
-                        <div class="main-categori-wrap mobile-header-border">
-                            <a class="categori-button-active-2" href="#">
-                                <span class="fi-rs-apps"></span> Browse Categories
-                            </a>
-                            <div class="categori-dropdown-wrap categori-dropdown-active-small">
-                                <ul>
-                                    <li><a href="shop-grid-right.html"><i class="evara-font-dress"></i>Women's
-                                            Clothing</a></li>
-                                    <li><a href="shop-grid-right.html"><i class="evara-font-tshirt"></i>Men's
-                                            Clothing</a></li>
-                                    <li> <a href="shop-grid-right.html"><i class="evara-font-smartphone"></i>
-                                            Cellphones</a></li>
-                                    <li><a href="shop-grid-right.html"><i class="evara-font-desktop"></i>Computer &
-                                            Office</a></li>
-                                    <li><a href="shop-grid-right.html"><i class="evara-font-cpu"></i>Consumer
-                                            Electronics</a></li>
-                                    <li><a href="shop-grid-right.html"><i class="evara-font-home"></i>Home & Garden</a>
-                                    </li>
-                                    <li><a href="shop-grid-right.html"><i class="evara-font-high-heels"></i>Shoes</a>
-                                    </li>
-                                    <li><a href="shop-grid-right.html"><i class="evara-font-teddy-bear"></i>Mother &
-                                            Kids</a></li>
-                                    <li><a href="shop-grid-right.html"><i class="evara-font-kite"></i>Outdoor fun</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- mobile menu start -->
-                        <nav>
-                            <ul class="mobile-menu">
-                                <li class="menu-item-has-children"><span class="menu-expand"></span><a
-                                        href="index.html">Home</a>
-                                    <ul class="dropdown">
-                                        <li><a href="index.html">Home 1</a></li>
-                                        <li><a href="index-2.html">Home 2</a></li>
-                                        <li><a href="index-3.html">Home 3</a></li>
-                                        <li><a href="index-4.html">Home 4</a></li>
-                                    </ul>
                                 </li>
-                                <li class="menu-item-has-children"><span class="menu-expand"></span><a
-                                        href="shop-grid-right.html">shop</a>
-                                    <ul class="dropdown">
-                                        <li><a href="shop-grid-right.html">Shop Grid – Right Sidebar</a></li>
-                                        <li><a href="shop-grid-left.html">Shop Grid – Left Sidebar</a></li>
-                                        <li><a href="shop-list-right.html">Shop List – Right Sidebar</a></li>
-                                        <li><a href="shop-list-left.html">Shop List – Left Sidebar</a></li>
-                                        <li><a href="shop-fullwidth.html">Shop - Wide</a></li>
-                                        <li class="menu-item-has-children"><span class="menu-expand"></span><a
-                                                href="#">Single Product</a>
-                                            <ul class="dropdown">
-                                                <li><a href="shop-product-right.html">Product – Right Sidebar</a></li>
-                                                <li><a href="shop-product-left.html">Product – Left Sidebar</a></li>
-                                                <li><a href="shop-product-full.html">Product – No sidebar</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="shop-filter.html">Shop – Filter</a></li>
-                                        <li><a href="shop-wishlist.html">Shop – Wishlist</a></li>
-                                        <li><a href="shop-cart.html">Shop – Cart</a></li>
-                                        <li><a href="shop-checkout.html">Shop – Checkout</a></li>
-                                        <li><a href="shop-compare.html">Shop – Compare</a></li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Mega
-                                        menu</a>
-                                    <ul class="dropdown">
-                                        <li class="menu-item-has-children"><span class="menu-expand"></span><a
-                                                href="#">Women's Fashion</a>
-                                            <ul class="dropdown">
-                                                <li><a href="shop-product-right.html">Dresses</a></li>
-                                                <li><a href="shop-product-right.html">Blouses & Shirts</a></li>
-                                                <li><a href="shop-product-right.html">Hoodies & Sweatshirts</a></li>
-                                                <li><a href="shop-product-right.html">Women's Sets</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="menu-item-has-children"><span class="menu-expand"></span><a
-                                                href="#">Men's Fashion</a>
-                                            <ul class="dropdown">
-                                                <li><a href="shop-product-right.html">Jackets</a></li>
-                                                <li><a href="shop-product-right.html">Casual Faux Leather</a></li>
-                                                <li><a href="shop-product-right.html">Genuine Leather</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="menu-item-has-children"><span class="menu-expand"></span><a
-                                                href="#">Technology</a>
-                                            <ul class="dropdown">
-                                                <li><a href="shop-product-right.html">Gaming Laptops</a></li>
-                                                <li><a href="shop-product-right.html">Ultraslim Laptops</a></li>
-                                                <li><a href="shop-product-right.html">Tablets</a></li>
-                                                <li><a href="shop-product-right.html">Laptop Accessories</a></li>
-                                                <li><a href="shop-product-right.html">Tablet Accessories</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children"><span class="menu-expand"></span><a
-                                        href="blog-category-fullwidth.html">Blog</a>
-                                    <ul class="dropdown">
-                                        <li><a href="blog-category-grid.html">Blog Category Grid</a></li>
-                                        <li><a href="blog-category-list.html">Blog Category List</a></li>
-                                        <li><a href="blog-category-big.html">Blog Category Big</a></li>
-                                        <li><a href="blog-category-fullwidth.html">Blog Category Wide</a></li>
-                                        <li class="menu-item-has-children"><span class="menu-expand"></span><a
-                                                href="#">Single Product Layout</a>
-                                            <ul class="dropdown">
-                                                <li><a href="blog-post-left.html">Left Sidebar</a></li>
-                                                <li><a href="blog-post-right.html">Right Sidebar</a></li>
-                                                <li><a href="blog-post-fullwidth.html">No Sidebar</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children"><span class="menu-expand"></span><a
-                                        href="#">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a href="page-about.html">About Us</a></li>
-                                        <li><a href="page-contact.html">Contact</a></li>
-                                        <li><a href="page-account.html">My Account</a></li>
-                                        <li><a href="page-login-register.html">login/register</a></li>
-                                        <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
-                                        <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
-                                        <li><a href="page-terms.html">Terms of Service</a></li>
-                                        <li><a href="page-404.html">404 Page</a></li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children"><span class="menu-expand"></span><a
-                                        href="#">Language</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#">English</a></li>
-                                        <li><a href="#">French</a></li>
-                                        <li><a href="#">German</a></li>
-                                        <li><a href="#">Spanish</a></li>
-                                    </ul>
-                                </li>
+                                <% if(user) { %>
+                                    <span>
+                                        <%= user.userName %>
+                                    </span>&nbsp;&nbsp;&nbsp;<a href="/userLogout">logout</a>
+                                    <% }else{ %>
+                                        <li><i class="fi-rs-user"></i><a href="/login">Log In </a>/<a
+                                                href="/signUp">Sign Up</a></li>
+                                        <%}%>
                             </ul>
-                        </nav>
-                        <!-- mobile menu end -->
-                    </div>
-                    <div class="mobile-header-info-wrap mobile-header-border">
-                        <div class="single-mobile-header-info mt-30">
-                            <a href="page-contact.html"> Our location </a>
+
                         </div>
-                        <div class="single-mobile-header-info">
-                            <a href="page-login-register.html">Log In / Sign Up </a>
-                        </div>
-                        <div class="single-mobile-header-info">
-                            <a href="#">(+01) - 2345 - 6789 </a>
-                        </div>
-                    </div>
-                    <div class="mobile-social-icon">
-                        <h5 class="mb-15 text-grey-4">Follow Us</h5>
-                        <a href="#"><img src="public/assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-                        <a href="#"><img src="public/assets/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-                        <a href="#"><img src="public/assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                        <a href="#"><img src="public/assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                        <a href="#"><img src="public/assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>
                     </div>
                 </div>
             </div>
         </div>
-        <main class="main">
-            <div class="page-header breadcrumb-wrap">
-                <div class="container">
-                    <div class="breadcrumb">
-                        <a href="/" rel="nofollow">Home</a>
-                        <span></span> Account
+        <div class="header-bottom sticky-bar sticky-white-bg">
+            <div class="container">
+                <div class="header-wrap header-space-between position-relative">
+                    <div class="logo logo-width-1">
+                        <a href="index.html"><img src="public/assets/imgs/theme/logo.svg" alt="logo"></a>
+                    </div>
+                    <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
+                        <nav>
+                            <ul>
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/shop">Shop</a></li>
+                                <li><a class="active" href="/myAccount">My Account</a></li>
+                                <li><a href="page-about.html">About</a></li>
+                                <li> <a href="page-contact.html">Contact</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="header-action-right">
+                        <div class="search-style-2">
+                            <form action="#">
+                                <select class="select-active">
+                                    <option>Search in</option>
+                                    <option>Women's Clothing</option>
+                                    <option>Men's Clothing</option>
+                                    <option>Cellphones</option>
+                                    <option>Computer & Office</option>
+                                    <option>Consumer Electronics</option>
+                                    <option>Jewelry & Accessories</option>
+                                    <option>Home & Garden</option>
+                                    <option>Luggage & Bags</option>
+                                    <option>Shoes</option>
+                                    <option>Mother & Kids</option>
+                                </select>
+                                <input type="text" placeholder="Search for items…">
+                            </form>
+                        </div>
+                        <div class="header-action-2">
+                            <div class="header-action-icon-2">
+                                <a href="shop-wishlist.html">
+                                    <img class="svgInject" alt="Evara"
+                                        src="public/assets/imgs/theme/icons/icon-heart.svg">
+                                </a>
+                            </div>
+                            <div class="header-action-icon-2">
+                                <a class="mini-cart-icon" href="/cart">
+                                    <img alt="Evara" src="public/assets/imgs/theme/icons/icon-cart.svg">
+                                </a>
+                            </div>
+                            <div class="header-action-icon d-block d-lg-none">
+                                <div class="burger-icon">
+                                    <span class="burger-icon-top"></span>
+                                    <span class="burger-icon-mid"></span>
+                                    <span class="burger-icon-bottom"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <section class="pt-150 pb-150">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-10 m-auto">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="dashboard-menu">
-                                        <ul class="nav flex-column" role="tablist">
-                                            <li class="nav-item">
-                                                <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab"
-                                                    href="#dashboard" role="tab" aria-controls="dashboard"
-                                                    aria-selected="false"><i
-                                                        class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders"
-                                                    role="tab" aria-controls="orders" aria-selected="false"><i
-                                                        class="fi-rs-shopping-bag mr-10"></i>Orders</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="address-tab" data-bs-toggle="tab"
-                                                    href="#address" role="tab" aria-controls="address"
-                                                    aria-selected="true"><i class="fi-rs-marker mr-10"></i>My
-                                                    Address</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" 
-                                                href="#wallet" role="tab" aria-controls="track-orders"
-                                                aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>Eye Trek wallet</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab"
-                                                    href="#account-detail" role="tab" aria-controls="account-detail"
-                                                    aria-selected="true"><i class="fi-rs-user mr-10"></i>Account
-                                                    details</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="/userLogout"><i
-                                                        class="fi-rs-sign-out mr-10"></i>Logout</a>
-                                            </li>
+        </div>
+    </header>
+    <div class="mobile-header-active mobile-header-wrapper-style">
+        <div class="mobile-header-wrapper-inner">
+            <div class="mobile-header-top">
+                <div class="mobile-header-logo">
+                    <a href="index.html"><img src="public/assets/imgs/theme/logo.svg" alt="logo"></a>
+                </div>
+                <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
+                    <button class="close-style search-close">
+                        <i class="icon-top"></i>
+                        <i class="icon-bottom"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="mobile-header-content-area">
+                <div class="mobile-search search-style-3 mobile-header-border">
+                    <form action="#">
+                        <input type="text" placeholder="Search for items…">
+                        <button type="submit"><i class="fi-rs-search"></i></button>
+                    </form>
+                </div>
+                <div class="mobile-menu-wrap mobile-header-border">
+                    <div class="main-categori-wrap mobile-header-border">
+                        <a class="categori-button-active-2" href="#">
+                            <span class="fi-rs-apps"></span> Browse Categories
+                        </a>
+                        <div class="categori-dropdown-wrap categori-dropdown-active-small">
+                            <ul>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-dress"></i>Women's
+                                        Clothing</a></li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-tshirt"></i>Men's
+                                        Clothing</a></li>
+                                <li> <a href="shop-grid-right.html"><i class="evara-font-smartphone"></i>
+                                        Cellphones</a></li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-desktop"></i>Computer &
+                                        Office</a></li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-cpu"></i>Consumer
+                                        Electronics</a></li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-home"></i>Home & Garden</a>
+                                </li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-high-heels"></i>Shoes</a>
+                                </li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-teddy-bear"></i>Mother &
+                                        Kids</a></li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-kite"></i>Outdoor fun</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- mobile menu start -->
+                    <nav>
+                        <ul class="mobile-menu">
+                            <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                    href="index.html">Home</a>
+                                <ul class="dropdown">
+                                    <li><a href="index.html">Home 1</a></li>
+                                    <li><a href="index-2.html">Home 2</a></li>
+                                    <li><a href="index-3.html">Home 3</a></li>
+                                    <li><a href="index-4.html">Home 4</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                    href="shop-grid-right.html">shop</a>
+                                <ul class="dropdown">
+                                    <li><a href="shop-grid-right.html">Shop Grid – Right Sidebar</a></li>
+                                    <li><a href="shop-grid-left.html">Shop Grid – Left Sidebar</a></li>
+                                    <li><a href="shop-list-right.html">Shop List – Right Sidebar</a></li>
+                                    <li><a href="shop-list-left.html">Shop List – Left Sidebar</a></li>
+                                    <li><a href="shop-fullwidth.html">Shop - Wide</a></li>
+                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                            href="#">Single Product</a>
+                                        <ul class="dropdown">
+                                            <li><a href="shop-product-right.html">Product – Right Sidebar</a></li>
+                                            <li><a href="shop-product-left.html">Product – Left Sidebar</a></li>
+                                            <li><a href="shop-product-full.html">Product – No sidebar</a></li>
                                         </ul>
-                                    </div>
+                                    </li>
+                                    <li><a href="shop-filter.html">Shop – Filter</a></li>
+                                    <li><a href="shop-wishlist.html">Shop – Wishlist</a></li>
+                                    <li><a href="shop-cart.html">Shop – Cart</a></li>
+                                    <li><a href="shop-checkout.html">Shop – Checkout</a></li>
+                                    <li><a href="shop-compare.html">Shop – Compare</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Mega
+                                    menu</a>
+                                <ul class="dropdown">
+                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                            href="#">Women's Fashion</a>
+                                        <ul class="dropdown">
+                                            <li><a href="shop-product-right.html">Dresses</a></li>
+                                            <li><a href="shop-product-right.html">Blouses & Shirts</a></li>
+                                            <li><a href="shop-product-right.html">Hoodies & Sweatshirts</a></li>
+                                            <li><a href="shop-product-right.html">Women's Sets</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                            href="#">Men's Fashion</a>
+                                        <ul class="dropdown">
+                                            <li><a href="shop-product-right.html">Jackets</a></li>
+                                            <li><a href="shop-product-right.html">Casual Faux Leather</a></li>
+                                            <li><a href="shop-product-right.html">Genuine Leather</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                            href="#">Technology</a>
+                                        <ul class="dropdown">
+                                            <li><a href="shop-product-right.html">Gaming Laptops</a></li>
+                                            <li><a href="shop-product-right.html">Ultraslim Laptops</a></li>
+                                            <li><a href="shop-product-right.html">Tablets</a></li>
+                                            <li><a href="shop-product-right.html">Laptop Accessories</a></li>
+                                            <li><a href="shop-product-right.html">Tablet Accessories</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                    href="blog-category-fullwidth.html">Blog</a>
+                                <ul class="dropdown">
+                                    <li><a href="blog-category-grid.html">Blog Category Grid</a></li>
+                                    <li><a href="blog-category-list.html">Blog Category List</a></li>
+                                    <li><a href="blog-category-big.html">Blog Category Big</a></li>
+                                    <li><a href="blog-category-fullwidth.html">Blog Category Wide</a></li>
+                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                            href="#">Single Product Layout</a>
+                                        <ul class="dropdown">
+                                            <li><a href="blog-post-left.html">Left Sidebar</a></li>
+                                            <li><a href="blog-post-right.html">Right Sidebar</a></li>
+                                            <li><a href="blog-post-fullwidth.html">No Sidebar</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                    href="#">Pages</a>
+                                <ul class="dropdown">
+                                    <li><a href="page-about.html">About Us</a></li>
+                                    <li><a href="page-contact.html">Contact</a></li>
+                                    <li><a href="page-account.html">My Account</a></li>
+                                    <li><a href="page-login-register.html">login/register</a></li>
+                                    <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
+                                    <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
+                                    <li><a href="page-terms.html">Terms of Service</a></li>
+                                    <li><a href="page-404.html">404 Page</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                    href="#">Language</a>
+                                <ul class="dropdown">
+                                    <li><a href="#">English</a></li>
+                                    <li><a href="#">French</a></li>
+                                    <li><a href="#">German</a></li>
+                                    <li><a href="#">Spanish</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- mobile menu end -->
+                </div>
+                <div class="mobile-header-info-wrap mobile-header-border">
+                    <div class="single-mobile-header-info mt-30">
+                        <a href="page-contact.html"> Our location </a>
+                    </div>
+                    <div class="single-mobile-header-info">
+                        <a href="page-login-register.html">Log In / Sign Up </a>
+                    </div>
+                    <div class="single-mobile-header-info">
+                        <a href="#">(+01) - 2345 - 6789 </a>
+                    </div>
+                </div>
+                <div class="mobile-social-icon">
+                    <h5 class="mb-15 text-grey-4">Follow Us</h5>
+                    <a href="#"><img src="public/assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
+                    <a href="#"><img src="public/assets/imgs/theme/icons/icon-twitter.svg" alt=""></a>
+                    <a href="#"><img src="public/assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>
+                    <a href="#"><img src="public/assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
+                    <a href="#"><img src="public/assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <main class="main">
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="/" rel="nofollow">Home</a>
+                    <span></span> Account
+                </div>
+            </div>
+        </div>
+        <section class="pt-150 pb-150">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 m-auto">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="dashboard-menu">
+                                    <ul class="nav flex-column" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab"
+                                                href="#dashboard" role="tab" aria-controls="dashboard"
+                                                aria-selected="false"><i
+                                                    class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders"
+                                                role="tab" aria-controls="orders" aria-selected="false"><i
+                                                    class="fi-rs-shopping-bag mr-10"></i>Orders</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="address-tab" data-bs-toggle="tab"
+                                                href="#address" role="tab" aria-controls="address"
+                                                aria-selected="true"><i class="fi-rs-marker mr-10"></i>My
+                                                Address</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" 
+                                            href="#wallet" role="tab" aria-controls="track-orders"
+                                            aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>Eye Trek wallet</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab"
+                                                href="#account-detail" role="tab" aria-controls="account-detail"
+                                                aria-selected="true"><i class="fi-rs-user mr-10"></i>Account
+                                                details</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/userLogout"><i
+                                                    class="fi-rs-sign-out mr-10"></i>Logout</a>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <% if(user){ %>
-                                    <div class="col-md-8">
-                                        <div class="tab-content dashboard-content">
-                                            <div class="tab-pane fade active show" id="dashboard" role="tabpanel"
-                                                aria-labelledby="dashboard-tab">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5 class="mb-0">Hello <%= user.userName %>
-                                                        </h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <p>From your account dashboard. you can easily check &amp; view
-                                                            your <a href="#">recent orders</a>, manage your <a
-                                                                href="#">shipping and billing addresses</a> and <a
-                                                                href="#">edit your password and account details.</a></p>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="email">Name:</label>
-                                                        <input type="email" id="email" value="<%= user.userName %>"
-                                                            readonly
-                                                            style="background-color: #f8f9fa; border: 1px solid #ced4da; border-radius: 5px; padding: 12px; margin-bottom: 10px; width: 90%; box-sizing: border-box; font-size: 16px; color: #495057;">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="password">Email:</label>
-                                                        <input type="email" id="password" value="<%= user.email %>"
-                                                            readonly
-                                                            style="background-color: #f8f9fa; border: 1px solid #ced4da; border-radius: 5px; padding: 12px; margin-bottom: 10px; width: 90%; box-sizing: border-box; font-size: 16px; color: #495057;">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="password">Email:</label>
-                                                        <input type="email" id="password" value="<%= user.mobile %>"
-                                                            readonly
-                                                            style="background-color: #f8f9fa; border: 1px solid #ced4da; border-radius: 5px; padding: 12px; margin-bottom: 10px; width: 90%; box-sizing: border-box; font-size: 16px; color: #495057;">
-                                                    </div>
+                            </div>
+                            <% if(user){ %>
+                                <div class="col-md-8">
+                                    <div class="tab-content dashboard-content">
+                                        <div class="tab-pane fade active show" id="dashboard" role="tabpanel"
+                                            aria-labelledby="dashboard-tab">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5 class="mb-0">Hello <%= user.userName %>
+                                                    </h5>
                                                 </div>
-
-                                            </div>
-                                            <div class="tab-pane fade" id="orders" role="tabpanel"
-                                                aria-labelledby="orders-tab">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5 class="mb-0">Your Orders</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="table-responsive">
-                                                            <% if (orderDetails && orderDetails.length > 0) { %>
-                                                                <table class="table">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Order</th>
-                                                                            <th>Date</th>
-                                                                            <th>Status</th>
-                                                                            <th>Total</th>
-                                                                            <th>Actions</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <% orderDetails.forEach((order, index) => { %>
-                                                                            <tr>
-                                                                                <td><%= (orderPage - 1) * 5 + index + 1 %></td>
-                                                                                <td> <%= new Date(order.createdAt).toLocaleString() %></td>
-                                                                                <td><%= order.status %></td>
-                                                                                <td>₹<%= (order.totalPrice).toFixed(2) %> for <%= order.cartItems.length %> item(s)</td>
-                                                                                <td><a href="/order/<%= order._id %>" class="btn-small d-block">View</a></td>
-                                                                            </tr>
-                                                                        <% }) %>
-                                                                    </tbody>
-                                                                </table>
-                                                            <% } else { %>
-                                                                <p>No orders found.</p>
-                                                            <% } %>
-                                                        </div>
-                                                        <!-- Pagination for Orders -->
-                                                        <% if (totalOrderPages > 1) { %>
-                                                            <nav aria-label="Page navigation">
-                                                                <ul class="pagination justify-content-center">
-                                                                    <% if (orderPage > 1) { %>
-                                                                        <li class="page-item">
-                                                                            <a class="page-link" href="?orderPage=<%= orderPage - 1 %>">Previous</a>
-                                                                        </li>
-                                                                    <% } %>
-                                                                    <% for (let i = 1; i <= totalOrderPages; i++) { %>
-                                                                        <li class="page-item <%= orderPage === i ? 'active' : '' %>">
-                                                                            <a class="page-link" href="?orderPage=<%= i %>"><%= i %></a>
-                                                                        </li>
-                                                                    <% } %>
-                                                                    <% if (orderPage < totalOrderPages) { %>
-                                                                        <li class="page-item">
-                                                                            <a class="page-link" href="?orderPage=<%= orderPage + 1 %>">Next</a>
-                                                                        </li>
-                                                                    <% } %>
-                                                                </ul>
-                                                            </nav>
-                                                        <% } %>
-                                                    </div>                                                   
+                                                <div class="card-body">
+                                                    <p>From your account dashboard. you can easily check &amp; view
+                                                        your <a href="#">recent orders</a>, manage your <a
+                                                            href="#">shipping and billing addresses</a> and <a
+                                                            href="#">edit your password and account details.</a></p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email">Name:</label>
+                                                    <input type="email" id="email" value="<%= user.userName %>"
+                                                        readonly
+                                                        style="background-color: #f8f9fa; border: 1px solid #ced4da; border-radius: 5px; padding: 12px; margin-bottom: 10px; width: 90%; box-sizing: border-box; font-size: 16px; color: #495057;">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="password">Email:</label>
+                                                    <input type="email" id="password" value="<%= user.email %>"
+                                                        readonly
+                                                        style="background-color: #f8f9fa; border: 1px solid #ced4da; border-radius: 5px; padding: 12px; margin-bottom: 10px; width: 90%; box-sizing: border-box; font-size: 16px; color: #495057;">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="password">Email:</label>
+                                                    <input type="email" id="password" value="<%= user.mobile %>"
+                                                        readonly
+                                                        style="background-color: #f8f9fa; border: 1px solid #ced4da; border-radius: 5px; padding: 12px; margin-bottom: 10px; width: 90%; box-sizing: border-box; font-size: 16px; color: #495057;">
                                                 </div>
                                             </div>
 
-                                            <!-- wallet -->
-
-                                            <div class="tab-pane fade" id="wallet" role="tabpanel" aria-labelledby="track-orders-tab">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5 class="mb-0">Wallet Management</h5>
-                                                    </div>
-                                                    <div class="card-body contact-from-area">
-                                                        <p>Your current balance: ₹<%= Userwallet ? Userwallet.balance : 0 %></p>
-                                                        <form id="add-money-form">
-                                                            <div class="input-style mb-20">
-                                                                <label>Amount to Add</label>
-                                                                <input name="amount" id="amount" placeholder="Enter amount" type="number" class="square" required>
-                                                            </div>
-                                                            <button type="button" class="submit submit-auto-width" id="rzp-button">Add Money</button>
-                                                        </form>
-                                                        <hr>
-                                                        <h5 class="mt-3">Transaction History</h5>
-                                                        <div class="table-responsive">
+                                        </div>
+                                        <div class="tab-pane fade" id="orders" role="tabpanel"
+                                            aria-labelledby="orders-tab">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5 class="mb-0">Your Orders</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <% if (orderDetails && orderDetails.length > 0) { %>
                                                             <table class="table">
                                                                 <thead>
                                                                     <tr>
+                                                                        <th>Order</th>
                                                                         <th>Date</th>
-                                                                        <th>Amount</th>
-                                                                        <th>Type</th>
+                                                                        <th>Status</th>
+                                                                        <th>Total</th>
+                                                                        <th>Actions</th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody id="transaction-history">
-                                                                    <% if (Userwallet && Userwallet.history && Userwallet.history.length > 0) { %>
-                                                                        <% Userwallet.history.forEach((transaction) => { %>
-                                                                            <tr>
-                                                                                <td><%= new Date(transaction.createdAt).toLocaleString() %></td>
-                                                                                <td>₹<%= transaction.amount.toFixed(2) %></td>
-                                                                                <td><%= transaction.type %></td>
-                                                                            </tr>
-                                                                        <% }) %>
-                                                                    <% } else { %>
+                                                                <tbody>
+                                                                    <% orderDetails.forEach((order, index) => { %>
                                                                         <tr>
-                                                                            <td colspan="3">No transactions found.</td>
+                                                                            <td><%= (orderPage - 1) * 5 + index + 1 %></td>
+                                                                            <td> <%= new Date(order.createdAt).toLocaleString() %></td>
+                                                                            <td><%= order.status %></td>
+                                                                            <td>₹<%= (order.totalPrice).toFixed(2) %> for <%= order.cartItems.length %> item(s)</td>
+                                                                            <td><a href="/order/<%= order._id %>" class="btn-small d-block">View</a></td>
                                                                         </tr>
-                                                                    <% } %>
+                                                                    <% }) %>
                                                                 </tbody>
                                                             </table>
-                                                        </div>
-                                                        <!-- Pagination for Transactions -->
-                                                        <% if (totalTransactionPages > 1) { %>
-                                                            <nav aria-label="Page navigation">
-                                                                <ul class="pagination justify-content-center">
-                                                                    <% if (transactionPage > 1) { %>
-                                                                        <li class="page-item">
-                                                                            <a class="page-link" href="?transactionPage=<%= transactionPage - 1 %>">Previous</a>
-                                                                        </li>
-                                                                    <% } %>
-                                                                    <% for (let i = 1; i <= totalTransactionPages; i++) { %>
-                                                                        <li class="page-item <%= transactionPage === i ? 'active' : '' %>">
-                                                                            <a class="page-link" href="?transactionPage=<%= i %>"><%= i %></a>
-                                                                        </li>
-                                                                    <% } %>
-                                                                    <% if (transactionPage < totalTransactionPages) { %>
-                                                                        <li class="page-item">
-                                                                            <a class="page-link" href="?transactionPage=<%= transactionPage + 1 %>">Next</a>
-                                                                        </li>
-                                                                    <% } %>
-                                                                </ul>
-                                                            </nav>
+                                                        <% } else { %>
+                                                            <p>No orders found.</p>
                                                         <% } %>
                                                     </div>
-                                                </div>
-                                                
+                                                    <!-- Pagination for Orders -->
+                                                    <% if (totalOrderPages > 1) { %>
+                                                        <nav aria-label="Page navigation">
+                                                            <ul class="pagination justify-content-center">
+                                                                <% if (orderPage > 1) { %>
+                                                                    <li class="page-item">
+                                                                        <a class="page-link" href="?orderPage=<%= orderPage - 1 %>">Previous</a>
+                                                                    </li>
+                                                                <% } %>
+                                                                <% for (let i = 1; i <= totalOrderPages; i++) { %>
+                                                                    <li class="page-item <%= orderPage === i ? 'active' : '' %>">
+                                                                        <a class="page-link" href="?orderPage=<%= i %>"><%= i %></a>
+                                                                    </li>
+                                                                <% } %>
+                                                                <% if (orderPage < totalOrderPages) { %>
+                                                                    <li class="page-item">
+                                                                        <a class="page-link" href="?orderPage=<%= orderPage + 1 %>">Next</a>
+                                                                    </li>
+                                                                <% } %>
+                                                            </ul>
+                                                        </nav>
+                                                    <% } %>
+                                                </div>                                                   
+                                            </div>
                                         </div>
 
-                                            <div class="tab-pane fade" id="address" role="tabpanel"
-                                                aria-labelledby="address-tab">
-                                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                                    <h5>My Addresses</h5>
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#addAddressModal">
-                                                        Add Address
-                                                    </button>
-                                                    <!-- Modal -->
-                                                     <!-- add address modal -->
-                                                    <div class="modal fade" id="addAddressModal" tabindex="-1"
-                                                        role="dialog" aria-labelledby="addAddressModalLabel"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <!-- Modal Header -->
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="addAddressModalLabel">
-                                                                        Add New Address</h5>
-                                                                    <button type="button" class="close"
-                                                                        data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
+                                        <!-- wallet -->
 
-                                                                <!-- Modal Body -->
-                                                                <div class="modal-body">
-                                                                    <form id="addAddressForm" method="POST"
-                                                                        action="/addAddress">
-                                                                        <!-- Name Input -->
-                                                                        <div class="form-group">
-                                                                            <label for="name">Name</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="name" name="name"
-                                                                                placeholder="Enter name">
-                                                                            <span id="nameError"
-                                                                                class="error-message"></span>
-                                                                        </div>
-
-                                                                        <!-- Mobile Number Input -->
-                                                                        <div class="form-group">
-                                                                            <label for="mobileNumber">Mobile
-                                                                                Number</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="mobileNumber" name="mobile"
-                                                                                placeholder="Enter mobile number">
-                                                                            <span id="mobileNumberError"
-                                                                                class="error-message"></span>
-                                                                        </div>
-
-                                                                        <!-- House Name Input -->
-                                                                        <div class="form-group">
-                                                                            <label for="houseName">House Name</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="houseName" name="houseName"
-                                                                                placeholder="Enter house name">
-                                                                            <span id="houseNameError"
-                                                                                class="error-message"></span>
-                                                                        </div>
-
-                                                                        <!-- Street Input -->
-                                                                        <div class="form-group">
-                                                                            <label for="street">Street</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="street" name="street"
-                                                                                placeholder="Enter street">
-                                                                            <span id="streetError"
-                                                                                class="error-message"></span>
-                                                                        </div>
-
-                                                                        <!-- City and State Inputs -->
-                                                                        <div class="form-row">
-                                                                            <div class="form-group col-md-6">
-                                                                                <label for="city">City</label>
-                                                                                <input type="text" class="form-control"
-                                                                                    id="city" name="city"
-                                                                                    placeholder="Enter city">
-                                                                                <span id="cityError"
-                                                                                    class="error-message"></span>
-                                                                            </div>
-                                                                            <div class="form-group col-md-6">
-                                                                                <label for="state">State</label>
-                                                                                <input type="text" class="form-control"
-                                                                                    id="state" name="state"
-                                                                                    placeholder="Enter state">
-                                                                                <span id="stateError"
-                                                                                    class="error-message"></span>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <!-- Pin Code Input -->
-                                                                        <div class="form-group">
-                                                                            <label for="pinCode">Pin Code</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="pinCode" name="pinCode"
-                                                                                placeholder="Enter pin code">
-                                                                            <span id="pinCodeError"
-                                                                                class="error-message"></span>
-                                                                        </div>
-
-                                                                        <!-- Modal Footer with Submit Button -->
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                class="btn btn-secondary"
-                                                                                data-dismiss="modal">Close</button>
-                                                                            <button type="submit"
-                                                                                class="btn btn-primary">Save
-                                                                                Address</button>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
+                                        <div class="tab-pane fade" id="wallet" role="tabpanel" aria-labelledby="track-orders-tab">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5 class="mb-0">Wallet Management</h5>
+                                                </div>
+                                                <div class="card-body contact-from-area">
+                                                    <p>Your current balance: ₹<%= Userwallet ? Userwallet.balance : 0 %></p>
+                                                    <form id="add-money-form">
+                                                        <div class="input-style mb-20">
+                                                            <label>Amount to Add</label>
+                                                            <input name="amount" id="amount" placeholder="Enter amount" type="number" class="square" required>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="container mt-5">
-                                                    <!-- Address Cards -->
-                                                <div class="row mt-4">
-                                                    <% if (addresses.length> 0) { %>
-                                                        <% addresses.forEach((element, index)=> { %>
-                                                            <div class="col-md-6 mb-3">
-                                                                <div class="card">
-                                                                    <div class="card-header">
-                                                                        <h5 class="mb-0">My Address <%= index + 1 %>
-                                                                        </h5>
-                                                                    </div>
-                                                                    <div class="card-body">
-                                                                        <address>Name: <%= element.name %>
-                                                                        </address>
-                                                                        <p>Number: <%= element.mobile %>
-                                                                        </p>
-                                                                        <p>House Name: <%= element.houseName %>
-                                                                                ,Street: <%= element.street %>
-                                                                        </p>
-                                                                        <p>City: <%= element.city %>,State: <%=
-                                                                                    element.state %> - PIN: <%=
-                                                                                        element.pinCode %>
-                                                                        </p>
-                                                                        <div class="d-flex justify-content-between">
-                                                                            <button type="button"
-                                                                                class="btn btn-small btn-secondary"
-                                                                                data-toggle="modal"
-                                                                                data-target="#editAddressModal"
-                                                                                onclick="prefillEditForm('<%= element._id %>', '<%= element.name %>', '<%= element.mobile %>', '<%= element.houseName %>', '<%= element.street %>', '<%= element.city %>', '<%= element.state %>', '<%= element.pinCode %>')">Edit</button>
-                                                                            <button type="button"
-                                                                                class="btn btn-small btn-danger ml-2"
-                                                                                onclick="deleteAddress('<%= element._id %>')">Delete</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <% }); %>
+                                                        <button type="button" class="submit submit-auto-width" id="rzp-button">Add Money</button>
+                                                    </form>
+                                                    <hr>
+                                                    <h5 class="mt-3">Transaction History</h5>
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Date</th>
+                                                                    <th>Amount</th>
+                                                                    <th>Type</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="transaction-history">
+                                                                <% if (Userwallet && Userwallet.history && Userwallet.history.length > 0) { %>
+                                                                    <% Userwallet.history.forEach((transaction) => { %>
+                                                                        <tr>
+                                                                            <td><%= new Date(transaction.createdAt).toLocaleString() %></td>
+                                                                            <td>₹<%= transaction.amount.toFixed(2) %></td>
+                                                                            <td><%= transaction.type %></td>
+                                                                        </tr>
+                                                                    <% }) %>
                                                                 <% } else { %>
-                                                                    <div class="col-12">
-                                                                        <p>No addresses found.</p>
-                                                                    </div>
-                                                                    <% } %>
+                                                                    <tr>
+                                                                        <td colspan="3">No transactions found.</td>
+                                                                    </tr>
+                                                                <% } %>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <!-- Pagination for Transactions -->
+                                                    <% if (totalTransactionPages > 1) { %>
+                                                        <nav aria-label="Page navigation">
+                                                            <ul class="pagination justify-content-center">
+                                                                <% if (transactionPage > 1) { %>
+                                                                    <li class="page-item">
+                                                                        <a class="page-link" href="?transactionPage=<%= transactionPage - 1 %>">Previous</a>
+                                                                    </li>
+                                                                <% } %>
+                                                                <% for (let i = 1; i <= totalTransactionPages; i++) { %>
+                                                                    <li class="page-item <%= transactionPage === i ? 'active' : '' %>">
+                                                                        <a class="page-link" href="?transactionPage=<%= i %>"><%= i %></a>
+                                                                    </li>
+                                                                <% } %>
+                                                                <% if (transactionPage < totalTransactionPages) { %>
+                                                                    <li class="page-item">
+                                                                        <a class="page-link" href="?transactionPage=<%= transactionPage + 1 %>">Next</a>
+                                                                    </li>
+                                                                <% } %>
+                                                            </ul>
+                                                        </nav>
+                                                    <% } %>
                                                 </div>
-                                                </div>
+                                            </div>
+                                            
+                                    </div>
 
-                                                <!-- Edit Address Modal -->
-                                                <div class="modal fade" id="editAddressModal" tabindex="-1"
-                                                    role="dialog" aria-labelledby="editAddressModalLabel"
+                                        <div class="tab-pane fade" id="address" role="tabpanel"
+                                            aria-labelledby="address-tab">
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <h5>My Addresses</h5>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#addAddressModal">
+                                                    Add Address
+                                                </button>
+                                                <!-- Modal -->
+                                                    <!-- add address modal -->
+                                                <div class="modal fade" id="addAddressModal" tabindex="-1"
+                                                    role="dialog" aria-labelledby="addAddressModalLabel"
                                                     aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <!-- Modal Header -->
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="editAddressModalLabel">Edit
-                                                                    Address</h5>
-                                                                <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close">
+                                                                <h5 class="modal-title" id="addAddressModalLabel">
+                                                                    Add New Address</h5>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
 
                                                             <!-- Modal Body -->
                                                             <div class="modal-body">
-                                                                <form id="editAddressForm" method="POST"
-                                                                    action="/editAddress">
-                                                                    <input type="hidden" id="editAddressId"
-                                                                        name="addressId">
+                                                                <form id="addAddressForm" method="POST"
+                                                                    action="/addAddress">
                                                                     <!-- Name Input -->
                                                                     <div class="form-group">
-                                                                        <label for="editName">Name</label>
+                                                                        <label for="name">Name</label>
                                                                         <input type="text" class="form-control"
-                                                                            id="editName" name="name"
+                                                                            id="name" name="name"
                                                                             placeholder="Enter name">
-                                                                        <span id="editNameError"
+                                                                        <span id="nameError"
                                                                             class="error-message"></span>
                                                                     </div>
 
                                                                     <!-- Mobile Number Input -->
                                                                     <div class="form-group">
-                                                                        <label for="editMobileNumber">Mobile
+                                                                        <label for="mobileNumber">Mobile
                                                                             Number</label>
                                                                         <input type="text" class="form-control"
-                                                                            id="editMobileNumber" name="mobile"
+                                                                            id="mobileNumber" name="mobile"
                                                                             placeholder="Enter mobile number">
-                                                                        <span id="editMobileNumberError"
+                                                                        <span id="mobileNumberError"
                                                                             class="error-message"></span>
                                                                     </div>
 
                                                                     <!-- House Name Input -->
                                                                     <div class="form-group">
-                                                                        <label for="editHouseName">House Name</label>
+                                                                        <label for="houseName">House Name</label>
                                                                         <input type="text" class="form-control"
-                                                                            id="editHouseName" name="houseName"
+                                                                            id="houseName" name="houseName"
                                                                             placeholder="Enter house name">
-                                                                        <span id="editHouseNameError"
+                                                                        <span id="houseNameError"
                                                                             class="error-message"></span>
                                                                     </div>
 
                                                                     <!-- Street Input -->
                                                                     <div class="form-group">
-                                                                        <label for="editStreet">Street</label>
+                                                                        <label for="street">Street</label>
                                                                         <input type="text" class="form-control"
-                                                                            id="editStreet" name="street"
+                                                                            id="street" name="street"
                                                                             placeholder="Enter street">
-                                                                        <span id="editStreetError"
+                                                                        <span id="streetError"
                                                                             class="error-message"></span>
                                                                     </div>
 
                                                                     <!-- City and State Inputs -->
                                                                     <div class="form-row">
                                                                         <div class="form-group col-md-6">
-                                                                            <label for="editCity">City</label>
+                                                                            <label for="city">City</label>
                                                                             <input type="text" class="form-control"
-                                                                                id="editCity" name="city"
+                                                                                id="city" name="city"
                                                                                 placeholder="Enter city">
-                                                                            <span id="editCityError"
+                                                                            <span id="cityError"
                                                                                 class="error-message"></span>
                                                                         </div>
                                                                         <div class="form-group col-md-6">
-                                                                            <label for="editState">State</label>
+                                                                            <label for="state">State</label>
                                                                             <input type="text" class="form-control"
-                                                                                id="editState" name="state"
+                                                                                id="state" name="state"
                                                                                 placeholder="Enter state">
-                                                                            <span id="editStateError"
+                                                                            <span id="stateError"
                                                                                 class="error-message"></span>
                                                                         </div>
                                                                     </div>
 
                                                                     <!-- Pin Code Input -->
                                                                     <div class="form-group">
-                                                                        <label for="editPinCode">Pin Code</label>
+                                                                        <label for="pinCode">Pin Code</label>
                                                                         <input type="text" class="form-control"
-                                                                            id="editPinCode" name="pinCode"
+                                                                            id="pinCode" name="pinCode"
                                                                             placeholder="Enter pin code">
-                                                                        <span id="editPinCodeError"
+                                                                        <span id="pinCodeError"
                                                                             class="error-message"></span>
                                                                     </div>
 
-                                                                    <!-- Modal Footer with Save Button -->
+                                                                    <!-- Modal Footer with Submit Button -->
                                                                     <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary"
+                                                                        <button type="button"
+                                                                            class="btn btn-secondary"
                                                                             data-dismiss="modal">Close</button>
                                                                         <button type="submit"
-                                                                            class="btn btn-primary">Save</button>
+                                                                            class="btn btn-primary">Save
+                                                                            Address</button>
                                                                     </div>
                                                                 </form>
                                                             </div>
@@ -798,80 +647,150 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="tab-pane fade" id="account-detail" role="tabpanel"
-                                                aria-labelledby="account-detail-tab">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5>Account Details</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="card-body">
-                                                            <!-- Details Form -->
-                                                            <form id="detailsForm" method="POST" name="enqDetails"
-                                                                action="/updateDetails">
-                                                                <div class="row">
-                                                                    <div class="form-group col-md-12">
-                                                                        <label>Name <span
-                                                                                class="required">*</span></label>
-                                                                        <input class="form-control square" name="name"
-                                                                            type="text" value="<%= user.userName %>">
-                                                                        <p id="nameError" class="error"></p>
-                                                                    </div>
-                                                                    <div class="form-group col-md-12">
-                                                                        <label>Mobile <span
-                                                                                class="required">*</span></label>
-                                                                        <input class="form-control square" name="mobile"
-                                                                            type="text" value="<%= user.mobile %>">
-                                                                        <p id="mobileError" class="error"></p>
-                                                                    </div>
-                                                                    <div class="form-group col-md-12">
-                                                                        <label>Email <span
-                                                                                class="required">*</span></label>
-                                                                        <p class="form-control-static">
-                                                                            <%= user.email %>
-                                                                        </p>
-                                                                    </div>
-                                                                    <div class="col-md-12">
+                                            <div class="container mt-5">
+                                                <!-- Address Cards -->
+                                            <div class="row mt-4">
+                                                <% if (addresses.length> 0) { %>
+                                                    <% addresses.forEach((element, index)=> { %>
+                                                        <div class="col-md-6 mb-3">
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    <h5 class="mb-0">My Address <%= index + 1 %>
+                                                                    </h5>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <address>Name: <%= element.name %>
+                                                                    </address>
+                                                                    <p>Number: <%= element.mobile %>
+                                                                    </p>
+                                                                    <p>House Name: <%= element.houseName %>
+                                                                            ,Street: <%= element.street %>
+                                                                    </p>
+                                                                    <p>City: <%= element.city %>,State: <%=
+                                                                                element.state %> - PIN: <%=
+                                                                                    element.pinCode %>
+                                                                    </p>
+                                                                    <div class="d-flex justify-content-between">
                                                                         <button type="button"
-                                                                            class="btn btn-fill-out submit"
-                                                                            onclick="validateDetails()">Save
-                                                                            Details</button>
+                                                                            class="btn btn-small btn-secondary"
+                                                                            data-toggle="modal"
+                                                                            data-target="#editAddressModal"
+                                                                            onclick="prefillEditForm('<%= element._id %>', '<%= element.name %>', '<%= element.mobile %>', '<%= element.houseName %>', '<%= element.street %>', '<%= element.city %>', '<%= element.state %>', '<%= element.pinCode %>')">Edit</button>
+                                                                        <button type="button"
+                                                                            class="btn btn-small btn-danger ml-2"
+                                                                            onclick="deleteAddress('<%= element._id %>')">Delete</button>
                                                                     </div>
                                                                 </div>
-                                                            </form>
+                                                            </div>
+                                                        </div>
+                                                        <% }); %>
+                                                            <% } else { %>
+                                                                <div class="col-12">
+                                                                    <p>No addresses found.</p>
+                                                                </div>
+                                                                <% } %>
+                                            </div>
+                                            </div>
 
-                                                            <!-- Password Form -->
-                                                            <form id="passwordForm" method="post" name="enqPassword"
-                                                                action="/updatePassword">
-                                                                <div class="row">
-                                                                    <p id="chackPasswordError" class="error"></p>
-                                                                    <div class="form-group col-md-12">
-                                                                        <label>Current Password <span
-                                                                                class="required">*</span></label>
-                                                                        <input required="" class="form-control square"
-                                                                            name="password" type="password">
-                                                                        <p id="passwordError" class="error"></p>
+                                            <!-- Edit Address Modal -->
+                                            <div class="modal fade" id="editAddressModal" tabindex="-1"
+                                                role="dialog" aria-labelledby="editAddressModalLabel"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <!-- Modal Header -->
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="editAddressModalLabel">Edit
+                                                                Address</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+
+                                                        <!-- Modal Body -->
+                                                        <div class="modal-body">
+                                                            <form id="editAddressForm" method="POST"
+                                                                action="/editAddress">
+                                                                <input type="hidden" id="editAddressId"
+                                                                    name="addressId">
+                                                                <!-- Name Input -->
+                                                                <div class="form-group">
+                                                                    <label for="editName">Name</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="editName" name="name"
+                                                                        placeholder="Enter name">
+                                                                    <span id="editNameError"
+                                                                        class="error-message"></span>
+                                                                </div>
+
+                                                                <!-- Mobile Number Input -->
+                                                                <div class="form-group">
+                                                                    <label for="editMobileNumber">Mobile
+                                                                        Number</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="editMobileNumber" name="mobile"
+                                                                        placeholder="Enter mobile number">
+                                                                    <span id="editMobileNumberError"
+                                                                        class="error-message"></span>
+                                                                </div>
+
+                                                                <!-- House Name Input -->
+                                                                <div class="form-group">
+                                                                    <label for="editHouseName">House Name</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="editHouseName" name="houseName"
+                                                                        placeholder="Enter house name">
+                                                                    <span id="editHouseNameError"
+                                                                        class="error-message"></span>
+                                                                </div>
+
+                                                                <!-- Street Input -->
+                                                                <div class="form-group">
+                                                                    <label for="editStreet">Street</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="editStreet" name="street"
+                                                                        placeholder="Enter street">
+                                                                    <span id="editStreetError"
+                                                                        class="error-message"></span>
+                                                                </div>
+
+                                                                <!-- City and State Inputs -->
+                                                                <div class="form-row">
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="editCity">City</label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="editCity" name="city"
+                                                                            placeholder="Enter city">
+                                                                        <span id="editCityError"
+                                                                            class="error-message"></span>
                                                                     </div>
-                                                                    <div class="form-group col-md-12">
-                                                                        <label>New Password <span
-                                                                                class="required">*</span></label>
-                                                                        <input required="" class="form-control square"
-                                                                            name="npassword" type="password">
-                                                                        <p id="newPasswordError" class="error"></p>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="editState">State</label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="editState" name="state"
+                                                                            placeholder="Enter state">
+                                                                        <span id="editStateError"
+                                                                            class="error-message"></span>
                                                                     </div>
-                                                                    <div class="form-group col-md-12">
-                                                                        <label>Confirm Password <span
-                                                                                class="required">*</span></label>
-                                                                        <input required="" class="form-control square"
-                                                                            name="cpassword" type="password">
-                                                                        <p id="confirmPasswordError" class="error"></p>
-                                                                    </div>
-                                                                    <div class="col-md-12">
-                                                                        <button type="button"
-                                                                            class="btn btn-fill-out submit"
-                                                                            onclick="validatePassword()">Save
-                                                                            Password</button>
-                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Pin Code Input -->
+                                                                <div class="form-group">
+                                                                    <label for="editPinCode">Pin Code</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="editPinCode" name="pinCode"
+                                                                        placeholder="Enter pin code">
+                                                                    <span id="editPinCodeError"
+                                                                        class="error-message"></span>
+                                                                </div>
+
+                                                                <!-- Modal Footer with Save Button -->
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Save</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -879,491 +798,577 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="tab-pane fade" id="account-detail" role="tabpanel"
+                                            aria-labelledby="account-detail-tab">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5>Account Details</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="card-body">
+                                                        <!-- Details Form -->
+                                                        <form id="detailsForm" method="POST" name="enqDetails"
+                                                            action="/updateDetails">
+                                                            <div class="row">
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Name <span
+                                                                            class="required">*</span></label>
+                                                                    <input class="form-control square" name="name"
+                                                                        type="text" value="<%= user.userName %>">
+                                                                    <p id="nameError" class="error"></p>
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Mobile <span
+                                                                            class="required">*</span></label>
+                                                                    <input class="form-control square" name="mobile"
+                                                                        type="text" value="<%= user.mobile %>">
+                                                                    <p id="mobileError" class="error"></p>
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Email <span
+                                                                            class="required">*</span></label>
+                                                                    <p class="form-control-static">
+                                                                        <%= user.email %>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <button type="button"
+                                                                        class="btn btn-fill-out submit"
+                                                                        onclick="validateDetails()">Save
+                                                                        Details</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+
+                                                        <!-- Password Form -->
+                                                        <form id="passwordForm" method="post" name="enqPassword"
+                                                            action="/updatePassword">
+                                                            <div class="row">
+                                                                <p id="chackPasswordError" class="error"></p>
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Current Password <span
+                                                                            class="required">*</span></label>
+                                                                    <input required="" class="form-control square"
+                                                                        name="password" type="password">
+                                                                    <p id="passwordError" class="error"></p>
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <label>New Password <span
+                                                                            class="required">*</span></label>
+                                                                    <input required="" class="form-control square"
+                                                                        name="npassword" type="password">
+                                                                    <p id="newPasswordError" class="error"></p>
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Confirm Password <span
+                                                                            class="required">*</span></label>
+                                                                    <input required="" class="form-control square"
+                                                                        name="cpassword" type="password">
+                                                                    <p id="confirmPasswordError" class="error"></p>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <button type="button"
+                                                                        class="btn btn-fill-out submit"
+                                                                        onclick="validatePassword()">Save
+                                                                        Password</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <% } %>
-                            </div>
+                                </div>
+                                <% } %>
                         </div>
                     </div>
                 </div>
-            </section>
-        </main>
+            </div>
+        </section>
+    </main>
 
-        <!-- addAddress -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const form = document.getElementById('addAddressForm');
-                const houseName = document.getElementById('houseName');
-                const street = document.getElementById('street');
-                const city = document.getElementById('city');
-                const state = document.getElementById('state');
-                const pinCode = document.getElementById('pinCode');
-                const name = document.getElementById('name');
-                const mobileNumber = document.getElementById('mobileNumber');
+    <!-- addAddress -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('addAddressForm');
+            const houseName = document.getElementById('houseName');
+            const street = document.getElementById('street');
+            const city = document.getElementById('city');
+            const state = document.getElementById('state');
+            const pinCode = document.getElementById('pinCode');
+            const name = document.getElementById('name');
+            const mobileNumber = document.getElementById('mobileNumber');
 
-                const houseNameError = document.getElementById('houseNameError');
-                const streetError = document.getElementById('streetError');
-                const cityError = document.getElementById('cityError');
-                const stateError = document.getElementById('stateError');
-                const pinCodeError = document.getElementById('pinCodeError');
-                const nameError = document.getElementById('nameError');
-                const mobileNumberError = document.getElementById('mobileNumberError');
+            const houseNameError = document.getElementById('houseNameError');
+            const streetError = document.getElementById('streetError');
+            const cityError = document.getElementById('cityError');
+            const stateError = document.getElementById('stateError');
+            const pinCodeError = document.getElementById('pinCodeError');
+            const nameError = document.getElementById('nameError');
+            const mobileNumberError = document.getElementById('mobileNumberError');
 
-                // Timeout duration in milliseconds (adjust as needed)
-                const errorMessageTimeout = 3000; // 3 seconds
+            // Timeout duration in milliseconds (adjust as needed)
+            const errorMessageTimeout = 3000; // 3 seconds
 
-                form.addEventListener('submit', function (event) {
-                    let isValid = true;
+            form.addEventListener('submit', function (event) {
+                let isValid = true;
 
-                    // Regular expressions
-                    const textPattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/; // Allows letters, single spaces or hyphens, no leading/trailing spaces
-                    const pinCodePattern = /^\d{6}$/; // Exactly 6 digits
-                    const mobileNumberPattern = /^[6-9]\d{9}$/; // Starts with 6, 7, 8, or 9 and is exactly 10 digits
+                // Regular expressions
+                const textPattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/; // Allows letters, single spaces or hyphens, no leading/trailing spaces
+                const pinCodePattern = /^\d{6}$/; // Exactly 6 digits
+                const mobileNumberPattern = /^[6-9]\d{9}$/; // Starts with 6, 7, 8, or 9 and is exactly 10 digits
 
-                    // Function to test for more than one consecutive space
-                    const hasMultipleSpaces = (value) => {
-                        return /\s{2,}/.test(value);
-                    };
-
-                    // Name validation
-                    if (!textPattern.test(name.value) || hasMultipleSpaces(name.value)) {
-                        isValid = false;
-                        nameError.innerText = 'Invalid Name';
-                        setTimeout(() => { nameError.innerText = ''; }, errorMessageTimeout);
-                    } else {
-                        nameError.innerText = '';
-                    }
-
-                    // Mobile Number validation
-                    if (!mobileNumberPattern.test(mobileNumber.value)) {
-                        isValid = false;
-                        mobileNumberError.innerText = 'Invalid Mobile Number';
-                        setTimeout(() => { mobileNumberError.innerText = ''; }, errorMessageTimeout);
-                    } else {
-                        mobileNumberError.innerText = '';
-                    }
-
-                    // House Name validation
-                    if (!textPattern.test(houseName.value) || hasMultipleSpaces(houseName.value)) {
-                        isValid = false;
-                        houseNameError.innerText = 'Invalid House Name';
-                        setTimeout(() => { houseNameError.innerText = ''; }, errorMessageTimeout);
-                    } else {
-                        houseNameError.innerText = '';
-                    }
-
-                    // Street validation (can have numbers, spaces, and letters)
-                    if (!textPattern.test(street.value) || hasMultipleSpaces(street.value)) {
-                        isValid = false;
-                        streetError.innerText = 'Invalid Street';
-                        setTimeout(() => { streetError.innerText = ''; }, errorMessageTimeout);
-                    } else {
-                        streetError.innerText = '';
-                    }
-
-                    // City validation
-                    if (!textPattern.test(city.value) || hasMultipleSpaces(city.value)) {
-                        isValid = false;
-                        cityError.innerText = 'Invalid City';
-                        setTimeout(() => { cityError.innerText = ''; }, errorMessageTimeout);
-                    } else {
-                        cityError.innerText = '';
-                    }
-
-                    // State validation
-                    if (!textPattern.test(state.value) || hasMultipleSpaces(state.value)) {
-                        isValid = false;
-                        stateError.innerText = 'Invalid State';
-                        setTimeout(() => { stateError.innerText = ''; }, errorMessageTimeout);
-                    } else {
-                        stateError.innerText = '';
-                    }
-
-                    // Pin Code validation
-                    if (!pinCodePattern.test(pinCode.value)) {
-                        isValid = false;
-                        pinCodeError.innerText = 'Invalid Pin Code (should be 6 digits)';
-                        setTimeout(() => { pinCodeError.innerText = ''; }, errorMessageTimeout);
-                    } else {
-                        pinCodeError.innerText = '';
-                    }
-
-                    if (!isValid) {
-                        event.preventDefault();
-                    }
-                });
-            });
-        </script>
-
-        <!-- edit address -->
-        <script>
-            function prefillEditForm(id, name, mobile, houseName, street, city, state, pinCode) {
-                document.getElementById('editAddressId').value = id;
-                document.getElementById('editName').value = name;
-                document.getElementById('editMobileNumber').value = mobile;
-                document.getElementById('editHouseName').value = houseName;
-                document.getElementById('editStreet').value = street;
-                document.getElementById('editCity').value = city;
-                document.getElementById('editState').value = state;
-                document.getElementById('editPinCode').value = pinCode;
-            }
-
-            function deleteAddress(id) {
-                // Implement delete address functionality here
-                // For example, you could send a request to your server to delete the address by its ID
-                if (confirm('Are you sure you want to delete this address?')) {
-                    fetch(`/deleteAddress/${id}`, {
-                        method: 'DELETE'
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                // Reload the page or remove the address card from the DOM
-                                location.reload();
-                            } else {
-                                alert('Failed to delete the address');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Failed to delete the address');
-                        });
-                }
-            }
-
-            document.addEventListener('DOMContentLoaded', function () {
-                const editForm = document.getElementById('editAddressForm');
-                const editFields = {
-                    name: document.getElementById('editName'),
-                    mobile: document.getElementById('editMobileNumber'),
-                    houseName: document.getElementById('editHouseName'),
-                    street: document.getElementById('editStreet'),
-                    city: document.getElementById('editCity'),
-                    state: document.getElementById('editState'),
-                    pinCode: document.getElementById('editPinCode'),
-                    errors: {
-                        name: document.getElementById('editNameError'),
-                        mobile: document.getElementById('editMobileNumberError'),
-                        houseName: document.getElementById('editHouseNameError'),
-                        street: document.getElementById('editStreetError'),
-                        city: document.getElementById('editCityError'),
-                        state: document.getElementById('editStateError'),
-                        pinCode: document.getElementById('editPinCodeError')
-                    }
-                };
-
-                const textPattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
-                const pinCodePattern = /^\d{6}$/;
-                const mobileNumberPattern = /^[6-9]\d{9}$/;
-
+                // Function to test for more than one consecutive space
                 const hasMultipleSpaces = (value) => {
                     return /\s{2,}/.test(value);
                 };
 
-                const validateForm = (fields) => {
-                    let isValid = true;
-
-                    // Name validation
-                    if (!textPattern.test(fields.name.value) || hasMultipleSpaces(fields.name.value)) {
-                        isValid = false;
-                        fields.errors.name.innerText = 'Invalid Name';
-                    } else {
-                        fields.errors.name.innerText = '';
-                    }
-
-                    // Mobile Number validation
-                    if (!mobileNumberPattern.test(fields.mobile.value)) {
-                        isValid = false;
-                        fields.errors.mobile.innerText = 'Invalid Mobile Number';
-                    } else {
-                        fields.errors.mobile.innerText = '';
-                    }
-
-                    // House Name validation
-                    if (!textPattern.test(fields.houseName.value) || hasMultipleSpaces(fields.houseName.value)) {
-                        isValid = false;
-                        fields.errors.houseName.innerText = 'Invalid House Name';
-                    } else {
-                        fields.errors.houseName.innerText = '';
-                    }
-
-                    // Street validation (can have numbers, spaces, and letters)
-                    if (!textPattern.test(fields.street.value) || hasMultipleSpaces(fields.street.value)) {
-                        isValid = false;
-                        fields.errors.street.innerText = 'Invalid Street';
-                    } else {
-                        fields.errors.street.innerText = '';
-                    }
-
-                    // City validation
-                    if (!textPattern.test(fields.city.value) || hasMultipleSpaces(fields.city.value)) {
-                        isValid = false;
-                        fields.errors.city.innerText = 'Invalid City';
-                    } else {
-                        fields.errors.city.innerText = '';
-                    }
-
-                    // State validation
-                    if (!textPattern.test(fields.state.value) || hasMultipleSpaces(fields.state.value)) {
-                        isValid = false;
-                        fields.errors.state.innerText = 'Invalid State';
-                    } else {
-                        fields.errors.state.innerText = '';
-                    }
-
-                    // Pin Code validation
-                    if (!pinCodePattern.test(fields.pinCode.value)) {
-                        isValid = false;
-                        fields.errors.pinCode.innerText = 'Invalid Pin Code (should be 6 digits)';
-                    } else {
-                        fields.errors.pinCode.innerText = '';
-                    }
-
-                    return isValid;
-                };
-
-                editForm.addEventListener('submit', async function (event) {
-                    event.preventDefault();
-                    if (!validateForm(editFields)) {
-                        return;
-                    }
-
-                    const addressId = document.getElementById('editAddressId').value;
-                    const formData = {
-                        userId: '<%= user._id %>', // Ensure this is correctly set to the logged-in user's ID
-                        addressId: addressId,
-                        name: editFields.name.value,
-                        mobile: editFields.mobile.value,
-                        houseName: editFields.houseName.value,
-                        street: editFields.street.value,
-                        city: editFields.city.value,
-                        state: editFields.state.value,
-                        pinCode: editFields.pinCode.value
-                    };
-
-                    try {
-                        const response = await fetch('/editAddress', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(formData)
-                        });
-
-                        const data = await response.json();
-                        if (response.ok) {
-                            alert('Address updated successfully');
-                            location.reload();
-                        } else {
-                            alert('Failed to update address: ' + data.message);
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                        alert('Failed to update address');
-                    }
-                });
-            });
-
-        </script>
-
-        <!-- delete address -->
-        <script>
-            function deleteAddress(id) {
-                if (confirm('Are you sure you want to delete this address?')) {
-                    fetch(`/deleteAddress/${id}`, {
-                        method: 'DELETE'
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                // Reload the page or remove the address card from the DOM
-                                location.reload();
-                            } else {
-                                alert('Failed to delete the address');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Failed to delete the address');
-                        });
-                }
-            }
-        </script>
-
-        <!-- validateDetails -->
-
-        <script>
-
-            // Function to validate details form
-            function validateDetails() {
-                let isValid = true;
-
-                // Validate name
-                const name = document.forms['enqDetails'].elements['name'].value;
-                const nameError = document.getElementById('nameError');
-                const namePattern = /^(?!.*  )[^\d]+$/;
-                if (!namePattern.test(name)) {
+                // Name validation
+                if (!textPattern.test(name.value) || hasMultipleSpaces(name.value)) {
                     isValid = false;
                     nameError.innerText = 'Invalid Name';
+                    setTimeout(() => { nameError.innerText = ''; }, errorMessageTimeout);
                 } else {
                     nameError.innerText = '';
                 }
 
-                // Validate mobile
-                const mobile = document.forms['enqDetails'].elements['mobile'].value;
-                const mobileError = document.getElementById('mobileError');
-                const mobilePattern = /^[6789]\d{9}$/;
-                if (!mobilePattern.test(mobile)) {
+                // Mobile Number validation
+                if (!mobileNumberPattern.test(mobileNumber.value)) {
                     isValid = false;
-                    mobileError.innerText = 'Invalid Mobile';
+                    mobileNumberError.innerText = 'Invalid Mobile Number';
+                    setTimeout(() => { mobileNumberError.innerText = ''; }, errorMessageTimeout);
                 } else {
-                    mobileError.innerText = '';
+                    mobileNumberError.innerText = '';
                 }
 
-                // If valid, submit details form
-                if (isValid) {
-                    document.forms['enqDetails'].submit();
-                }
-            }
-
-            // Function to validate password form
-            function validatePassword() {
-                let isValid = true;
-
-                // Validate current password
-                const password = document.forms['enqPassword'].elements['password'].value;
-                const passwordError = document.getElementById('passwordError');
-                const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
-                if (!passwordPattern.test(password)) {
+                // House Name validation
+                if (!textPattern.test(houseName.value) || hasMultipleSpaces(houseName.value)) {
                     isValid = false;
-                    passwordError.innerText = 'Enter your current password.';
+                    houseNameError.innerText = 'Invalid House Name';
+                    setTimeout(() => { houseNameError.innerText = ''; }, errorMessageTimeout);
                 } else {
-                    passwordError.innerText = '';
+                    houseNameError.innerText = '';
                 }
 
-                // Validate new password
-                const newPassword = document.forms['enqPassword'].elements['npassword'].value;
-                const newPasswordError = document.getElementById('newPasswordError');
-                if (!passwordPattern.test(newPassword)) {
+                // Street validation (can have numbers, spaces, and letters)
+                if (!textPattern.test(street.value) || hasMultipleSpaces(street.value)) {
                     isValid = false;
-                    newPasswordError.innerText = 'New password must be at least 8 characters long and include at least one letter and one number.';
+                    streetError.innerText = 'Invalid Street';
+                    setTimeout(() => { streetError.innerText = ''; }, errorMessageTimeout);
                 } else {
-                    newPasswordError.innerText = '';
+                    streetError.innerText = '';
                 }
 
-                // Validate confirm password
-                const confirmPassword = document.forms['enqPassword'].elements['cpassword'].value;
-                const confirmPasswordError = document.getElementById('confirmPasswordError');
-                if (newPassword !== confirmPassword) {
+                // City validation
+                if (!textPattern.test(city.value) || hasMultipleSpaces(city.value)) {
                     isValid = false;
-                    confirmPasswordError.innerText = 'Passwords do not match.';
+                    cityError.innerText = 'Invalid City';
+                    setTimeout(() => { cityError.innerText = ''; }, errorMessageTimeout);
                 } else {
-                    confirmPasswordError.innerText = '';
+                    cityError.innerText = '';
                 }
-                const checkPasswordError = document.getElementById('chackPasswordError')
 
-                const submitForm = () => {
-                    console.log("hi");
-                    document.forms['enqPassword'].submit();
+                // State validation
+                if (!textPattern.test(state.value) || hasMultipleSpaces(state.value)) {
+                    isValid = false;
+                    stateError.innerText = 'Invalid State';
+                    setTimeout(() => { stateError.innerText = ''; }, errorMessageTimeout);
+                } else {
+                    stateError.innerText = '';
                 }
-                // If valid, submit password form
 
-                if (isValid) {
-                    fetch('/checkPassword', {
-                        method: 'POST', headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ password })
-                    }).then(res => res.json())
-                        .then(data => {
-                            if (data.success) {
-                                Swal.fire({
-                                position: "center",
-                                icon: "success",
-                                title: "Password changed successfully",
-                                showConfirmButton: false,
-                                timer: 2500
-                                });
-                                submitForm()
-                            } else {
-                                checkPasswordError.innerText = data.message;
-                                Swal.fire({
-                                icon: "error",
-                                title: "Oops...",
-                                text: "Something went wrong!",
-                                });
-                            }
-                        })
+                // Pin Code validation
+                if (!pinCodePattern.test(pinCode.value)) {
+                    isValid = false;
+                    pinCodeError.innerText = 'Invalid Pin Code (should be 6 digits)';
+                    setTimeout(() => { pinCodeError.innerText = ''; }, errorMessageTimeout);
+                } else {
+                    pinCodeError.innerText = '';
                 }
-            }
-        </script>
 
-        <!-- wallet -->
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
 
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-        <script>
-            document.getElementById('rzp-button').onclick = async function(e) {
-                e.preventDefault();
-                const amount = document.getElementById('amount').value;
-        
-                // Create an order with Razorpay
-                const response = await fetch('/wallet/add-money', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ amount: amount })
-                });
-        
-                const data = await response.json();
-        
-                if (response.ok) {
-                    // Initialize Razorpay checkout
-                    const options = {
-                        "key":'rzp_test_mkeaiN7D6EJHVs',
-                        "amount": data.amount,
-                        "currency": data.currency,
-                        "name": "Your App Name",
-                        "description": "Add money to wallet",
-                        "order_id": data.orderId,
-                        "handler": async function (response) {
-                            const paymentData = {
-                                razorpay_payment_id: response.razorpay_payment_id,
-                                razorpay_order_id: response.razorpay_order_id,
-                                razorpay_signature: response.razorpay_signature,
-                                userId: data.userId,
-                                amount: data.amount
-                            };
-        
-                            // Confirm the payment success
-                            const result = await fetch('/wallet/payment-success', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(paymentData)
-                            });
-        
-                            if (result.ok) {
-                                location.reload(); // Reload to update the wallet balance
-                            } else {
-                                alert('Payment failed');
-                            }
-                        },
-                        "prefill": {
-                            "name": "Your User Name",
-                            "email": "user@example.com"
-                        },
-                        "theme": {
-                            "color": "#3399cc"
+    <!-- edit address -->
+    <script>
+        function prefillEditForm(id, name, mobile, houseName, street, city, state, pinCode) {
+            document.getElementById('editAddressId').value = id;
+            document.getElementById('editName').value = name;
+            document.getElementById('editMobileNumber').value = mobile;
+            document.getElementById('editHouseName').value = houseName;
+            document.getElementById('editStreet').value = street;
+            document.getElementById('editCity').value = city;
+            document.getElementById('editState').value = state;
+            document.getElementById('editPinCode').value = pinCode;
+        }
+
+        function deleteAddress(id) {
+            // Implement delete address functionality here
+            // For example, you could send a request to your server to delete the address by its ID
+            if (confirm('Are you sure you want to delete this address?')) {
+                fetch(`/deleteAddress/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Reload the page or remove the address card from the DOM
+                            location.reload();
+                        } else {
+                            alert('Failed to delete the address');
                         }
-                    };
-        
-                    const rzp = new Razorpay(options);
-                    rzp.open();
-                } else {
-                    alert('Failed to create Razorpay order');
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to delete the address');
+                    });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const editForm = document.getElementById('editAddressForm');
+            const editFields = {
+                name: document.getElementById('editName'),
+                mobile: document.getElementById('editMobileNumber'),
+                houseName: document.getElementById('editHouseName'),
+                street: document.getElementById('editStreet'),
+                city: document.getElementById('editCity'),
+                state: document.getElementById('editState'),
+                pinCode: document.getElementById('editPinCode'),
+                errors: {
+                    name: document.getElementById('editNameError'),
+                    mobile: document.getElementById('editMobileNumberError'),
+                    houseName: document.getElementById('editHouseNameError'),
+                    street: document.getElementById('editStreetError'),
+                    city: document.getElementById('editCityError'),
+                    state: document.getElementById('editStateError'),
+                    pinCode: document.getElementById('editPinCodeError')
                 }
             };
-        </script>
 
-        <%- include('./partials/userFooter') %>
+            const textPattern = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
+            const pinCodePattern = /^\d{6}$/;
+            const mobileNumberPattern = /^[6-9]\d{9}$/;
+
+            const hasMultipleSpaces = (value) => {
+                return /\s{2,}/.test(value);
+            };
+
+            const validateForm = (fields) => {
+                let isValid = true;
+
+                // Name validation
+                if (!textPattern.test(fields.name.value) || hasMultipleSpaces(fields.name.value)) {
+                    isValid = false;
+                    fields.errors.name.innerText = 'Invalid Name';
+                } else {
+                    fields.errors.name.innerText = '';
+                }
+
+                // Mobile Number validation
+                if (!mobileNumberPattern.test(fields.mobile.value)) {
+                    isValid = false;
+                    fields.errors.mobile.innerText = 'Invalid Mobile Number';
+                } else {
+                    fields.errors.mobile.innerText = '';
+                }
+
+                // House Name validation
+                if (!textPattern.test(fields.houseName.value) || hasMultipleSpaces(fields.houseName.value)) {
+                    isValid = false;
+                    fields.errors.houseName.innerText = 'Invalid House Name';
+                } else {
+                    fields.errors.houseName.innerText = '';
+                }
+
+                // Street validation (can have numbers, spaces, and letters)
+                if (!textPattern.test(fields.street.value) || hasMultipleSpaces(fields.street.value)) {
+                    isValid = false;
+                    fields.errors.street.innerText = 'Invalid Street';
+                } else {
+                    fields.errors.street.innerText = '';
+                }
+
+                // City validation
+                if (!textPattern.test(fields.city.value) || hasMultipleSpaces(fields.city.value)) {
+                    isValid = false;
+                    fields.errors.city.innerText = 'Invalid City';
+                } else {
+                    fields.errors.city.innerText = '';
+                }
+
+                // State validation
+                if (!textPattern.test(fields.state.value) || hasMultipleSpaces(fields.state.value)) {
+                    isValid = false;
+                    fields.errors.state.innerText = 'Invalid State';
+                } else {
+                    fields.errors.state.innerText = '';
+                }
+
+                // Pin Code validation
+                if (!pinCodePattern.test(fields.pinCode.value)) {
+                    isValid = false;
+                    fields.errors.pinCode.innerText = 'Invalid Pin Code (should be 6 digits)';
+                } else {
+                    fields.errors.pinCode.innerText = '';
+                }
+
+                return isValid;
+            };
+
+            editForm.addEventListener('submit', async function (event) {
+                event.preventDefault();
+                if (!validateForm(editFields)) {
+                    return;
+                }
+
+                const addressId = document.getElementById('editAddressId').value;
+                const formData = {
+                    userId: '<%= user._id %>', // Ensure this is correctly set to the logged-in user's ID
+                    addressId: addressId,
+                    name: editFields.name.value,
+                    mobile: editFields.mobile.value,
+                    houseName: editFields.houseName.value,
+                    street: editFields.street.value,
+                    city: editFields.city.value,
+                    state: editFields.state.value,
+                    pinCode: editFields.pinCode.value
+                };
+
+                try {
+                    const response = await fetch('/editAddress', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const data = await response.json();
+                    if (response.ok) {
+                        alert('Address updated successfully');
+                        location.reload();
+                    } else {
+                        alert('Failed to update address: ' + data.message);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Failed to update address');
+                }
+            });
+        });
+
+    </script>
+
+    <!-- delete address -->
+    <script>
+        function deleteAddress(id) {
+            if (confirm('Are you sure you want to delete this address?')) {
+                fetch(`/deleteAddress/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Reload the page or remove the address card from the DOM
+                            location.reload();
+                        } else {
+                            alert('Failed to delete the address');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to delete the address');
+                    });
+            }
+        }
+    </script>
+
+    <!-- validateDetails -->
+
+    <script>
+
+        // Function to validate details form
+        function validateDetails() {
+            let isValid = true;
+
+            // Validate name
+            const name = document.forms['enqDetails'].elements['name'].value;
+            const nameError = document.getElementById('nameError');
+            const namePattern = /^(?!.*  )[^\d]+$/;
+            if (!namePattern.test(name)) {
+                isValid = false;
+                nameError.innerText = 'Invalid Name';
+            } else {
+                nameError.innerText = '';
+            }
+
+            // Validate mobile
+            const mobile = document.forms['enqDetails'].elements['mobile'].value;
+            const mobileError = document.getElementById('mobileError');
+            const mobilePattern = /^[6789]\d{9}$/;
+            if (!mobilePattern.test(mobile)) {
+                isValid = false;
+                mobileError.innerText = 'Invalid Mobile';
+            } else {
+                mobileError.innerText = '';
+            }
+
+            // If valid, submit details form
+            if (isValid) {
+                document.forms['enqDetails'].submit();
+            }
+        }
+
+        // Function to validate password form
+        function validatePassword() {
+            let isValid = true;
+
+            // Validate current password
+            const password = document.forms['enqPassword'].elements['password'].value;
+            const passwordError = document.getElementById('passwordError');
+            const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
+            if (!passwordPattern.test(password)) {
+                isValid = false;
+                passwordError.innerText = 'Enter your current password.';
+            } else {
+                passwordError.innerText = '';
+            }
+
+            // Validate new password
+            const newPassword = document.forms['enqPassword'].elements['npassword'].value;
+            const newPasswordError = document.getElementById('newPasswordError');
+            if (!passwordPattern.test(newPassword)) {
+                isValid = false;
+                newPasswordError.innerText = 'New password must be at least 8 characters long and include at least one letter and one number.';
+            } else {
+                newPasswordError.innerText = '';
+            }
+
+            // Validate confirm password
+            const confirmPassword = document.forms['enqPassword'].elements['cpassword'].value;
+            const confirmPasswordError = document.getElementById('confirmPasswordError');
+            if (newPassword !== confirmPassword) {
+                isValid = false;
+                confirmPasswordError.innerText = 'Passwords do not match.';
+            } else {
+                confirmPasswordError.innerText = '';
+            }
+            const checkPasswordError = document.getElementById('chackPasswordError')
+
+            const submitForm = () => {
+                console.log("hi");
+                document.forms['enqPassword'].submit();
+            }
+            // If valid, submit password form
+
+            if (isValid) {
+                fetch('/checkPassword', {
+                    method: 'POST', headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ password })
+                }).then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Password changed successfully",
+                            showConfirmButton: false,
+                            timer: 2500
+                            });
+                            submitForm()
+                        } else {
+                            checkPasswordError.innerText = data.message;
+                            Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                            });
+                        }
+                    })
+            }
+        }
+    </script>
+
+    <!-- wallet -->
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        document.getElementById('rzp-button').onclick = async function(e) {
+            e.preventDefault();
+            const amount = document.getElementById('amount').value;
+    
+            // Create an order with Razorpay
+            const response = await fetch('/wallet/add-money', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ amount: amount })
+            });
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+                // Initialize Razorpay checkout
+                const options = {
+                    "key":'rzp_test_mkeaiN7D6EJHVs',
+                    "amount": data.amount,
+                    "currency": data.currency,
+                    "name": "Your App Name",
+                    "description": "Add money to wallet",
+                    "order_id": data.orderId,
+                    "handler": async function (response) {
+                        const paymentData = {
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_signature: response.razorpay_signature,
+                            userId: data.userId,
+                            amount: data.amount
+                        };
+    
+                        // Confirm the payment success
+                        const result = await fetch('/wallet/payment-success', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(paymentData)
+                        });
+    
+                        if (result.ok) {
+                            location.reload(); // Reload to update the wallet balance
+                        } else {
+                            alert('Payment failed');
+                        }
+                    },
+                    "prefill": {
+                        "name": "Your User Name",
+                        "email": "user@example.com"
+                    },
+                    "theme": {
+                        "color": "#3399cc"
+                    }
+                };
+    
+                const rzp = new Razorpay(options);
+                rzp.open();
+            } else {
+                Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Add amount",
+                });
+            }
+        };
+    </script>
+    
+</body>
+<%- include('./partials/userFooter') %>
