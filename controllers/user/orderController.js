@@ -3,6 +3,7 @@ const Cart = require('../../models/cartModel')
 const User = require('../../models/userModel')
 const Address = require('../../models/addressModel')
 const Order = require('../../models/orderModel')
+const Wallet = require('../../models/walletModel')
 const Razorpay = require('razorpay')
 
 const instance = new Razorpay({
@@ -86,33 +87,61 @@ const onlinePay = async (req, res) => {
 const placeOrder = async (req, res) => {
     try {
         let total = [];
+        console.log(req.body, "Request body");
 
-        // const { addressId } = req.body.addressId;
-        console.log(req.body, "dddddddddddddddddddddddddddddddddddddddd")
         const userId = req.session.userId;
         const user = await User.findOne({ _id: userId });
         const address = await Address.findOne({ userId });
         const addressData = address.address.filter(data => data._id == req.body.addressId);
-        console.log("sssssssssssssssss", addressData)
+        console.log("Address Data", addressData);
+
         const cart = await Cart.findOne({ userId }).populate('cartItems.productId');
         const cartItems = cart.cartItems;
-
 
         cartItems.forEach(data => {
             total.push(data.quantity * data.price);
         });
 
+        const totalAmount = total.reduce((acc, cur) => acc + cur, 0);
+
+        let paymentStatus;
+        if (req.body.paymentMethod === 'Wallet') {
+            const wallet = await Wallet.findOne({ userId });
+            if (!wallet) {
+                return res.status(400).json({ message: "Wallet not found", success: false });
+            }
+
+            if (wallet.balance < totalAmount) {
+                return res.status(400).json({ message: "Insufficient wallet balance", success: false });
+            }
+
+            wallet.balance -= totalAmount;
+            wallet.history.push({
+                amount: totalAmount,
+                type: 'debit',
+                createdAt: new Date()
+            });
+            await wallet.save();
+            
+            paymentStatus = "Success";
+        } else if (req.body.paymentMethod === 'Cash on Delivery') {
+            paymentStatus = "Pending";
+        } else {
+            paymentStatus = "Pending";
+        }
         const order = new Order({
-            userId, cartItems,
-            totalPrice: total.reduce((acc, cur) => acc + cur, 0),
+            userId,
+            cartItems,
+            totalPrice: totalAmount,
             paymentMethod: req.body.paymentMethod,
-            paymentStatus: "Pending",
+            paymentStatus: paymentStatus,
             status: "ORDER PLACED",
             address: addressData
         });
 
         await order.save();
 
+        
         for (const item of cartItems) {
             const productData = await Product.findOne({ _id: item.productId });
             productData.stock -= item.quantity;
@@ -121,12 +150,13 @@ const placeOrder = async (req, res) => {
 
         await Cart.deleteOne({ userId });
 
-        res.status(200).json({ message: "order placed successfully", success: true });
+        res.status(200).json({ message: "Order placed successfully", success: true });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Something went wrong", success: false });
     }
-}
+};
+
 
 const thankYou = async (req, res) => {
     try {

@@ -9,7 +9,7 @@ const adminLogin = async (req, res) => {
     try {
         const { email, password } = req.body
         if (process.env.adminEmail == email && process.env.adminPassword == password) {
-            req.session.adminId = emailF
+            req.session.adminId = email
             res.redirect('/admin/adminHome')
             console.log("PAGE rendered`")
         } else {

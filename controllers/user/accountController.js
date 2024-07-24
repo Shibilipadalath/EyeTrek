@@ -250,6 +250,7 @@ const cancelOrder = async (req, res) => {
     try {
         const orderId = req.params.orderId;
         console.log('orderId................', orderId);
+        
         const order = await Order.findById(orderId);
 
         if (!order) {
@@ -259,6 +260,24 @@ const cancelOrder = async (req, res) => {
         if (['Pending', 'Processing', 'Shipped', 'ORDER PLACED'].includes(order.status)) {
             order.status = 'Cancelled';
             await order.save();
+
+            if (order.paymentMethod === 'Wallet') {
+                const userWallet = await Wallet.findOne({ userId: order.userId });
+                if (!userWallet) {
+                    return res.status(404).send('Wallet not found');
+                }
+
+                userWallet.balance += order.totalPrice;
+
+                userWallet.history.push({
+                    amount: order.totalPrice,
+                    type: 'credit',
+                    createdAt: new Date(),
+                });
+
+                await userWallet.save();
+            }
+
             return res.redirect(`/order/${orderId}`);
         } else {
             return res.status(400).send('Order cannot be cancelled');
@@ -267,12 +286,14 @@ const cancelOrder = async (req, res) => {
         console.error(error);
         return res.status(500).send('Server error');
     }
-}
+};
+
 
 const returnOrder = async (req, res) => {
     try {
         const orderId = req.params.orderId;
         console.log('orderId................', orderId);
+
         const order = await Order.findById(orderId);
 
         if (!order) {
@@ -282,6 +303,24 @@ const returnOrder = async (req, res) => {
         if (order.status === 'Delivered') {
             order.status = 'Returned';
             await order.save();
+
+            if (order.paymentMethod === 'Wallet') {
+                const userWallet = await Wallet.findOne({ userId: order.userId });
+                if (!userWallet) {
+                    return res.status(404).send('Wallet not found');
+                }
+
+                userWallet.balance += order.totalPrice;
+
+                userWallet.history.push({
+                    amount: order.totalPrice,
+                    type: 'credit',
+                    createdAt: new Date(),
+                });
+
+                await userWallet.save();
+            }
+
             return res.redirect(`/order/${orderId}`);
         } else {
             return res.status(400).send('Order cannot be returned');
@@ -290,7 +329,8 @@ const returnOrder = async (req, res) => {
         console.error(error);
         return res.status(500).send('Server error');
     }
-}
+};
+
 
 const addMoney = async (req, res) => {
     try {
@@ -307,7 +347,7 @@ const addMoney = async (req, res) => {
             amount: amount * 100,
             currency: 'INR',
             receipt: `receipt_${Date.now()}`,
-            payment_capture: '1' // auto capture
+            payment_capture: '1' 
         };
 
         const order = await razorpayInstance.orders.create(options);

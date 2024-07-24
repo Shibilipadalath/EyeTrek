@@ -52,8 +52,6 @@ const addToCart = async (req, res) => {
     try {
         const productId = req.query.id;
         const userId = req.session.userId;
-        console.log('Session in addToCart:', req.session);
-        console.log('User ID:', req.session);
 
         if (!userId) {
             return res.status(401).json({ success: false, error: 'User not authenticated' });
@@ -72,11 +70,14 @@ const addToCart = async (req, res) => {
         const existingProduct = cart.cartItems.find(item => item.productId.toString() === productId);
         if (existingProduct) {
             const totalQuantity = existingProduct.quantity + 1;
-            if (totalQuantity > product.stock) {
-                return res.status(400).json({ success: false, error: 'Cannot add more items than available stock' });
+            if (totalQuantity > product.stock || totalQuantity > 10) {
+                return res.status(400).json({ success: false, error: 'Cannot add more items than available stock or exceed limit of 10 items per product' });
             }
             existingProduct.quantity = totalQuantity;
         } else {
+            if (product.stock < 1) {
+                return res.status(400).json({ success: false, error: 'Product is out of stock' });
+            }
             cart.cartItems.push({ productId, quantity: 1, price: product.offerPrice });
         }
 
@@ -90,6 +91,7 @@ const addToCart = async (req, res) => {
         res.status(500).json({ success: false, error: 'Internal server error' });
     }
 };
+
 
 const removeFromCart = async (req, res) => {
     try {
@@ -142,10 +144,10 @@ const updateCartQuantity = async (req, res) => {
         }
 
         if (action === 'increase') {
-            if (cartItem.quantity < cartItem.productId.stock) {
+            if (cartItem.quantity < cartItem.productId.stock && cartItem.quantity < 10) {
                 cartItem.quantity += 1;
             } else {
-                return res.status(400).json({ message: 'Cannot add more items. Stock limit reached.' });
+                return res.status(400).json({ message: 'Cannot add more items. Stock limit or maximum limit of 10 items reached.' });
             }
         } else if (action === 'decrease' && cartItem.quantity > 1) {
             cartItem.quantity -= 1;
@@ -167,6 +169,7 @@ const updateCartQuantity = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
 
 const checkOutPage = async (req, res) => {
 

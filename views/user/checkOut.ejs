@@ -999,180 +999,232 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
         <script>
-            function placeOrder() {
+    async function placeOrder() {
+        console.log("place order worked");
 
-                console.log("place order worked");
-                let selectedRadioButton = document.querySelector('input[name="payment_option"]:checked');
-                if (!selectedRadioButton) {
-                    Swal.fire({
+        // Check if payment method is selected
+        const selectedPaymentOption = document.querySelector('input[name="payment_option"]:checked');
+        if (!selectedPaymentOption) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please select a Payment Method.",
+            });
+            return; // Prevent further execution
+        }
+
+        const addressId = document.querySelector('input[name="selectedAddress"]:checked').value;
+        const paymentMethod = selectedPaymentOption.value;
+        console.log(addressId, "Address ID");
+
+        const orderData = {
+            paymentMethod: paymentMethod,
+            addressId: addressId,
+        };
+
+        try {
+            if (paymentMethod === 'Razorpay') {
+                await handleRazorpay(orderData);
+            } else if (paymentMethod === 'Wallet') {
+                await handleWallet(orderData);
+            } else if (paymentMethod === 'Cash on delivery') {
+                await handleCashOnDelivery(orderData);
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Invalid Payment Method",
+                    text: "The selected payment method is not supported.",
+                });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
+        }
+    }
+
+    async function handleRazorpay(orderData) {
+        try {
+            const response = await fetch('/onlinepay', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
+            });
+
+            const data = await response.json();
+
+            const options = {
+                "key": 'rzp_test_mkeaiN7D6EJHVs',
+                "amount": data.order2.amount,
+                "currency": 'INR',
+                "name": 'EYE TREK',
+                "description": 'Purchase Description',
+                "image": "/public.png",
+                "order_id": data.order2.id,
+                "handler": async function (response) {
+                    if (response.razorpay_payment_id) {
+                        await finalizeOrder(data.order.orderId);
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Payment successful!",
+                            showConfirmButton: false,
+                            timer: 2000
+                        }).then(() => {
+                            window.location.href = '/thankYou';
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Payment failed!",
+                            text: "Something went wrong with the payment. Please try again or choose a different payment method.",
+                        });
+                    }
+                    removeItem();
+                },
+                "prefill": {
+                    "name": 'shibili',
+                    "email": 'shibili@example.com',
+                    "contact": '9999999999',
+                },
+                "theme": {
+                    "color": '#8B008B',
+                    "profile_picture": "/public.png"
+                },
+            };
+
+            const razorpayInstance = new Razorpay(options);
+            razorpayInstance.open();
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
+        }
+    }
+
+    async function handleWallet(orderData) {
+        try {
+            const response = await fetch('/placeOrder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
+            });
+
+            const data = await response.json();
+
+            if (data.message === "Insufficient wallet balance") {
+                Swal.fire({
                     icon: "error",
                     title: "Oops...",
-                    text: "Please select a Payment Method.",
-                    });
-                    return false; // Prevent the form from being submitted
-                }
-
-                const addressId = document.querySelector('input[name="selectedAddress"]:checked').value;
-                const selectedRadioButtons = selectedRadioButton.value;
-                console.log(addressId,"ssssssssss")
-               
-                // const selectedAddress1 = document.querySelector('input[name="selectedAddress"]:checked');
-                // if (!selectedAddress1) {
-                //     toastr.info("Please select an address.");
-                //     return false; // Prevent the form from being submitted
-                // }
-
-                // const selectedAddress = selectedAddress1.value;
-                
-                const orderData = {
-                    paymentMethod: selectedRadioButtons,
-                    addressId: addressId,
-                    // couponCode: couponCode,
-
-                };
-
-                let url = '';
-                if (selectedRadioButtons === 'Razorpay') {
-
-                    url = '/onlinepay';
-                    let orderId = ''
-                    fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(orderData),
-                    })
-                        .then((response) => response.json())
-                        .then(data => {
-                            orderId = data.order.orderId;
-                            const options = {
-                                "key": 'rzp_test_mkeaiN7D6EJHVs',
-                                "amount": data.order2.amount, 
-                                "currency": 'INR', 
-                                "name": 'EYE TREK',
-                                "description": 'Purchase Description',
-                                "image": "/public.png",
-                                "order_id": data.order2.id,
-                                "handler": function (response) {
-                                    console.log(response, "respossadasd")
-                                    if (response.razorpay_payment_id) {
-                                        orderData.paymentStatus = "Success";
-                                        fetch(`/saveOrder?id=${orderId}`, {
-
-                                            method: 'PATCH',
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                            },
-                                            body: JSON.stringify({ orderId}),
-                                        })
-                                            .then(() => {
-                                                Swal.fire({
-                                                    position: "center",
-                                                    icon: "success",
-                                                    title: "Payment successful!",
-                                                    showConfirmButton: false,
-                                                    timer: 2000
-                                                }).then(() => {
-                                                    window.location.href = '/thankYou';
-                                                });
-                                            })
-                                            .catch(error => {
-                                                console.error('Error:', error);
-                                                Swal.fire({
-                                                    icon: "error",
-                                                    title: "Oops...",
-                                                    text: "Something went wrong!",
-                                                });
-                                            });
-                                    } else {
-                                        Swal.fire({
-                                            icon: "error",
-                                            title: "Payment failed!",
-                                            text: "Something went wrong with the payment. Please try again or choose a different payment method.",
-                                        });
-                                    }
-                                    removeItem();
-                                },
-                                "prefill": {
-                                    "name": 'shibili',
-                                    "email": 'shibili@example.com',
-                                    "contact": '9999999999',
-                                },
-                                "theme": {
-                                    "color": '#8B008B'
-                                    , "profile_picture": "/public.png"
-                                },
-                            };
-                            const razorpayInstance = new Razorpay(options);
-                            razorpayInstance.open();
-                        })
-
-                        .catch(error => {
-                            console.error('Error:', error);
-                            Swal.fire({
-                                icon: "error",
-                                title: "Oops...",
-                                text: "Something went wrong!",
-                            });
-                        });
-                } else {
-                    url = '/placeOrder';
-                    fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(orderData),
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.message === "Insufficient wallet balance") {
-                                Swal.fire({
-                                    icon: "error",
-                                    title: "Oops...",
-                                    text: "Insufficient wallet balance!",
-                                });
-                            } else {
-                                Swal.fire({
-                                    position: "center",
-                                    icon: "success",
-                                    title: "Order Placed",
-                                    showConfirmButton: false,
-                                    timer: 2000
-                                }).then(() => {
-                                    window.location.href = '/thankYou';
-                                });
-                                removeItem();
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            Swal.fire({
-                                icon: "error",
-                                title: "Oops...",
-                                text: "Something went wrong!",
-                            });
-                        });
-                }
+                    text: "Insufficient wallet balance!",
+                });
+            } else {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Order Placed",
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(() => {
+                    window.location.href = '/thankYou';
+                });
+                removeItem();
             }
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
+        }
+    }
 
-            function removeItem() {
-                fetch('/clearCart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({}),
-                })
-                    .then(response => {
-                        // Handle the response if needed
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+    async function handleCashOnDelivery(orderData) {
+        try {
+            const response = await fetch('/placeOrder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
+            });
+
+            const data = await response.json();
+
+            if (data.message === "Order placed successfully") {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Order Placed",
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(() => {
+                    window.location.href = '/thankYou';
+                });
+                removeItem();
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Order Failed",
+                    text: data.message || "Something went wrong!",
+                });
             }
-        </script>
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
+        }
+    }
+
+    async function finalizeOrder(orderId) {
+        try {
+            await fetch(`/saveOrder?id=${orderId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ orderId: orderId }),
+            });
+        } catch (error) {
+            console.error('Error finalizing order:', error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Failed to finalize the order.",
+            });
+        }
+    }
+
+    async function removeItem() {
+        try {
+            await fetch('/clearCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({}),
+            });
+        } catch (error) {
+            console.error('Error clearing cart:', error);
+        }
+    }
+</script>
+
+
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 

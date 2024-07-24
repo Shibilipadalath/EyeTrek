@@ -824,6 +824,7 @@
                     return response.json().then(data => {
                         throw new Error(data.message);
                     });
+                    
                 }
             }).then(data => {
                 document.getElementById(`quantity-${index}`).textContent = data.quantity;

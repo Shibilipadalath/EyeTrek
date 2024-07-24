@@ -3,19 +3,35 @@ const Order = require('../../models/orderModel');
 const Product = require('../../models/productModel');
 const Category = require('../../models/categoryModel');
 // const fs = require('fs');
-const path = require('path');
+// const path = require('path');
 const PDFDocument = require('pdfkit');
 
 
 const adminHome = async (req, res) => {
     try {
+        const revenue = await Order.aggregate([
+            { $group: { _id: null, totalRevenue: { $sum: '$totalPrice' } } }
+        ]);
+
+        const totalOrders = await Order.countDocuments();
+
+        const totalProducts = await Product.countDocuments();
+
+        const totalUsers = await User.countDocuments();
+
         const categories = await Category.find({ isActive: true });
-        res.render('adminHome', { categories });
+        res.render('adminHome', {
+            revenue: revenue[0]?.totalRevenue || 0,
+            totalOrders,
+            totalProducts,
+            totalUsers,
+            categories
+        });
     } catch (error) {
         console.log(error);
         res.status(500).send('Internal Server Error');
     }
-}
+};
 
 const fetchOrders = async (req, res) => {
     try {
@@ -112,7 +128,6 @@ const generateReport = async (req, res) => {
         res.setHeader('Content-disposition', `attachment; filename=${fileName}`);
         res.setHeader('Content-type', 'application/pdf');
 
-
         doc.pipe(res);
 
         doc.fontSize(18).text('Sales Report', { align: 'center' });
@@ -120,11 +135,28 @@ const generateReport = async (req, res) => {
         doc.fontSize(12).text(`Report generated on: ${new Date().toLocaleDateString()}`, { align: 'center' });
         doc.moveDown();
 
+        const overallSalesCount = orders.length;
+        const overallOrderAmount = orders.reduce((total, order) => total + order.totalPrice, 0);
+        const overallDiscount = orders.reduce((discount, order) => {
+            const totalOriginalPrice = order.cartItems.reduce((total, item) => {
+                return total + (item.quantity * item.productId.originalPrice);
+            }, 0);
+            const totalOfferPrice = order.cartItems.reduce((total, item) => {
+                return total + (item.quantity * item.productId.offerPrice);
+            }, 0);
+            return discount + (totalOriginalPrice - totalOfferPrice);
+        }, 0);
+
+        doc.fontSize(12).text(`Overall Sales Count: ${overallSalesCount}`);
+        doc.text(`Overall Order Amount: ${overallOrderAmount.toFixed(2)}`);
+        doc.text(`Overall Discount: ${overallDiscount.toFixed(2)}`);
+        doc.moveDown();
+
         orders.forEach(order => {
             doc.fontSize(12).text(`Order ID: ${order._id}`);
             doc.text(`Billing Name: ${order.userId ? order.userId.userName : 'Unknown'}`);
             doc.text(`Date: ${new Date(order.createdAt).toLocaleDateString()}`);
-            doc.text(`Total: $${order.totalPrice.toFixed(2)}`);
+            doc.text(`Total: ${order.totalPrice.toFixed(2)}`);
             doc.text(`Payment Status: ${order.paymentStatus}`);
             doc.text(`Payment Method: ${order.paymentMethod}`);
             doc.moveDown();
