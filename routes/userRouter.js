@@ -76,7 +76,6 @@ userRoute.post('/wallet/payment-success', userBlock.isBlocked, userAuth.isLogin,
 
 userRoute.post('/placeOrder', userBlock.isBlocked, userAuth.isLogin, orderController.placeOrder)
 userRoute.post('/onlinepay', userBlock.isBlocked, userAuth.isLogin, orderController.onlinePay)
-
 userRoute.get('/thankYou', userBlock.isBlocked, userAuth.isLogin, orderController.thankYou)
 
 

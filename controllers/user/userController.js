@@ -158,15 +158,15 @@ const resendOtp = async (req, res) => {
 };
 
 
-const forgotPassword=async(req,res)=>{
+const forgotPassword = async (req, res) => {
     try {
-        res.render('forgotPassword',{error:''})      
+        res.render('forgotPassword', { error: '' })
     } catch (error) {
         console.error(error);
     }
 }
 
-    const forgotPasswordVerify = async (req, res) => {
+const forgotPasswordVerify = async (req, res) => {
     const email = req.body.email;
     console.log(email);
 
@@ -198,8 +198,8 @@ const forgotPassword=async(req,res)=>{
 const forgotOtpVerify = async (req, res) => {
     const { digit1, digit2, digit3, digit4 } = req.body;
     const otp = digit1 + digit2 + digit3 + digit4;
-    
-    console.log('new OTP FOR forgot password',otp);
+
+    console.log('new OTP FOR forgot password', otp);
     if (otp === req.session.forgotOtp) {
         res.render('newPassword', { error: '' });
     } else {

@@ -1,13 +1,29 @@
-const Product=require('../../models/productModel')
-const Category=require('../../models/categoryModel')
-const Offer=require('../../models/offerModel')
+const Product = require('../../models/productModel')
+const Category = require('../../models/categoryModel')
+const Offer = require('../../models/offerModel')
 
 const offerPage = async (req, res) => {
     try {
         const offers = await Offer.find();
-        res.render('offerList', { offers });
+
+        const categories = await Category.find();
+
+        const products = await Product.find();
+
+        const categoryMap = categories.reduce((map, category) => {
+            map[category._id] = category.name;
+            return map;
+        }, {});
+
+        const productMap = products.reduce((map, product) => {
+            map[product._id] = product.name;
+            return map;
+        }, {});
+
+        res.render('offerList', { offers, categoryMap, productMap });
     } catch (error) {
         console.error("Error:", error);
+        res.status(500).send('Internal server error');
     }
 };
 
@@ -29,7 +45,7 @@ const createOffer = async (req, res) => {
         if (discountOn === 'category') {
             let categoryOfferExists = await Offer.findOne({ discountedCategory });
             if (categoryOfferExists) {
-                return res.render('addOffer', {categories, products, alert: 'Category offer already exists' });
+                return res.render('addOffer', { categories, products, alert: 'Category offer already exists' });
             }
             const newOffer = new Offer({
                 name,
@@ -56,7 +72,7 @@ const createOffer = async (req, res) => {
         } else {
             let productOfferExists = await Offer.findOne({ discountedProduct });
             if (productOfferExists) {
-                return res.render('addOffer', { categories, products,alert: 'Product offer already exists' });
+                return res.render('addOffer', { categories, products, alert: 'Product offer already exists' });
             }
             const newOffer = new Offer({
                 name,

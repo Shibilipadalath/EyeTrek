@@ -20,7 +20,7 @@ const wishListPage = async (req, res) => {
 
         console.log(wishlist);
 
-        
+
         if (!wishlist) {
             return res.render('wishList', { userExist, products: [] });
         }

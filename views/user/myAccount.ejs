@@ -1276,9 +1276,21 @@
                     }).then(res => res.json())
                         .then(data => {
                             if (data.success) {
+                                Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Password changed successfully",
+                                showConfirmButton: false,
+                                timer: 2500
+                                });
                                 submitForm()
                             } else {
                                 checkPasswordError.innerText = data.message;
+                                Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Something went wrong!",
+                                });
                             }
                         })
                 }

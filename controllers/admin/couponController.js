@@ -1,4 +1,4 @@
-const Coupon=require('../../models/couponModel')
+const Coupon = require('../../models/couponModel')
 
 
 const couponList = async (req, res) => {
@@ -125,7 +125,7 @@ const couponBlock = async (req, res) => {
 
 
 
-module.exports={
+module.exports = {
     couponList,
     addCouponPage,
     addCoupon,

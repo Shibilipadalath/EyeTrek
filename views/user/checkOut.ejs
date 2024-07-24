@@ -1004,7 +1004,11 @@
                 console.log("place order worked");
                 let selectedRadioButton = document.querySelector('input[name="payment_option"]:checked');
                 if (!selectedRadioButton) {
-                    alert("Please select a Payment Method.");
+                    Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Please select a Payment Method.",
+                    });
                     return false; // Prevent the form from being submitted
                 }
 
@@ -1043,9 +1047,9 @@
                         .then(data => {
                             orderId = data.order.orderId;
                             const options = {
-                                "key": 'rzp_test_mkeaiN7D6EJHVs', // Replace with your Razorpay key ID
-                                "amount": data.order2.amount, // Check if the amount is correct based on your totalAmount
-                                "currency": 'INR', // Change the currency to match your requirements
+                                "key": 'rzp_test_mkeaiN7D6EJHVs',
+                                "amount": data.order2.amount, 
+                                "currency": 'INR', 
                                 "name": 'EYE TREK',
                                 "description": 'Purchase Description',
                                 "image": "/public.png",
@@ -1053,16 +1057,14 @@
                                 "handler": function (response) {
                                     console.log(response, "respossadasd")
                                     if (response.razorpay_payment_id) {
-                                        // If payment is successful, update payment status to "Received"
                                         orderData.paymentStatus = "Success";
-                                        // Save the order again with updated payment status
-                                        fetch(`/saveOrder?id=${orderId}`, { // Pass the orderId as a query parameter
+                                        fetch(`/saveOrder?id=${orderId}`, {
 
                                             method: 'PATCH',
                                             headers: {
                                                 'Content-Type': 'application/json',
                                             },
-                                            body: JSON.stringify({ orderId}), // Send updated orderData
+                                            body: JSON.stringify({ orderId}),
                                         })
                                             .then(() => {
                                                 Swal.fire({
@@ -1115,7 +1117,6 @@
                             });
                         });
                 } else {
-                    // If payment method is not Razorpay, make a fetch request to '/placeorder' endpoint
                     url = '/placeOrder';
                     fetch(url, {
                         method: 'POST',

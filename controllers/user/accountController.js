@@ -8,8 +8,8 @@ const Razorpay = require('razorpay');
 
 
 const razorpayInstance = new Razorpay({
-    key_id:process.env.RAZORPAY_ID_KEY,
-    key_secret:process.env.RAZORPAY_SECRET_KEY
+    key_id: process.env.RAZORPAY_ID_KEY,
+    key_secret: process.env.RAZORPAY_SECRET_KEY
 });
 
 
@@ -298,14 +298,13 @@ const addMoney = async (req, res) => {
         const userId = req.session.userId;
         console.log(amount);
 
-        // Ensure the amount is valid
         if (!amount || amount <= 0) {
             return res.status(400).json({ error: 'Invalid amount' });
         }
 
         // Create a Razorpay order
         const options = {
-            amount: amount * 100, // amount in the smallest currency unit (paise)
+            amount: amount * 100,
             currency: 'INR',
             receipt: `receipt_${Date.now()}`,
             payment_capture: '1' // auto capture
@@ -313,7 +312,6 @@ const addMoney = async (req, res) => {
 
         const order = await razorpayInstance.orders.create(options);
 
-        // Send the order details to the client
         res.json({
             orderId: order.id,
             amount: order.amount,
@@ -331,7 +329,6 @@ const paymentSuccess = async (req, res) => {
 
         console.log(req.body);
 
-        // Validate the payment using Razorpay's API (Add your secret key)
         const generatedSignature = crypto.createHmac('sha256', process.env.RAZORPAY_SECRET_KEY)
             .update(`${razorpay_order_id}|${razorpay_payment_id}`)
             .digest('hex');
@@ -342,10 +339,8 @@ const paymentSuccess = async (req, res) => {
 
         console.log('Payment validation successful');
 
-        // Find the wallet by userId
         let wallet = await Wallet.findOne({ userId: userId });
 
-        // If wallet does not exist, create one with default balance 0
         if (!wallet) {
             wallet = new Wallet({
                 userId: userId,
@@ -358,8 +353,7 @@ const paymentSuccess = async (req, res) => {
             console.log("Found wallet:", wallet);
         }
 
-        // Update the wallet balance and history
-        wallet.balance += amount / 100; // Convert amount back from paise to rupees
+        wallet.balance += amount / 100;
         wallet.history.push({
             amount: amount / 100,
             type: 'credit',
@@ -374,7 +368,7 @@ const paymentSuccess = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-    
+
 
 
 module.exports = {

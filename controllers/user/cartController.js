@@ -24,7 +24,7 @@ const cartPage = async (req, res) => {
             return res.render('cart', { cart: null, productsWithQuantity: [], user, totalPrice: '0.00' });
         }
 
-        
+
         const productsWithQuantity = cart.cartItems.map(item => ({
             product: item.productId,
             quantity: item.quantity

@@ -9,7 +9,7 @@ const adminLogin = async (req, res) => {
     try {
         const { email, password } = req.body
         if (process.env.adminEmail == email && process.env.adminPassword == password) {
-            req.session.adminId = email
+            req.session.adminId = emailF
             res.redirect('/admin/adminHome')
             console.log("PAGE rendered`")
         } else {
@@ -31,16 +31,11 @@ const adminLogout = async (req, res) => {
         });
     } catch (error) {
         console.error('Unexpected error during user logout:', error);
-        return res.status(500).send('Internal Server Error')    }
-}
-
-const adminHome = async (req, res) => {
-    try {
-        res.render('adminHome')
-    } catch (error) {
-        console.log(error);
+        return res.status(500).send('Internal Server Error')
     }
 }
+
+
 const userManagement = async (req, res) => {
     try {
         const user = await User.find({})
@@ -65,7 +60,7 @@ const blockUser = async (req, res) => {
         const userId = req.params.id;
         console.log("block", userId);
         const block = await User.findByIdAndUpdate(userId, { isBlocked: true }, { new: true });
-        if(req.session.userId === userId)
+        if (req.session.userId === userId)
             req.session.userId = null
         console.log("blockeddddd", block);
         return res.status(200).json(block);
@@ -80,7 +75,7 @@ const unBlockUser = async (req, res) => {
         const userId = req.params.id
         console.log("unblock", userId);
         const unBlock = await User.findByIdAndUpdate(userId, { isBlocked: false }, { new: true })
-        if(req.session.userId === userId)
+        if (req.session.userId === userId)
             req.session.userId = userId
         console.log("unBlocked", unBlock);
         return res.status(200).json(unBlock)
@@ -93,8 +88,8 @@ const unBlockUser = async (req, res) => {
 
 const orderPage = async (req, res) => {
     try {
-        const orders = await Order.find().populate('userId').populate('cartItems.productId').sort({createdAt:-1})
-        
+        const orders = await Order.find().populate('userId').populate('cartItems.productId').sort({ createdAt: -1 })
+
         res.render('orderManagement', { orders });
     } catch (error) {
         console.error('Error fetching orders:', error);
@@ -103,7 +98,7 @@ const orderPage = async (req, res) => {
 }
 
 
-const orderDetailsPage=async(req,res)=>{
+const orderDetailsPage = async (req, res) => {
     try {
         const orderId = req.params.id;
         const order = await Order.findById(orderId).populate('userId').populate('cartItems.productId');
@@ -119,7 +114,7 @@ const orderDetailsPage=async(req,res)=>{
     }
 }
 
-const updateOrderStatus=async(req,res)=>{
+const updateOrderStatus = async (req, res) => {
     try {
         const orderId = req.params.id;
         const { status } = req.body;
@@ -142,7 +137,6 @@ const updateOrderStatus=async(req,res)=>{
 module.exports = {
     loadAdmin,
     adminLogin,
-    adminHome,
     userManagement,
     userEditPage,
     blockUser,

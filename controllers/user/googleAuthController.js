@@ -14,36 +14,36 @@ passport.use(new GoogleStrategy({
   callbackURL: "http://localhost:3000/auth/google/callback",
   passReqToCallback: true,
 },
-async function(req, accessToken, refreshToken, profile, done) {
-  try {
-    let user = await User.findOne({ googleId: profile.id });
-    if (user) {
-      if (user.isBlocked) {
-        return done(null, null);
+  async function (req, accessToken, refreshToken, profile, done) {
+    try {
+      let user = await User.findOne({ googleId: profile.id });
+      if (user) {
+        if (user.isBlocked) {
+          return done(null, null);
+        }
+        req.session.userId = user.email;
+        return done(null, user);
+      } else {
+        user = new User({
+          googleId: profile.id,
+          displayName: profile.displayName,
+          email: profile.emails[0].value,
+          profilePhoto: profile.photos[0].value,
+        });
+        await user.save();
+        req.session.userId = profile.emails[0].value;
+        return done(null, user);
       }
-      req.session.userId= user.email;
-      return done(null, user);
-    } else {
-      user = new User({
-        googleId: profile.id,
-        displayName: profile.displayName,
-        email: profile.emails[0].value,
-        profilePhoto: profile.photos[0].value,
-      });
-      await user.save();
-      req.session.userId = profile.emails[0].value;
-      return done(null, user);
+    } catch (error) {
+      return done(error, false);
     }
-  } catch (error) {
-    return done(error, false);
-  }
-}));
+  }));
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
 
-passport.deserializeUser(async function(id, done) {
+passport.deserializeUser(async function (id, done) {
   try {
     const user = await User.findById(id);
     done(null, user);

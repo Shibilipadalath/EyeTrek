@@ -19,7 +19,7 @@ const shoppingPage = async (req, res) => {
         const productsPerPage = 6;
         const page = parseInt(req.query.page) || 1;
         const sortParam = req.query.sort || 'featured';
-        const categoryId = req.query.category || null; // Get category from query params
+        const categoryId = req.query.category || null;
         let sort = {};
 
         switch (sortParam) {
@@ -58,7 +58,6 @@ const shoppingPage = async (req, res) => {
         const product = activedProducts.filter((item) => item.category.isActive === true);
         const user = await User.findOne({ _id: req.session.userId });
 
-        // Fetch all categories to display in the category filter
         const categories = await Category.find({ isActive: true });
 
         res.render('shop', { user, product, sort: sortParam, currentPage: page, totalPages, categories, selectedCategory: categoryId });

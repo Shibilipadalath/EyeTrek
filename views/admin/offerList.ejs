@@ -153,7 +153,7 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Discount On</th>
+                                    <th>Discounted product and category</th>
                                     <th>Status</th>
                                     <th>Discount Type</th>
                                     <th>Discount Value</th>
@@ -170,7 +170,13 @@
                                             </div>
                                         </a>
                                     </td>
-                                    <td><%= offer.discountOn %></td>
+                                    <td>
+                                        <% if (offer.discountOn === 'category') { %>
+                                            <%= categoryMap[offer.discountedCategory] %>
+                                        <% } else if (offer.discountOn === 'product') { %>
+                                            <%= productMap[offer.discountedProduct] %>
+                                        <% } %>
+                                    </td>
                                     <td><span class="badge rounded-pill <%= offer.isActive ? 'alert-success' : 'alert-warning' %>"><%= offer.isActive ? 'Active' : 'Blocked' %></span></td>
                                     <td><%= offer.discountType %></td>
                                     <td><%= offer.discountValue %></td>
@@ -179,7 +185,7 @@
                                     </td>
                                 </tr>
                                 <% }) %>
-                            </tbody>
+                            </tbody>                                                       
                         </table>
                         <% } else { %>
                         <h1 class="text-center text-secondary mt-5">No offers found in the database</h1>

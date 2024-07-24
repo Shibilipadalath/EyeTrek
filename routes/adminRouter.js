@@ -1,5 +1,6 @@
 const express = require("express")
 const adminController = require("../controllers/admin/adminController")
+const dashboardController = require("../controllers/admin/dashboardController")
 const productController = require('../controllers/admin/productController')
 const categoryController = require("../controllers/admin/categoryController")
 const offerController=require('../controllers/admin/offerController')
@@ -15,12 +16,17 @@ adminRouter.set('views', 'views/admin')
 
 adminRouter.get('/', adminAuth.isLogout, adminController.loadAdmin)
 adminRouter.post('/', adminAuth.isLogout, adminController.adminLogin);
-adminRouter.get('/adminHome', adminAuth.isLogin, adminController.adminHome);
 adminRouter.get('/userManagement', adminAuth.isLogin, adminController.userManagement)
 adminRouter.get('/userEditPage', adminAuth.isLogin, adminController.userEditPage)
 adminRouter.put('/blockUser/:id', adminAuth.isLogin, adminController.blockUser)
 adminRouter.put('/UnBlockUser/:id', adminAuth.isLogin, adminController.unBlockUser)
 adminRouter.get('/adminLogout', adminAuth.isLogin, adminController.adminLogout)
+
+//dashboard
+
+adminRouter.get('/adminHome', adminAuth.isLogin, dashboardController.adminHome);
+adminRouter.get('/orders', adminAuth.isLogin, dashboardController.fetchOrders);
+adminRouter.get('/download-report', adminAuth.isLogin, dashboardController.generateReport);
 
 //product
 

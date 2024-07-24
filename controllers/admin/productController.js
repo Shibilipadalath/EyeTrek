@@ -102,7 +102,7 @@ const updateEditProduct = async (req, res) => {
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
-        
+
 
         product.name = name;
         product.description = Description;
@@ -115,12 +115,12 @@ const updateEditProduct = async (req, res) => {
         //new image
         if (imagePath.length > 0) {
             if (!product.image) {
-                product.image = []; 
+                product.image = [];
             }
             product.image.push(...imagePath)
         }
 
-        
+
         const savedProduct = await product.save();
         if (savedProduct) {
             console.log('Product has been updated');
