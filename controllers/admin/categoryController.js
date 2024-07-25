@@ -1,4 +1,6 @@
 const Category = require('../../models/categoryModel')
+
+
 const categoryPage = async (req, res) => {
     try {
         const category = await Category.find({})

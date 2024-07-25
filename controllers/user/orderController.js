@@ -16,7 +16,6 @@ const onlinePay = async (req, res) => {
     try {
         let total = [];
         const userId = req.session.userId;
-        const user = await User.findOne({ _id: userId });
         const address = await Address.findOne({ userId });
         const addressData = address.address.filter(data => data._id == req.body.addressId);
         const cart = await Cart.findOne({ userId }).populate('cartItems.productId');
@@ -38,14 +37,7 @@ const onlinePay = async (req, res) => {
             return orderId + timestamp.slice(-6);
         }
 
-        const newOrderId = generateOrderId();
-
         let TotalAmount = total.reduce((acc, cur) => acc + cur, 0)
-
-
-        console.log("TotalAmount", TotalAmount)
-
-
 
         const order = new Order({
             userId, cartItems,
@@ -74,9 +66,6 @@ const onlinePay = async (req, res) => {
             receipt: req.session.user
         });
 
-        console.log(order);
-        console.log(order2);
-
         res.json({ order2, order });
     } catch (error) {
         console.error(error);
@@ -90,10 +79,8 @@ const placeOrder = async (req, res) => {
         console.log(req.body, "Request body");
 
         const userId = req.session.userId;
-        const user = await User.findOne({ _id: userId });
         const address = await Address.findOne({ userId });
         const addressData = address.address.filter(data => data._id == req.body.addressId);
-        console.log("Address Data", addressData);
 
         const cart = await Cart.findOne({ userId }).populate('cartItems.productId');
         const cartItems = cart.cartItems;
@@ -122,7 +109,7 @@ const placeOrder = async (req, res) => {
                 createdAt: new Date()
             });
             await wallet.save();
-            
+
             paymentStatus = "Success";
         } else if (req.body.paymentMethod === 'Cash on Delivery') {
             paymentStatus = "Pending";
@@ -141,7 +128,7 @@ const placeOrder = async (req, res) => {
 
         await order.save();
 
-        
+
         for (const item of cartItems) {
             const productData = await Product.findOne({ _id: item.productId });
             productData.stock -= item.quantity;
@@ -162,7 +149,6 @@ const thankYou = async (req, res) => {
     try {
         const userId = req.session.userId
         const latestOrder = await Order.findOne({ userId }).sort({ createdAt: -1 }).exec()
-
 
         res.render('thankPage', { order: latestOrder })
     } catch (error) {

@@ -2,7 +2,6 @@ const Product = require('../../models/productModel')
 const Cart = require('../../models/cartModel')
 const User = require('../../models/userModel')
 const Address = require('../../models/addressModel')
-const Order = require('../../models/orderModel')
 
 
 const cartPage = async (req, res) => {

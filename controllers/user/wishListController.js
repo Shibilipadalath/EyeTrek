@@ -1,5 +1,4 @@
 const User = require('../../models/userModel');
-const Product = require('../../models/productModel');
 const Wishlist = require('../../models/wishListModel');
 
 const wishListPage = async (req, res) => {
@@ -17,8 +16,6 @@ const wishListPage = async (req, res) => {
             },
             match: { isActive: true }
         });
-
-        console.log(wishlist);
 
 
         if (!wishlist) {
@@ -49,8 +46,6 @@ const addToWishList = async (req, res) => {
         }
 
         const userId = req.session.userId;
-
-        console.log(`User ID: ${userId}, Product ID: ${productId}`);
 
         let wishlist = await Wishlist.findOne({ userId });
         if (!wishlist) {

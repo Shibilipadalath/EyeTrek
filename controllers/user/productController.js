@@ -6,8 +6,6 @@ const productDetails = async (req, res) => {
     try {
         const productId = req.query.productId
         const product = await Product.findById(productId)
-
-        console.log(product)
         res.render('productDetails', { product })
     } catch (error) {
         console.error(error);

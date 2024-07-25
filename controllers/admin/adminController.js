@@ -2,7 +2,11 @@ const User = require('../../models/userModel')
 const Order = require('../../models/orderModel')
 
 const loadAdmin = async (req, res) => {
-    res.render('adminLogin', { error: '' })
+    try {
+        res.render('adminLogin', { error: '' })
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 const adminLogin = async (req, res) => {
@@ -11,7 +15,6 @@ const adminLogin = async (req, res) => {
         if (process.env.adminEmail == email && process.env.adminPassword == password) {
             req.session.adminId = email
             res.redirect('/admin/adminHome')
-            console.log("PAGE rendered`")
         } else {
             return res.render('adminLogin', { error: 'Admin credentials not recognized' })
         }
@@ -24,13 +27,11 @@ const adminLogout = async (req, res) => {
     try {
         req.session.destroy((err) => {
             if (err) {
-                console.error('Error occurred during user logout:', err);
                 return res.status(500).send('Internal Server Error');
             }
             return res.redirect('/admin');
         });
     } catch (error) {
-        console.error('Unexpected error during user logout:', error);
         return res.status(500).send('Internal Server Error')
     }
 }
@@ -45,24 +46,13 @@ const userManagement = async (req, res) => {
     }
 }
 
-const userEditPage = async (req, res) => {
-    try {
-        const userId = req.query.id
-        const userData = await User.findOne({ _id: userId })
-        console.log(userId, userData)
-    } catch (error) {
-        console.error(error)
-    }
 
-}
 const blockUser = async (req, res) => {
     try {
         const userId = req.params.id;
-        console.log("block", userId);
         const block = await User.findByIdAndUpdate(userId, { isBlocked: true }, { new: true });
         if (req.session.userId === userId)
             req.session.userId = null
-        console.log("blockeddddd", block);
         return res.status(200).json(block);
     } catch (error) {
         console.error(error);
@@ -73,14 +63,10 @@ const blockUser = async (req, res) => {
 const unBlockUser = async (req, res) => {
     try {
         const userId = req.params.id
-        console.log("unblock", userId);
         const unBlock = await User.findByIdAndUpdate(userId, { isBlocked: false }, { new: true })
         if (req.session.userId === userId)
             req.session.userId = userId
-        console.log("unBlocked", unBlock);
         return res.status(200).json(unBlock)
-
-
     } catch (error) {
         console.error(error)
     }
@@ -89,7 +75,6 @@ const unBlockUser = async (req, res) => {
 const orderPage = async (req, res) => {
     try {
         const orders = await Order.find().populate('userId').populate('cartItems.productId').sort({ createdAt: -1 })
-
         res.render('orderManagement', { orders });
     } catch (error) {
         console.error('Error fetching orders:', error);
@@ -138,7 +123,6 @@ module.exports = {
     loadAdmin,
     adminLogin,
     userManagement,
-    userEditPage,
     blockUser,
     unBlockUser,
     adminLogout,

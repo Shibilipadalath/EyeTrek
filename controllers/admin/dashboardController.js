@@ -2,8 +2,6 @@ const User = require('../../models/userModel');
 const Order = require('../../models/orderModel');
 const Product = require('../../models/productModel');
 const Category = require('../../models/categoryModel');
-// const fs = require('fs');
-// const path = require('path');
 const PDFDocument = require('pdfkit');
 
 
@@ -38,8 +36,6 @@ const fetchOrders = async (req, res) => {
         const { page = 1, limit = 10, category, startDate, endDate, paymentStatus, period } = req.query;
 
         const filter = {};
-
-        console.log(req.query, 'getttttttttttttttt');
 
         if (category) {
             const categoryData = await Category.findOne({ name: category, isActive: true });
@@ -79,8 +75,6 @@ const fetchOrders = async (req, res) => {
                     break;
             }
         }
-
-        console.log('Filters Applied:', filter);
 
         const orders = await Order.find(filter)
             .limit(limit * 1)

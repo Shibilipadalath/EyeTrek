@@ -4,14 +4,13 @@ const productDetailsController = require("../controllers/user/productController"
 const cartController = require('../controllers/user/cartController')
 const wishListController = require('../controllers/user/wishListController')
 const accountController = require('../controllers/user/accountController')
-const userAuth = require('../middlewere/userAuth')
-const userBlock = require('../middlewere/isBlocked')
 const orderController = require("../controllers/user/orderController")
 const googleAuthController = require('../controllers/user/googleAuthController')
+const userAuth = require('../middlewere/userAuth')
+const userBlock = require('../middlewere/isBlocked')
 
 
 const userRoute = express()
-
 userRoute.set('views', 'views/user')
 
 //googleAuth
@@ -35,8 +34,6 @@ userRoute.post('/forgotPassword', userAuth.isLogout, userController.forgotPasswo
 userRoute.post('/forgotOtpVerify', userAuth.isLogout, userController.forgotOtpVerify)
 userRoute.post('/resetPassword', userAuth.isLogout, userController.resetPassword);
 userRoute.get('/search', userController.searchProducts);
-
-
 
 //product
 
@@ -83,7 +80,7 @@ userRoute.get('/thankYou', userBlock.isBlocked, userAuth.isLogin, orderControlle
 
 userRoute.get('/wishListPage', userBlock.isBlocked, userAuth.isLogin, wishListController.wishListPage);
 userRoute.post('/wishList', userBlock.isBlocked, userAuth.isLogin, wishListController.addToWishList);
-userRoute.delete('/removeFromWishlist',userBlock.isBlocked, userAuth.isLogin, wishListController.removeFromWishlist);
+userRoute.delete('/removeFromWishlist', userBlock.isBlocked, userAuth.isLogin, wishListController.removeFromWishlist);
 
 
 module.exports = userRoute

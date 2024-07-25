@@ -1,10 +1,11 @@
 const Product = require('../../models/productModel')
 const Category = require('../../models/categoryModel')
+
+
 const productManagement = async (req, res) => {
     try {
         const product = await Product.find({})
         const category = await Category.find({})
-        console.log(category);
         res.render('productsList', { product, category })
     } catch (error) {
         console.error(error)
@@ -23,7 +24,6 @@ const addProductPage = async (req, res) => {
 const addProduct = async (req, res) => {
     try {
         const { name, Description, brand, stock, originalPrice, offerPrice, category, } = req.body
-        console.log(req.body);
         if (!req.files || req.files.length === 0) {
             return res.status(400).send('No files were uploaded.');
         }
@@ -44,7 +44,6 @@ const addProduct = async (req, res) => {
 
         const saveProduct = await newProduct.save()
         if (saveProduct) {
-            console.log('product has been saved');
             res.redirect('/admin/addProductPage')
         } else {
             console.log('somthing wrong happened');
@@ -73,7 +72,6 @@ const removeImage = async (req, res) => {
         }
 
         const index = product.image.findIndex((image) => image === imageName);
-        console.log(index, "productIndex")
 
         if (index !== -1) {
             product.image.splice(index, 1);
@@ -92,11 +90,8 @@ const updateEditProduct = async (req, res) => {
     try {
         const { name, Description, brand, stock, originalPrice, offerPrice, category } = req.body;
         const id = req.query.id;
-        console.log(req.body, "Received request body");
-        console.log(id, "id get");
 
         const imagePath = req.files ? req.files.map(file => file.filename) : [];
-        console.log(imagePath, "images");
 
         const product = await Product.findById(id);
         if (!product) {
@@ -112,7 +107,6 @@ const updateEditProduct = async (req, res) => {
         product.offerPrice = offerPrice;
         product.category = category;
 
-        //new image
         if (imagePath.length > 0) {
             if (!product.image) {
                 product.image = [];
@@ -123,10 +117,8 @@ const updateEditProduct = async (req, res) => {
 
         const savedProduct = await product.save();
         if (savedProduct) {
-            console.log('Product has been updated');
             res.redirect('/admin/productList');
         } else {
-            console.log('Something wrong happened');
             res.status(500).json({ message: 'Failed to update product' });
         }
     } catch (error) {
@@ -147,9 +139,6 @@ const ToggleBlockProduct = async (req, res) => {
         console.error(error)
     }
 }
-
-
-
 
 
 module.exports = {

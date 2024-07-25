@@ -1,6 +1,5 @@
 const User = require('../../models/userModel')
 const Product = require('../../models/productModel')
-const Category = require('../../models/categoryModel')
 const otpGenerator = require('otp-generator')
 const mailController = require("../../util/mailSender")
 const bcrypt = require('bcrypt')
@@ -54,7 +53,6 @@ const userLogin = async (req, res) => {
 const userLogout = (req, res) => {
     try {
         if (req.session.userId) {
-            console.log('user', req.session.userId)
             delete req.session.userId;
 
         }
@@ -96,7 +94,6 @@ const userSignUp = async (req, res) => {
                 lowerCaseAlphabets: false,
                 specialChars: false
             })
-            console.log('otp', otp)
             req.session.otp = otp
 
             let mailSender = mailController.mailSender
@@ -144,7 +141,6 @@ const resendOtp = async (req, res) => {
             lowerCaseAlphabets: false,
             specialChars: false
         });
-        console.log(otp);
         req.session.otp = otp;
 
         let mailSender = mailController.mailSender;
@@ -168,7 +164,6 @@ const forgotPassword = async (req, res) => {
 
 const forgotPasswordVerify = async (req, res) => {
     const email = req.body.email;
-    console.log(email);
 
     try {
         const user = await User.findOne({ email });
@@ -182,7 +177,6 @@ const forgotPasswordVerify = async (req, res) => {
             lowerCaseAlphabets: false,
             specialChars: false
         });
-        console.log('forgotPassword otp', otp);
         req.session.forgotOtp = otp;
         req.session.email = email;
 
@@ -199,7 +193,6 @@ const forgotOtpVerify = async (req, res) => {
     const { digit1, digit2, digit3, digit4 } = req.body;
     const otp = digit1 + digit2 + digit3 + digit4;
 
-    console.log('new OTP FOR forgot password', otp);
     if (otp === req.session.forgotOtp) {
         res.render('newPassword', { error: '' });
     } else {

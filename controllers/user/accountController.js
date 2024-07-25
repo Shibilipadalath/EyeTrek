@@ -23,7 +23,6 @@ const myAccount = async (req, res) => {
         const addressData = await Address.findOne({ userId: user._id });
         const addresses = addressData ? addressData.address : [];
 
-        // Pagination for orders
         const ordersPerPage = 5;
         const orderPage = parseInt(req.query.orderPage) || 1;
 
@@ -34,9 +33,7 @@ const myAccount = async (req, res) => {
             .sort({ createdAt: -1 })
             .skip((orderPage - 1) * ordersPerPage)
             .limit(ordersPerPage);
-        console.log(orderDetails);
 
-        // Pagination for wallet
         const transactionsPerPage = 5;
         const transactionPage = parseInt(req.query.transactionPage) || 1;
 
@@ -52,7 +49,6 @@ const myAccount = async (req, res) => {
             paginatedHistory = Userwallet.history.slice(startIndex, endIndex);
         }
 
-        console.log(Userwallet);
         return res.render('myAccount', {
             user,
             addresses,
@@ -161,11 +157,8 @@ const deleteAddress = async (req, res) => {
 const updateDetails = async (req, res) => {
     try {
         const { name, mobile } = req.body;
-        console.log("req body=======", name, mobile);
-        console.log(`Received name: ${name}, mobile: ${mobile}`);
 
         const user = await User.findOne({ _id: req.session.userId })
-        console.log(user);
         if (!user) {
             console.log('User not found');
             return res.status(404).json({ message: 'User not found' });
@@ -186,21 +179,16 @@ const updatePassword = async (req, res) => {
     try {
         const { password, npassword, cpassword } = req.body;
 
-        console.log(password, npassword, cpassword);
-
-
         const user = await User.findOne({ _id: req.session.userId });
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // checking current password
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
         if (!isPasswordCorrect) {
             return res.status(400).json({ message: 'Current password is incorrect' });
         }
 
-        // Hash the new password
         const hashedPassword = await bcrypt.hash(npassword, 10);
         user.password = hashedPassword;
         await user.save();
@@ -219,7 +207,6 @@ const checkPassword = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Check if the current password is correct
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
         if (!isPasswordCorrect) {
             return res.status(400).json({ message: 'Current password is incorrect', success: false });
@@ -249,8 +236,7 @@ const viewOrder = async (req, res) => {
 const cancelOrder = async (req, res) => {
     try {
         const orderId = req.params.orderId;
-        console.log('orderId................', orderId);
-        
+
         const order = await Order.findById(orderId);
 
         if (!order) {
@@ -292,7 +278,6 @@ const cancelOrder = async (req, res) => {
 const returnOrder = async (req, res) => {
     try {
         const orderId = req.params.orderId;
-        console.log('orderId................', orderId);
 
         const order = await Order.findById(orderId);
 
@@ -336,7 +321,6 @@ const addMoney = async (req, res) => {
     try {
         const { amount } = req.body;
         const userId = req.session.userId;
-        console.log(amount);
 
         if (!amount || amount <= 0) {
             return res.status(400).json({ error: 'Invalid amount' });
@@ -347,7 +331,7 @@ const addMoney = async (req, res) => {
             amount: amount * 100,
             currency: 'INR',
             receipt: `receipt_${Date.now()}`,
-            payment_capture: '1' 
+            payment_capture: '1'
         };
 
         const order = await razorpayInstance.orders.create(options);
@@ -367,8 +351,6 @@ const paymentSuccess = async (req, res) => {
     try {
         const { razorpay_payment_id, razorpay_order_id, razorpay_signature, userId, amount } = req.body;
 
-        console.log(req.body);
-
         const generatedSignature = crypto.createHmac('sha256', process.env.RAZORPAY_SECRET_KEY)
             .update(`${razorpay_order_id}|${razorpay_payment_id}`)
             .digest('hex');
@@ -376,8 +358,6 @@ const paymentSuccess = async (req, res) => {
         if (generatedSignature !== razorpay_signature) {
             return res.status(400).json({ error: 'Invalid signature' });
         }
-
-        console.log('Payment validation successful');
 
         let wallet = await Wallet.findOne({ userId: userId });
 
@@ -388,7 +368,6 @@ const paymentSuccess = async (req, res) => {
                 history: []
             });
             await wallet.save();
-            console.log("Created new wallet:", wallet);
         } else {
             console.log("Found wallet:", wallet);
         }

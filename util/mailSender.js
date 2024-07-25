@@ -1,6 +1,5 @@
 const nodemailer = require('nodemailer');
 
-
 const mailSender = async (email, title, body) => {
     try {
         let transporter = nodemailer.createTransport({
@@ -12,7 +11,7 @@ const mailSender = async (email, title, body) => {
         });
 
         let info = await transporter.sendMail({
-            from:process.env.mailSenderMail ,
+            from: process.env.mailSenderMail,
             to: `${email}`,
             subject: `${title}`,
             html: `${body}`,
@@ -22,8 +21,8 @@ const mailSender = async (email, title, body) => {
         return info;
     } catch (error) {
         console.error('Error occurred while sending email', error);
-        throw error; // Re-throw the error to handle it at the calling site
+        throw error;
     }
 };
 
-module.exports={mailSender};
+module.exports = { mailSender };

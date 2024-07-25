@@ -57,7 +57,6 @@ const editCouponPage = async (req, res) => {
         const couponId = req.query.couponId;
         const coupon = await Coupon.findById(couponId);
 
-        // Format the expiry date
         coupon.formattedExpiryDate = coupon.expiryDate.toISOString().substring(0, 10);
 
         res.status(200).render('editCoupon', { coupon });
