@@ -3,6 +3,7 @@ const Order = require('../../models/orderModel');
 const Product = require('../../models/productModel');
 const Category = require('../../models/categoryModel');
 const PDFDocument = require('pdfkit');
+const ExcelJS = require('exceljs');
 
 
 const adminHome = async (req, res) => {
@@ -77,11 +78,13 @@ const fetchOrders = async (req, res) => {
         }
 
         const orders = await Order.find(filter)
-            .limit(limit * 1)
-            .skip((page - 1) * limit)
-            .populate('userId')
-            .populate('cartItems.productId')
-            .exec();
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .sort({ createdAt: -1 })
+        .populate('userId')
+        .populate('cartItems.productId')
+        .exec();
+    
 
         const count = await Order.countDocuments(filter);
 
@@ -102,10 +105,9 @@ const fetchOrders = async (req, res) => {
 
 const generateReport = async (req, res) => {
     try {
-        const { startDate, endDate } = req.query;
+        const { startDate, endDate, format } = req.query;
 
         const filter = {};
-
         if (startDate && endDate) {
             filter.createdAt = { $gte: new Date(startDate), $lte: new Date(endDate) };
         } else if (startDate) {
@@ -116,47 +118,81 @@ const generateReport = async (req, res) => {
 
         const orders = await Order.find(filter).populate('userId').populate('cartItems.productId').exec();
 
-        const doc = new PDFDocument();
-        const fileName = `Sales_Report_${new Date().toISOString()}.pdf`;
+        if (format === 'pdf') {
+            const doc = new PDFDocument();
+            const fileName = `Sales_Report_${new Date().toISOString()}.pdf`;
 
-        res.setHeader('Content-disposition', `attachment; filename=${fileName}`);
-        res.setHeader('Content-type', 'application/pdf');
+            res.setHeader('Content-disposition', `attachment; filename=${fileName}`);
+            res.setHeader('Content-type', 'application/pdf');
 
-        doc.pipe(res);
+            doc.pipe(res);
 
-        doc.fontSize(18).text('Sales Report', { align: 'center' });
-        doc.moveDown();
-        doc.fontSize(12).text(`Report generated on: ${new Date().toLocaleDateString()}`, { align: 'center' });
-        doc.moveDown();
-
-        const overallSalesCount = orders.length;
-        const overallOrderAmount = orders.reduce((total, order) => total + order.totalPrice, 0);
-        const overallDiscount = orders.reduce((discount, order) => {
-            const totalOriginalPrice = order.cartItems.reduce((total, item) => {
-                return total + (item.quantity * item.productId.originalPrice);
-            }, 0);
-            const totalOfferPrice = order.cartItems.reduce((total, item) => {
-                return total + (item.quantity * item.productId.offerPrice);
-            }, 0);
-            return discount + (totalOriginalPrice - totalOfferPrice);
-        }, 0);
-
-        doc.fontSize(12).text(`Overall Sales Count: ${overallSalesCount}`);
-        doc.text(`Overall Order Amount: ${overallOrderAmount.toFixed(2)}`);
-        doc.text(`Overall Discount: ${overallDiscount.toFixed(2)}`);
-        doc.moveDown();
-
-        orders.forEach(order => {
-            doc.fontSize(12).text(`Order ID: ${order._id}`);
-            doc.text(`Billing Name: ${order.userId ? order.userId.userName : 'Unknown'}`);
-            doc.text(`Date: ${new Date(order.createdAt).toLocaleDateString()}`);
-            doc.text(`Total: ${order.totalPrice.toFixed(2)}`);
-            doc.text(`Payment Status: ${order.paymentStatus}`);
-            doc.text(`Payment Method: ${order.paymentMethod}`);
+            doc.fontSize(18).text('Sales Report', { align: 'center' });
             doc.moveDown();
-        });
+            doc.fontSize(12).text(`Report generated on: ${new Date().toLocaleDateString()}`, { align: 'center' });
+            doc.moveDown();
 
-        doc.end();
+            const overallSalesCount = orders.length;
+            const overallOrderAmount = orders.reduce((total, order) => total + order.totalPrice, 0);
+            const overallDiscount = orders.reduce((discount, order) => {
+                const totalOriginalPrice = order.cartItems.reduce((total, item) => {
+                    return total + (item.quantity * item.productId.originalPrice);
+                }, 0);
+                const totalOfferPrice = order.cartItems.reduce((total, item) => {
+                    return total + (item.quantity * item.productId.offerPrice);
+                }, 0);
+                return discount + (totalOriginalPrice - totalOfferPrice);
+            }, 0);
+
+            doc.fontSize(12).text(`Overall Sales Count: ${overallSalesCount}`);
+            doc.text(`Overall Order Amount: ${overallOrderAmount.toFixed(2)}`);
+            doc.text(`Overall Discount: ${overallDiscount.toFixed(2)}`);
+            doc.moveDown();
+
+            orders.forEach(order => {
+                doc.fontSize(12).text(`Order ID: ${order._id}`);
+                doc.text(`Billing Name: ${order.userId ? order.userId.userName : 'Unknown'}`);
+                doc.text(`Date: ${new Date(order.createdAt).toLocaleDateString()}`);
+                doc.text(`Total: ${order.totalPrice.toFixed(2)}`);
+                doc.text(`Payment Status: ${order.paymentStatus}`);
+                doc.text(`Payment Method: ${order.paymentMethod}`);
+                doc.moveDown();
+            });
+
+            doc.end();
+        } else if (format === 'excel') {
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet('Sales Report');
+
+            worksheet.columns = [
+                { header: 'Order ID', key: 'orderId', width: 20 },
+                { header: 'Billing Name', key: 'billingName', width: 30 },
+                { header: 'Date', key: 'date', width: 15 },
+                { header: 'Total', key: 'total', width: 15 },
+                { header: 'Payment Status', key: 'paymentStatus', width: 20 },
+                { header: 'Payment Method', key: 'paymentMethod', width: 20 },
+            ];
+
+            orders.forEach(order => {
+                worksheet.addRow({
+                    orderId: order._id,
+                    billingName: order.userId ? order.userId.userName : 'Unknown',
+                    date: new Date(order.createdAt).toLocaleDateString(),
+                    total: order.totalPrice.toFixed(2),
+                    paymentStatus: order.paymentStatus,
+                    paymentMethod: order.paymentMethod
+                });
+            });
+
+            const fileName = `Sales_Report_${new Date().toISOString()}.xlsx`;
+            res.setHeader('Content-disposition', `attachment; filename=${fileName}`);
+            res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+            await workbook.xlsx.write(res);
+            res.end();
+        } else {
+            res.status(400).json({ message: 'Invalid format specified' });
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });

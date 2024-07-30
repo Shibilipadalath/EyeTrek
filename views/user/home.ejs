@@ -211,11 +211,17 @@
                                 <div class="header-action-icon-2">
                                     <a href="/wishListPage">
                                         <img class="svgInject" alt="Evara" src="public/assets/imgs/theme/icons/icon-heart.svg">
+                                        <% if(wishListQuantity){ %>
+                                            <span class="pro-count white" style="color: red; font-weight: 900; background-color: rgb(144, 232, 162);"><%= wishListQuantity %></span>
+                                        <% } %> 
                                     </a>
                                 </div>
                                 <div class="header-action-icon-2">
                                     <a class="mini-cart-icon" href="/cart">
                                         <img alt="Evara" src="public/assets/imgs/theme/icons/icon-cart.svg">
+                                        <% if(cartQuantity){ %>
+                                            <span class="pro-count white" style="color: red; font-weight: 900; background-color: rgb(144, 232, 162);"><%= cartQuantity %></span>
+                                        <% } %>                                        
                                     </a>
                                 </div>
                             </div>

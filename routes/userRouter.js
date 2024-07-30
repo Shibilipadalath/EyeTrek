@@ -47,10 +47,6 @@ userRoute.get('/addToCart', userBlock.isBlocked, userAuth.isLogin, cartControlle
 userRoute.delete('/deleteFromCart', userBlock.isBlocked, userAuth.isLogin, cartController.removeFromCart)
 userRoute.post('/updateCartQuantity', userBlock.isBlocked, userAuth.isLogin, cartController.updateCartQuantity)
 
-//chenckOut
-
-userRoute.get('/checkOut', userBlock.isBlocked, userAuth.isLogin, cartController.checkOutPage)
-
 
 //account
 
@@ -62,6 +58,7 @@ userRoute.post('/updateDetails', userBlock.isBlocked, userAuth.isLogin, accountC
 userRoute.post('/updatePassword', userBlock.isBlocked, userAuth.isLogin, accountController.updatePassword);
 userRoute.post('/checkPassword', userBlock.isBlocked, userAuth.isLogin, accountController.checkPassword);
 userRoute.get('/order/:id', userBlock.isBlocked, userAuth.isLogin, accountController.viewOrder);
+userRoute.get('/orders/:id/download-invoice', userBlock.isBlocked, userAuth.isLogin, accountController.downloadInvoice);
 userRoute.post('/orders/:orderId/cancel', userBlock.isBlocked, userAuth.isLogin, accountController.cancelOrder);
 userRoute.post('/orders/:orderId/return', userBlock.isBlocked, userAuth.isLogin, accountController.returnOrder);
 userRoute.post('/wallet/add-money', userBlock.isBlocked, userAuth.isLogin, accountController.addMoney);
@@ -70,8 +67,10 @@ userRoute.post('/wallet/payment-success', userBlock.isBlocked, userAuth.isLogin,
 
 //order
 
-
+userRoute.get('/checkOut', userBlock.isBlocked, userAuth.isLogin, orderController.checkOutPage)
+userRoute.post('/applyCoupon', userBlock.isBlocked, userAuth.isLogin, orderController.applyCoupon)
 userRoute.post('/placeOrder', userBlock.isBlocked, userAuth.isLogin, orderController.placeOrder)
+userRoute.patch('/saveOrder', userBlock.isBlocked, userAuth.isLogin, orderController.saveOrder)
 userRoute.post('/onlinepay', userBlock.isBlocked, userAuth.isLogin, orderController.onlinePay)
 userRoute.get('/thankYou', userBlock.isBlocked, userAuth.isLogin, orderController.thankYou)
 

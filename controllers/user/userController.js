@@ -1,5 +1,7 @@
 const User = require('../../models/userModel')
 const Product = require('../../models/productModel')
+const Cart = require('../../models/cartModel')
+const WishList = require('../../models/wishListModel')
 const otpGenerator = require('otp-generator')
 const mailController = require("../../util/mailSender")
 const bcrypt = require('bcrypt')
@@ -7,10 +9,19 @@ const bcrypt = require('bcrypt')
 
 const homePage = async (req, res) => {
     try {
+        const userId = req.session.userId
+        
         const activedProducts = await Product.find({ isActive: true }).limit(6).populate('category')
         const product = activedProducts.filter((item) => item.category.isActive === true)
-        const userExist = await User.findOne({ _id: req.session.userId })
-        res.render('home', { product, userExist })
+        const userExist = await User.findOne({ _id: userId })
+
+        const cart = await Cart.findOne({ userId })
+        const cartQuantity = cart?.cartItems.reduce((sum, item) => sum + item.quantity, 0) ?? 0;
+
+        const wishList = await WishList.findOne({ userId })     
+        const wishListQuantity = wishList?.products.length ?? 0
+
+        res.render('home', { product, userExist, cartQuantity, wishListQuantity })
     } catch (error) {
         console.error(error);
     }

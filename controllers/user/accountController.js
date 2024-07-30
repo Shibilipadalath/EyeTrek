@@ -5,6 +5,7 @@ const Wallet = require('../../models/walletModel')
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const Razorpay = require('razorpay');
+const PDFDocument= require('pdfkit')
 
 
 const razorpayInstance = new Razorpay({
@@ -233,6 +234,7 @@ const viewOrder = async (req, res) => {
     }
 }
 
+
 const cancelOrder = async (req, res) => {
     try {
         const orderId = req.params.orderId;
@@ -315,6 +317,55 @@ const returnOrder = async (req, res) => {
         return res.status(500).send('Server error');
     }
 };
+
+const downloadInvoice=async(req,res)=>{
+    try {
+        const orderId = req.params.id;
+        const order = await Order.findById(orderId).populate('cartItems.productId');
+
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        const doc = new PDFDocument();
+        const fileName = `Invoice_${order._id}.pdf`;
+
+        res.setHeader('Content-disposition', `attachment; filename=${fileName}`);
+        res.setHeader('Content-type', 'application/pdf');
+
+        doc.pipe(res);
+
+        doc.fontSize(18).text(`Invoice for Order #${order._id}`, { align: 'center' });
+        doc.moveDown();
+        doc.fontSize(12).text(`Date: ${new Date(order.createdAt).toLocaleString()}`, { align: 'center' });
+        doc.moveDown();
+
+        doc.fontSize(12).text(`Status: ${order.status}`);
+        doc.text(`Total Price: ${order.totalPrice.toFixed(2)}`);
+        doc.moveDown();
+
+        doc.text('Items:', { underline: true });
+        order.cartItems.forEach(item => {
+            doc.text(`- ${item.productId.name} (Qty: ${item.quantity}) - ${item.price.toFixed(2)}`);
+        });
+        doc.moveDown();
+
+        doc.text('Shipping Address:', { underline: true });
+        const address = order.address[0];
+        doc.text(`Name: ${address.name}`);
+        doc.text(`Mobile: ${address.mobile}`);
+        doc.text(`House: ${address.houseName}`);
+        doc.text(`Street: ${address.street}`);
+        doc.text(`City: ${address.city}`);
+        doc.text(`State: ${address.state}`);
+        doc.text(`Pin Code: ${address.pinCode}`);
+
+        doc.end();
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
 
 
 const addMoney = async (req, res) => {
@@ -401,6 +452,7 @@ module.exports = {
     viewOrder,
     cancelOrder,
     returnOrder,
+    downloadInvoice,
     addMoney,
     paymentSuccess
 }

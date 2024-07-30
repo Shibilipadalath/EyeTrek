@@ -70,9 +70,11 @@
         </div>
         <div class="order-info">
             <p>Status: <span><%= order.status %></span></p>
+            <p>Status: <span><%= order.paymentStatus %></span></p>
             <p>Total Price: <span>₹<%= (order.totalPrice).toFixed(2) %></span></p>
         </div>
         <h2>Items</h2>
+        <a href="/orders/<%= order._id %>/download-invoice" class="btn btn-secondary mt-3" style="margin-bottom: 3px;">Download Invoice</a>
         <table class="table table-striped items-table">
             <thead class="thead-dark">
                 <tr>
@@ -104,17 +106,21 @@
             <p>State: <%= order.address[0].state %></p>
             <p>Pin Code: <%= order.address[0].pinCode %></p>
         </div>
-        <a href="/myAccount" class="btn btn-primary mt-3">Back to My Account</a>
-        <% if (order.status !== 'Cancelled' && order.status !== 'Delivered' && order.status !== 'Returned' && order.status !== 'Refunded') { %>
-            <form action="/orders/<%= order._id %>/cancel" method="POST" class="mt-3">
-                <button type="submit" class="btn btn-danger">Cancel Order</button>
-            </form>
-        <% } %>
-        <% if (order.status === 'Delivered') { %>
-            <form action="/orders/<%= order._id %>/return" method="POST" class="mt-3">
-                <button type="submit" class="btn btn-warning">Return Order</button>
-            </form>
-        <% } %>
+        <div class="d-flex justify-content-between align-items-center mt-3">         
+            <% if (order.status !== 'Cancelled' && order.status !== 'Delivered' && order.status !== 'Returned' && order.status !== 'Refunded') { %>
+                <form action="/orders/<%= order._id %>/cancel" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-danger">Cancel Order</button>
+                </form>
+            <% } %>
+            <% if (order.status === 'Delivered') { %>
+                <form action="/orders/<%= order._id %>/return" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-warning">Return Order</button>
+                </form>
+            <% } %>
+            <div>
+                <a href="/myAccount" class="btn btn-primary">Back to My Account</a>
+            </div>
+        </div> 
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

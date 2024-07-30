@@ -4,12 +4,69 @@ const User = require('../../models/userModel')
 const Address = require('../../models/addressModel')
 const Order = require('../../models/orderModel')
 const Wallet = require('../../models/walletModel')
+const Coupon = require('../../models/couponModel')
 const Razorpay = require('razorpay')
 
 const instance = new Razorpay({
     key_id: process.env.RAZORPAY_ID_KEY,
     key_secret: process.env.RAZORPAY_SECRET_KEY
 })
+
+const checkOutPage = async (req, res) => {
+    try {
+        const userId = req.session.userId;
+        if (!userId) {
+            return res.redirect('/login'); 
+        }
+        
+        const userData = await User.findOne({ _id: userId });
+        const addressData = await Address.findOne({ userId }).populate('userId');
+        const cartData = await Cart.findOne({ userId }).populate('cartItems.productId');
+        const coupons = await Coupon.find({ isListed: true });
+
+        if (!cartData || !cartData.cartItems || cartData.cartItems.length === 0) {
+            return res.redirect('/');
+        }
+
+        let cartTotalPrice = 0;
+        if (cartData.cartItems) {
+            cartTotalPrice = cartData.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        }
+        
+        return res.render('checkOut', { user: userData, address: addressData, cart: cartData, cartTotalPrice, coupons });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Internal Server Error');
+    }
+}
+
+
+
+const applyCoupon = async (req, res) => {
+    const { couponCode, cartTotal } = req.body;
+    try {
+        const coupon = await Coupon.findOne({ coupon_code: couponCode, isListed: true });
+        if (coupon) {
+            let discount = (cartTotal * coupon.percentage) / 100;
+
+            // Cap the discount at the maximum discount limit
+            if (discount > coupon.maximumAmount) {
+                discount = coupon.maximumAmount;
+            }
+
+            const totalPrice = cartTotal - discount;
+
+            return res.json({ success: true, totalPrice: totalPrice.toFixed(2), discount: discount.toFixed(2) });
+        } else {
+            return res.json({ success: false, message: 'Invalid coupon code' });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.json({ success: false, message: 'An error occurred' });
+    }
+}
+
+
 
 
 const onlinePay = async (req, res) => {
@@ -25,8 +82,7 @@ const onlinePay = async (req, res) => {
             total.push(data.quantity * data.price);
         });
 
-
-        function generateOrderId() {
+        const generateOrderId = () => {
             const timestamp = Date.now().toString();
             const randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             let orderId = 'ORD';
@@ -35,19 +91,19 @@ const onlinePay = async (req, res) => {
                 orderId += randomChars.charAt(randomIndex);
             }
             return orderId + timestamp.slice(-6);
-        }
+        };
 
-        let TotalAmount = total.reduce((acc, cur) => acc + cur, 0)
+        const totalAmount = total.reduce((acc, cur) => acc + cur, 0);
 
         const order = new Order({
-            userId, cartItems,
-            totalPrice: TotalAmount,
+            userId,
+            cartItems,
+            totalPrice: totalAmount,
             paymentMethod: "RazorPay",
-            paymentStatus: "success",
+            paymentStatus: "Pending",
             status: "ORDER PLACED",
             address: addressData
         });
-
 
         await order.save();
 
@@ -59,11 +115,10 @@ const onlinePay = async (req, res) => {
 
         await Cart.deleteOne({ userId });
 
-        const amounts = TotalAmount;
         const order2 = await instance.orders.create({
-            amount: amounts * 100,
+            amount: totalAmount * 100,
             currency: "INR",
-            receipt: req.session.user
+            receipt: req.session.user,
         });
 
         res.json({ order2, order });
@@ -72,6 +127,29 @@ const onlinePay = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
+
+const saveOrder = async (req, res) => {
+    try {
+        const orderId = req.query.id;
+        const { paymentStatus } = req.body;
+        
+        const order = await Order.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+        
+        order.paymentStatus = paymentStatus;
+        await order.save();
+        
+        res.status(200).json({ message: "Order updated successfully" });
+    } catch (error) {
+        console.error('Error saving order:', error);
+        res.status(500).json({ message: "Failed to save the order" });
+    }
+};
+
+
 
 const placeOrder = async (req, res) => {
     try {
@@ -113,6 +191,8 @@ const placeOrder = async (req, res) => {
             paymentStatus = "Success";
         } else if (req.body.paymentMethod === 'Cash on Delivery') {
             paymentStatus = "Pending";
+        } else if (req.body.paymentMethod === 'Razorpay') {
+            paymentStatus = "Pending";
         } else {
             paymentStatus = "Pending";
         }
@@ -128,7 +208,6 @@ const placeOrder = async (req, res) => {
 
         await order.save();
 
-
         for (const item of cartItems) {
             const productData = await Product.findOne({ _id: item.productId });
             productData.stock -= item.quantity;
@@ -143,6 +222,7 @@ const placeOrder = async (req, res) => {
         res.status(500).json({ message: "Something went wrong", success: false });
     }
 };
+
 
 
 const thankYou = async (req, res) => {
@@ -163,4 +243,7 @@ module.exports = {
     placeOrder,
     thankYou,
     onlinePay,
+    checkOutPage,
+    applyCoupon,
+    saveOrder
 }

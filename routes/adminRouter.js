@@ -5,6 +5,7 @@ const productController = require('../controllers/admin/productController')
 const categoryController = require("../controllers/admin/categoryController")
 const offerController = require('../controllers/admin/offerController')
 const couponController = require('../controllers/admin/couponController')
+const analyticsController=require('../controllers/admin/analyticsController')
 const adminAuth = require('../middlewere/adminAuth')
 const MulterImg = require('../config/multer')
 
@@ -66,6 +67,12 @@ adminRouter.get('/editCoupon', adminAuth.isLogin, couponController.editCouponPag
 adminRouter.post('/editCoupon', adminAuth.isLogin, couponController.editCoupon);
 adminRouter.post('/coupon/unblock', adminAuth.isLogin, couponController.couponUnblock);
 adminRouter.post('/coupon/block', adminAuth.isLogin, couponController.couponBlock);
+
+//bestProduct
+
+adminRouter.get('/popularProductPage',adminAuth.isLogin,analyticsController.popularProductPage)
+adminRouter.get('/bestCategoryPage',adminAuth.isLogin,analyticsController.bestCategoryPage)
+adminRouter.get('/topBrandPage',adminAuth.isLogin,analyticsController.topBrandPage)
 
 
 module.exports = adminRouter
