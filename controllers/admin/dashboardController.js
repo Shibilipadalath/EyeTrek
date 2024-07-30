@@ -199,8 +199,47 @@ const generateReport = async (req, res) => {
     }
 };
 
+
+const sales = async (req, res) => {
+    try {
+        const { filter } = req.query;
+        console.log(req.query);
+        let groupBy = {};
+
+        // Set the appropriate grouping field based on the filter
+        if (filter === 'daily') {
+            groupBy = { $dayOfMonth: '$createdAt' };
+        } else if (filter === 'monthly') {
+            groupBy = { $month: '$createdAt' };
+        } else if (filter === 'yearly') {
+            groupBy = { $year: '$createdAt' };
+        } else {
+            return res.status(400).json({ success: false, message: 'Invalid filter' });
+        }
+
+        const salesData = await Order.aggregate([
+            {
+                $group: {
+                    _id: groupBy,
+                    total: { $sum: '$totalPrice' },
+                    count: { $sum: 1 }
+                }
+            },
+            { $sort: { _id: 1 } }
+        ]);
+
+        console.log(salesData);
+
+        return res.status(200).json(salesData);
+    } catch (error) {
+        console.error('Error generating chart:', error);
+        res.status(500).json({ error: 'Failed to generate sales chart' });
+    }
+};
+
 module.exports = {
     adminHome,
     fetchOrders,
-    generateReport
+    generateReport,
+    sales
 }

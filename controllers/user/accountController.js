@@ -367,6 +367,60 @@ const downloadInvoice=async(req,res)=>{
     }
 }
 
+const pendingPayment=async(req,res)=>{
+    const { orderId } = req.body;
+
+    try {
+        const order = await Order.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ success: false, message: 'Order not found' });
+        }
+
+        const razorpayOrder = await razorpayInstance.orders.create({
+            amount: order.totalPrice * 100,
+            currency: 'INR',
+            receipt: orderId
+        });
+
+        return res.json({
+            success: true,
+            key_id: process.env.RAZORPAY_ID_KEY,
+            amount: order.totalPrice * 100,
+            currency: 'INR',
+            order_id: razorpayOrder.id,
+            name: 'Customer Name',
+            email: 'customer@example.com',
+            contact: '1234567890'
+        });
+    } catch (error) {
+        console.error('Error creating Razorpay order:', error);
+        return res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+}
+
+const finalizePendingPayment=async(req,res)=>{
+    try {
+        const { orderId, paymentId } = req.body;
+
+        if (!orderId || !paymentId) {
+            return res.status(400).json({ success: false, message: 'Order ID and Payment ID are required.' });
+        }
+
+        const order = await Order.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ success: false, message: 'Order not found.' });
+        }
+
+        order.paymentStatus = 'success';
+        await order.save();
+
+        res.json({ success: true, message: 'Order finalized successfully.' });
+    } catch (error) {
+        console.error('Error finalizing order:', error);
+        res.status(500).json({ success: false, message: 'Internal server error.' });
+    }
+}
+
 
 const addMoney = async (req, res) => {
     try {
@@ -377,7 +431,6 @@ const addMoney = async (req, res) => {
             return res.status(400).json({ error: 'Invalid amount' });
         }
 
-        // Create a Razorpay order
         const options = {
             amount: amount * 100,
             currency: 'INR',
@@ -453,6 +506,8 @@ module.exports = {
     cancelOrder,
     returnOrder,
     downloadInvoice,
+    pendingPayment,
+    finalizePendingPayment,
     addMoney,
     paymentSuccess
 }

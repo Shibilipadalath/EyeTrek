@@ -57,10 +57,15 @@ userRoute.delete('/deleteAddress/:addressId', userBlock.isBlocked, userAuth.isLo
 userRoute.post('/updateDetails', userBlock.isBlocked, userAuth.isLogin, accountController.updateDetails);
 userRoute.post('/updatePassword', userBlock.isBlocked, userAuth.isLogin, accountController.updatePassword);
 userRoute.post('/checkPassword', userBlock.isBlocked, userAuth.isLogin, accountController.checkPassword);
+
 userRoute.get('/order/:id', userBlock.isBlocked, userAuth.isLogin, accountController.viewOrder);
 userRoute.get('/orders/:id/download-invoice', userBlock.isBlocked, userAuth.isLogin, accountController.downloadInvoice);
+
+userRoute.post('/api/razorpayOrderId', userBlock.isBlocked, userAuth.isLogin, accountController.pendingPayment);
+userRoute.post('/finalizeOrder', userBlock.isBlocked, userAuth.isLogin, accountController.finalizePendingPayment);
 userRoute.post('/orders/:orderId/cancel', userBlock.isBlocked, userAuth.isLogin, accountController.cancelOrder);
 userRoute.post('/orders/:orderId/return', userBlock.isBlocked, userAuth.isLogin, accountController.returnOrder);
+
 userRoute.post('/wallet/add-money', userBlock.isBlocked, userAuth.isLogin, accountController.addMoney);
 userRoute.post('/wallet/payment-success', userBlock.isBlocked, userAuth.isLogin, accountController.paymentSuccess);
 

@@ -26,6 +26,8 @@ adminRouter.get('/adminLogout', adminAuth.isLogin, adminController.adminLogout)
 adminRouter.get('/adminHome', adminAuth.isLogin, dashboardController.adminHome);
 adminRouter.get('/orders', adminAuth.isLogin, dashboardController.fetchOrders);
 adminRouter.get('/download-report', adminAuth.isLogin, dashboardController.generateReport);
+adminRouter.get('/sales', adminAuth.isLogin, dashboardController.sales);
+
 
 //product
 

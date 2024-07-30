@@ -178,23 +178,113 @@
                 </div>
             </div>            
             <div class="row">
-                <div class="col-xl-8 col-lg-12">
+                <div class="col-xl-8 col-lg-12" style="margin-left: 16% ;">
                     <div class="card mb-4">
                         <article class="card-body">
                             <h5 class="card-title">Sale statistics</h5>
+                            <button onclick="updateChart('daily')" style="border-radius: 7px; border-color: red;">Daily</button>
+                            <button onclick="updateChart('monthly')" style="border-radius: 7px; border-color: red;">Monthly</button>
+                            <button onclick="updateChart('yearly')" style="border-radius: 7px; border-color: red;">Yearly</button>
                             <canvas id="myChart" height="120px"></canvas>
                         </article>
                     </div>
-                </div>
+                    <script>
+                        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                        let myChart;
                 
-                <div class="col-xl-4 col-lg-12">
-                    <div class="card mb-4">
-                        <article class="card-body">
-                            <h5 class="card-title">Revenue Base on Area</h5>
-                            <canvas id="myChart2" height="217"></canvas>
-                        </article>
-                    </div>
-                </div>
+                        async function fetchSalesData(filter) {
+                            try {
+                                const response = await fetch(`/admin/sales?filter=${filter}`);
+                                if (!response.ok) {
+                                    throw new Error(`HTTP error! status: ${response.status}`);
+                                }
+                                const data = await response.json();
+                                console.log('Sales data fetched:', data);
+                                return data;
+                            } catch (error) {
+                                console.error('Error fetching sales data:', error);
+                            }
+                        }
+                
+                        function updateChart(filter) {
+                            if (!myChart) {
+                                console.error('Chart is not initialized');
+                                return;
+                            }
+                
+                            fetchSalesData(filter).then(salesData => {
+                                if (Array.isArray(salesData)) {
+                                    let labels = [];
+                                    let totals = [];
+                
+                                    if (filter === "daily") {
+                                        labels = Array.from({ length: 31 }, (_, i) => i + 1);
+                                        totals = Array(31).fill(0);
+                                        salesData.forEach(d => {
+                                            if (d._id >= 1 && d._id <= 31) {
+                                                totals[d._id - 1] = d.total;
+                                            }
+                                        });
+                                    } else if (filter === "monthly") {
+                                        labels = monthNames;
+                                        totals = Array(12).fill(0);
+                                        salesData.forEach(d => {
+                                            if (d._id >= 1 && d._id <= 12) {
+                                                totals[d._id - 1] = d.total;
+                                            }
+                                        });
+                                    } else if (filter === "yearly") {
+                                        labels = salesData.map(d => d._id);
+                                        totals = salesData.map(d => d.total);
+                                    }
+                
+                                    myChart.data.labels = labels;
+                                    myChart.data.datasets[0].data = totals;
+                                    myChart.update();
+                                    console.log('Chart updated with:', { labels, totals });
+                                } else {
+                                    console.error('Sales data is not an array:', salesData);
+                                }
+                            }).catch(error => console.error('Error updating chart:', error));
+                        }
+                
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const ctx = document.getElementById('myChart').getContext('2d');
+                            myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: [],
+                                    datasets: [{
+                                        label: 'Sales',
+                                        backgroundColor: '#088178',
+                                        borderColor: '#088178',
+                                        data: []
+                                    }]
+                                },
+                                options: {
+                                    plugins: {
+                                        legend: {
+                                            labels: {
+                                                usePointStyle: true,
+                                            },
+                                        }
+                                    },
+                                    scales: {
+                                        x: {
+                                            beginAtZero: true
+                                        },
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                }
+                            });
+                
+                            // Load initial chart data
+                            updateChart('monthly');
+                        });
+                    </script>
+                </div>                                
             </div>
             <div class="card mb-4">
                 <header class="card-header">
