@@ -107,6 +107,8 @@ const userSignUp = async (req, res) => {
             })
             req.session.otp = otp
 
+            console.log(req.session.otp);
+
             let mailSender = mailController.mailSender
             await mailSender(email, 'Verification Email', `<h3>Confirm your OTP</h3><h5>Here is your OTP: <b>${otp}</b></h5>`);
             res.render('otpPage', { error: '' })
@@ -153,6 +155,7 @@ const resendOtp = async (req, res) => {
             specialChars: false
         });
         req.session.otp = otp;
+        console.log(req.session.otp);
 
         let mailSender = mailController.mailSender;
         await mailSender(email, 'Verification Email', `<h3>Confirm your OTP</h3><h5>Here is your OTP: <b>${otp}</b></h5>`);
