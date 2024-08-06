@@ -11,7 +11,7 @@ const homePage = async (req, res) => {
     try {
         const userId = req.session.userId
         
-        const activedProducts = await Product.find({ isActive: true }).limit(6).populate('category')
+        const activedProducts = await Product.find({ isActive: true }).limit(6).sort({createdAt:-1}).populate('category')
         const product = activedProducts.filter((item) => item.category.isActive === true)
         const userExist = await User.findOne({ _id: userId })
 

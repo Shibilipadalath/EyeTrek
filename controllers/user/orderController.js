@@ -18,6 +18,9 @@ const checkOutPage = async (req, res) => {
         if (!userId) {
             return res.redirect('/login'); 
         }
+
+        const currentDate = new Date();
+        await Coupon.updateMany({ expiryDate: { $lt: currentDate } }, { $set: { isListed: false } });
         
         const userData = await User.findOne({ _id: userId });
         const addressData = await Address.findOne({ userId }).populate('userId');
@@ -49,7 +52,6 @@ const applyCoupon = async (req, res) => {
         if (coupon) {
             let discount = (cartTotal * coupon.percentage) / 100;
 
-            // Cap the discount at the maximum discount limit
             if (discount > coupon.maximumAmount) {
                 discount = coupon.maximumAmount;
             }

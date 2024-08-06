@@ -4,7 +4,7 @@ const Category = require('../../models/categoryModel')
 
 const productManagement = async (req, res) => {
     try {
-        const product = await Product.find({})
+        const product = await Product.find({}).sort({createdAt:-1})
         const category = await Category.find({})
         res.render('productsList', { product, category })
     } catch (error) {

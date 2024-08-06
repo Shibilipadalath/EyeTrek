@@ -2,6 +2,7 @@ const User = require('../../models/userModel')
 const Address = require('../../models/addressModel')
 const Order = require('../../models/orderModel')
 const Wallet = require('../../models/walletModel')
+const Product = require('../../models/productModel')
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const Razorpay = require('razorpay');
@@ -45,10 +46,14 @@ const myAccount = async (req, res) => {
         if (Userwallet) {
             const totalTransactions = Userwallet.history.length;
             totalTransactionPages = Math.ceil(totalTransactions / transactionsPerPage);
+            
             const startIndex = (transactionPage - 1) * transactionsPerPage;
             const endIndex = Math.min(startIndex + transactionsPerPage, totalTransactions);
-            paginatedHistory = Userwallet.history.slice(startIndex, endIndex);
+
+            const reversedHistory = Userwallet.history.slice().reverse();
+            paginatedHistory = reversedHistory.slice(startIndex, endIndex);
         }
+        
 
         return res.render('myAccount', {
             user,
@@ -249,6 +254,14 @@ const cancelOrder = async (req, res) => {
             order.status = 'Cancelled';
             await order.save();
 
+            for (const item of order.cartItems) {
+                const product = await Product.findById(item.productId);
+                if (product) {
+                    product.stock += item.quantity;
+                    await product.save();
+                }
+            }
+
             if (order.paymentMethod === 'Wallet') {
                 const userWallet = await Wallet.findOne({ userId: order.userId });
                 if (!userWallet) {
@@ -277,6 +290,7 @@ const cancelOrder = async (req, res) => {
 };
 
 
+
 const returnOrder = async (req, res) => {
     try {
         const orderId = req.params.orderId;
@@ -290,6 +304,14 @@ const returnOrder = async (req, res) => {
         if (order.status === 'Delivered') {
             order.status = 'Returned';
             await order.save();
+
+            for(const item of order.cartItems){
+                const product=await Product.findById(item.productId)
+                if(product){
+                    product.stock+=item.quantity
+                    await product.save()
+                }
+            }
 
             if (order.paymentMethod === 'Wallet') {
                 const userWallet = await Wallet.findOne({ userId: order.userId });

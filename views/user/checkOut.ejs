@@ -892,40 +892,39 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <% cart.cartItems.forEach((element,index)=> { %>
+                                                <% cart.cartItems.forEach((element, index) => { %>
                                                     <tr>
-                                                        <td class="image product-thumbnail"><img
-                                                                src="public/products/<%= element.productId.image[0] %>"
-                                                                alt="#"></td>
+                                                        <td class="image product-thumbnail">
+                                                            <img src="/public/products/<%= element.productId.image[0] %>" alt="#">
+                                                        </td>
                                                         <td>
                                                             <h5><a href="shop-product-full.html">
-                                                                    <%= element.productId.name %>
-                                                                </a></h5> <span class="product-qty">x <%=
-                                                                    element.quantity %></span>
+                                                                <%= element.productId.name %>
+                                                            </a></h5>
+                                                            <span class="product-qty">x <%= element.quantity %></span>
                                                         </td>
-                                                        <td> ₹<%= parseFloat(element.price).toFixed(2) %></td>
-                                                        </td>
+                                                        <td>₹<%= parseFloat(element.price*element.quantity).toFixed(2) %></td>
                                                     </tr>
-                                                    <tr>
-                                                        <th>SubTotal</th>
-                                                        <td class="product-subtotal" colspan="2"> ₹ <%= (element.quantity * parseFloat(element.price)).toFixed(2) %></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Shipping</th>
-                                                        <td colspan="2"><em>Free Shipping</em></td>
-                                                    </tr>
-                                                    <tr>
-                                                    <th>Total</th>
-                                                        <td colspan="2" class="product-subtotal"><span id="totalPrice" class="font-xl text-brand fw-900"> ₹ <%= cartTotalPrice.toFixed(2) %></span></td>
-                                                    </tr>
-
-                                                    <% }) %>
-
+                                                <% }); %>
+                                                <tr>
+                                                    <th>SubTotal</th>
+                                                    <td class="product-subtotal" colspan="2">₹ <%= cart.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2) %></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Shipping</th>
+                                                    <td colspan="2"><em>Free Shipping</em></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Total After all Discount</th>
+                                                    <td colspan="2" class="product-subtotal">
+                                                        <span id="totalPrice" class="font-xl text-brand fw-900">₹ <%= cartTotalPrice.toFixed(2) %></span>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     <% } %>
-
                                 </div>
+
                                 <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                                 <div class="payment_method">
                                     <div class="mb-25">
