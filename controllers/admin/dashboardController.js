@@ -88,8 +88,6 @@ const fetchOrders = async (req, res) => {
 
         const count = await Order.countDocuments(filter);
 
-        console.log('Orders Fetched:', orders);
-
         res.json({
             orders,
             totalPages: Math.ceil(count / limit),
@@ -203,10 +201,8 @@ const generateReport = async (req, res) => {
 const sales = async (req, res) => {
     try {
         const { filter } = req.query;
-        console.log(req.query);
         let groupBy = {};
 
-        // Set the appropriate grouping field based on the filter
         if (filter === 'daily') {
             groupBy = { $dayOfMonth: '$createdAt' };
         } else if (filter === 'monthly') {
@@ -227,9 +223,6 @@ const sales = async (req, res) => {
             },
             { $sort: { _id: 1 } }
         ]);
-
-        console.log(salesData);
-
         return res.status(200).json(salesData);
     } catch (error) {
         console.error('Error generating chart:', error);

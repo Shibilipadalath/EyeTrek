@@ -1,4 +1,11 @@
 <%- include('./partials/adminHeader') %>
+<style>
+    .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+</style>
 <body>
     <div class="screen-overlay"></div>
     <aside class="navbar-aside" id="offcanvas_aside">
@@ -63,41 +70,12 @@
                 </li>
             </ul>
             <hr>
-            <ul class="menu-aside">
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="#"> <i class="icon material-icons md-settings"></i>
-                        <span class="text">Settings</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="page-settings-1.html">Setting sample 1</a>
-                        <a href="page-settings-2.html">Setting sample 2</a>
-                    </div>
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="page-blank.html"> <i class="icon material-icons md-local_offer"></i>
-                        <span class="text"> Starter page </span>
-                    </a>
-                </li>
-            </ul>
-            <br>
-            <br>
         </nav>
     </aside>
     <main class="main-wrap">
         <header class="main-header navbar">
             <div class="col-search">
-                <form class="searchform">
-                    <div class="input-group">
-                        <input list="search_terms" type="text" class="form-control" placeholder="Search term">
-                        <button class="btn btn-light bg" type="button"> <i class="material-icons md-search"></i></button>
-                    </div> 
-                    <datalist id="search_terms">
-                        <option value="Products">
-                        <option value="New orders">
-                        <option value="Apple iphone">
-                        <option value="Ahmed Hassan">
-                    </datalist>
-                </form>
+                
             </div>
             <div class="col-nav">
                 <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
@@ -178,76 +156,22 @@
                 </div>
             </div>            
             <div class="row">
-                <div class="col-xl-8 col-lg-12" style="margin-left: 16% ;">
+                <div class="col-xl-8 col-lg-12" style="margin-left: 16%;">
                     <div class="card mb-4">
                         <article class="card-body">
                             <h5 class="card-title">Sale statistics</h5>
-                            <button onclick="updateChart('daily')" style="border-radius: 7px; border-color: red;">Daily</button>
-                            <button onclick="updateChart('monthly')" style="border-radius: 7px; border-color: red;">Monthly</button>
-                            <button onclick="updateChart('yearly')" style="border-radius: 7px; border-color: red;">Yearly</button>
+                            <div class="button-container text-center">
+                                <button onclick="updateChart('daily')" class="btn btn-primary mx-1">Daily</button>
+                                <button onclick="updateChart('monthly')" class="btn btn-primary mx-1">Monthly</button>
+                                <button onclick="updateChart('yearly')" class="btn btn-primary mx-1">Yearly</button>
+                            </div>
                             <canvas id="myChart" height="120px"></canvas>
                         </article>
                     </div>
                     <script>
                         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
                         let myChart;
-                
-                        async function fetchSalesData(filter) {
-                            try {
-                                const response = await fetch(`/admin/sales?filter=${filter}`);
-                                if (!response.ok) {
-                                    throw new Error(`HTTP error! status: ${response.status}`);
-                                }
-                                const data = await response.json();
-                                console.log('Sales data fetched:', data);
-                                return data;
-                            } catch (error) {
-                                console.error('Error fetching sales data:', error);
-                            }
-                        }
-                
-                        function updateChart(filter) {
-                            if (!myChart) {
-                                console.error('Chart is not initialized');
-                                return;
-                            }
-                
-                            fetchSalesData(filter).then(salesData => {
-                                if (Array.isArray(salesData)) {
-                                    let labels = [];
-                                    let totals = [];
-                
-                                    if (filter === "daily") {
-                                        labels = Array.from({ length: 31 }, (_, i) => i + 1);
-                                        totals = Array(31).fill(0);
-                                        salesData.forEach(d => {
-                                            if (d._id >= 1 && d._id <= 31) {
-                                                totals[d._id - 1] = d.total;
-                                            }
-                                        });
-                                    } else if (filter === "monthly") {
-                                        labels = monthNames;
-                                        totals = Array(12).fill(0);
-                                        salesData.forEach(d => {
-                                            if (d._id >= 1 && d._id <= 12) {
-                                                totals[d._id - 1] = d.total;
-                                            }
-                                        });
-                                    } else if (filter === "yearly") {
-                                        labels = salesData.map(d => d._id);
-                                        totals = salesData.map(d => d.total);
-                                    }
-                
-                                    myChart.data.labels = labels;
-                                    myChart.data.datasets[0].data = totals;
-                                    myChart.update();
-                                    console.log('Chart updated with:', { labels, totals });
-                                } else {
-                                    console.error('Sales data is not an array:', salesData);
-                                }
-                            }).catch(error => console.error('Error updating chart:', error));
-                        }
-                
+            
                         document.addEventListener('DOMContentLoaded', function () {
                             const ctx = document.getElementById('myChart').getContext('2d');
                             myChart = new Chart(ctx, {
@@ -256,7 +180,7 @@
                                     labels: [],
                                     datasets: [{
                                         label: 'Sales',
-                                        backgroundColor: '#088178',
+                                        backgroundColor: '#F94449',
                                         borderColor: '#088178',
                                         data: []
                                     }]
@@ -279,13 +203,74 @@
                                     }
                                 }
                             });
-                
+            
                             // Load initial chart data
                             updateChart('monthly');
                         });
+            
+                        async function fetchSalesData(filter) {
+                            try {
+                                const response = await fetch(`/admin/sales?filter=${filter}`);
+                                if (!response.ok) {
+                                    throw new Error(`HTTP error! status: ${response.status}`);
+                                }
+                                const data = await response.json();
+                                return data;
+                            } catch (error) {
+                                console.error('Error fetching sales data:', error);
+                            }
+                        }
+            
+                        function updateChart(filter) {
+                            if (!myChart) {
+                                console.error('Chart is not initialized');
+                                return;
+                            }
+            
+                            fetchSalesData(filter).then(salesData => {
+                                if (Array.isArray(salesData)) {
+                                    let labels = [];
+                                    let totals = [];
+                                    const currentDate = new Date();
+                                    const currentYear = currentDate.getFullYear();
+                                    const currentMonth = currentDate.getMonth() + 1; // Months are zero-indexed
+                                    const currentDay = currentDate.getDate();
+            
+                                    if (filter === "daily") {
+                                        // Labels for current month days (1st to today's date)
+                                        labels = Array.from({ length: currentDay }, (_, i) => i + 1);
+                                        totals = Array(currentDay).fill(0);
+                                        salesData.forEach(d => {
+                                            if (d._id >= 1 && d._id <= currentDay) {
+                                                totals[d._id - 1] = d.total;
+                                            }
+                                        });
+                                    } else if (filter === "monthly") {
+                                        // Labels for each month (Jan to current month)
+                                        labels = monthNames.slice(0, currentMonth);
+                                        totals = Array(currentMonth).fill(0);
+                                        salesData.forEach(d => {
+                                            if (d._id >= 1 && d._id <= currentMonth) {
+                                                totals[d._id - 1] = d.total;
+                                            }
+                                        });
+                                    } else if (filter === "yearly") {
+                                        // Labels for each year until the current year
+                                        labels = salesData.map(d => d._id);
+                                        totals = salesData.map(d => d.total);
+                                    }
+            
+                                    myChart.data.labels = labels;
+                                    myChart.data.datasets[0].data = totals;
+                                    myChart.update();
+                                } else {
+                                    console.error('Sales data is not an array:', salesData);
+                                }
+                            }).catch(error => console.error('Error updating chart:', error));
+                        }
                     </script>
-                </div>                                
-            </div>
+                </div>
+            </div>                        
             <div class="card mb-4">
                 <header class="card-header">
                     <h4 class="card-title">Sales Report</h4>
