@@ -52,12 +52,12 @@ const addToCart = async (req, res) => {
         const userId = req.session.userId;
 
         if (!userId) {
-            return res.status(401).json({ success: false, error: 'User not authenticated' });
+            return res.status(401).json({ success: false, message: 'User not authenticated' });
         }
 
         const product = await Product.findById(productId);
         if (!product || product.stock === 0) {
-            return res.status(404).json({ success: false, error: 'Product is out of stock' });
+            return res.status(404).json({ success: false, message: 'Product is out of stock' });
         }
 
         let cart = await Cart.findOne({ userId });
@@ -69,7 +69,7 @@ const addToCart = async (req, res) => {
         if (existingProduct) {
             const totalQuantity = existingProduct.quantity + 1;
             if (totalQuantity > product.stock || totalQuantity > 10) {
-                return res.status(400).json({ success: false, error: 'Cannot add more items than available stock or exceed limit of 10 items per product' });
+                return res.status(400).json({ success: false, message: 'Cannot add more items than available stock or exceed limit of 10 items per product' });
             }
             existingProduct.quantity = totalQuantity;
         } else {

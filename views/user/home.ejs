@@ -195,7 +195,7 @@
             <div class="container">
                 <div class="header-wrap">
                     <div class="logo logo-width-1">
-                        <a href="index.html"><img src="public/assets/imgs/theme/eyetrek.png" alt="logo"></a>
+                        <a href="/"><img src="public/assets/imgs/theme/eyetrek.png" alt="logo"></a>
                     </div>
                     <div class="header-right">
                         <div class="search-style-2">
@@ -441,23 +441,12 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="widget-category mb-30">
-                            <h5 class="section-title style-1 mb-30 wow fadeIn animated">Category</h5>
-                            <ul class="categories">
-                                <li><a href="shop-grid-right.html">Shoes & Bags</a></li>
-                                <li><a href="shop-grid-right.html">Blouses & Shirts</a></li>
-                                <li><a href="shop-grid-right.html">Dresses</a></li>
-                                <li><a href="shop-grid-right.html">Swimwear</a></li>
-                                <li><a href="shop-grid-right.html">Beauty</a></li>
-                                <li><a href="shop-grid-right.html">Jewelry & Watch</a></li>
-                                <li><a href="shop-grid-right.html">Accessories</a></li>
-                            </ul>
-                        </div>
-                        <div class="widget-category mb-30">
-                            <h5 class="section-title style-1 mb-30 wow fadeIn animated">Sort by</h5>
-                            <ul class="categories">
-                                <li><a href="shop-grid-right.html">Price: Low to High</a></li>
-                                <li><a href="shop-grid-right.html">Price: High to Low</a></li>
-                            </ul>
+                            <img src="public/assets/imgs/banner/gucciads.jpg" alt="">
+                            <div class="banner-text">
+                                <span style="font-family: Georgia, 'Times New Roman', Times, serif;">Take Your Best</span>
+                                <br>
+                                <a href="/shop">Shop Now <i class="fi-rs-arrow-right"></i></a>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-9">
@@ -478,11 +467,13 @@
                                                         <img class="hover-img" src="public/products/<%= product[i].image[1] %>" alt="">
                                                     </a>
                                                 </div>
+                                                <% if(userExist){ %>
                                                 <div class="product-action-1">
                                                     <a aria-label="Add To Wishlist" class="action-btn hover-up" onclick="addToWishlist('<%= product[i]._id %>')">
                                                         <i class="fi-rs-heart"></i>
                                                     </a>
                                                 </div>
+                                                <% } %>
                                                 <div class="product-badges product-badges-position product-badges-mrg"></div>
                                             </div>
                                             <div class="product-content-wrap">
@@ -495,11 +486,9 @@
                                                     <span>&#8377;<%= product[i].offerPrice.toFixed(2) %> </span>
                                                     <span class="old-price">&#8377;<%= product[i].originalPrice %></span>
                                                 </div>
-                                                <% if(userExist){%>
                                                 <div class="product-action-1 show">
                                                     <a aria-label="Add To Cart" class="action-btn hover-up" onclick="addToCart('<%= product[i]._id %>')"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
-                                                <% } %>
                                             </div>
                                         </div>                                                                                                                
                                     </div>
@@ -616,7 +605,7 @@
                 Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: `Error adding item to cart: ${error}`,
+                        text: `Error adding item to cart: ${data.message}`,
                     });
             })
         }

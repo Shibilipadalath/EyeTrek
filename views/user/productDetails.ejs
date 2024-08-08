@@ -172,7 +172,7 @@
             <div class="container">
                 <div class="header-wrap">
                     <div class="logo logo-width-1">
-                        <a href="index.html"><img src="public/assets/imgs/theme/eyetrek.png" alt="logo"></a>
+                        <a href="/"><img src="public/assets/imgs/theme/eyetrek.png" alt="logo"></a>
                     </div>
                     <div class="header-right">
                         <div class="search-style-2">
@@ -181,7 +181,7 @@
                         <div class="header-action-right">
                             <div class="header-action-2">
                                 <div class="header-action-icon-2">
-                                    <a href="shop-wishlist.html">
+                                    <a href="/wishListPage">
                                         <img class="svgInject" alt="Evara"
                                             src="public/assets/imgs/theme/icons/icon-heart.svg">
 
@@ -224,7 +224,7 @@
                     <div class="header-action-right d-block d-lg-none">
                         <div class="header-action-2">
                             <div class="header-action-icon-2">
-                                <a href="shop-wishlist.html">
+                                <a href="/wishListPage">
                                     <img alt="Evara" src="public/assets/imgs/theme/icons/icon-heart.svg">
                                     <span class="pro-count white">4</span>
                                 </a>
@@ -439,12 +439,8 @@
                                             <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                                             <div class="detail-extralink">
                                                 <div class="product-extra-link2">
-                                                    <button type="submit" class="button button-add-to-cart"
-                                                        onclick="addToCart('<%= product._id %>')">Add to
-                                                        cart</button>
-                                                    <a aria-label="Add To Wishlist" class="action-btn hover-up"
-                                                        href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-
+                                                    <button type="submit" class="button button-add-to-cart" onclick="addToCart('<%= product._id %>')">Add to cart</button>
+                                                    <a aria-label="Add To Wishlist" class="action-btn hover-up" onclick="addToWishlist('<%= product._id %>')"><i class="fi-rs-heart"></i></a>
                                                 </div>
                                             </div>
                                             <% if(product.stock>0){ %>
@@ -650,7 +646,7 @@
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: `Error adding item to cart: ${error}`,
+                        text: `Please Login`,
                     });
                 })
         }
@@ -692,6 +688,53 @@
                 });
             });
         });
+    </script>
+
+    <!-- add to wishList -->
+    <script>
+        function addToWishlist(productId) {
+            fetch('/wishList', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ productId })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.redirect) {
+                    window.location.href = data.redirect; // Redirect to login page
+                } else if (data.message) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: data.message,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                } else if (data.error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: data.error,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please Login',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        }
     </script>
 
 </body>
