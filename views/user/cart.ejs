@@ -353,8 +353,8 @@
                                     <tr class="main-heading">
                                         <th scope="col">Image</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Price</th>
                                         <th scope="col">Quantity</th>
+                                        <th scope="col">Price</th>
                                         <th scope="col">Subtotal</th>
                                         <th scope="col">Remove</th>
                                     </tr>
@@ -372,7 +372,6 @@
                                                     <!-- Add other product details here -->
                                                     <p><%= productWithQuantity.product.description %></p>
                                                 </td>
-                                                <td class="price" data-title="Price"><span> ₹ <%= parseFloat(productWithQuantity.product.offerPrice).toFixed(2) %></span></td>
                                                 <td class="text-center" data-title="Quantity">
                                                     <div class="detail-qty border radius m-auto">
                                                         <a class="qty-down" onclick="updateQuantity('<%= productWithQuantity.product._id %>', 'decrease', '<%= i %>')">
@@ -383,7 +382,8 @@
                                                             <i class="fi-rs-angle-small-up"></i>
                                                         </a>
                                                     </div>
-                                                </td>                                                
+                                                </td>    
+                                                <td class="price" data-title="Price"><span> ₹ <%= parseFloat(productWithQuantity.product.offerPrice).toFixed(2) %></span></td>                                            
                                                 <td class="text-right" data-title="Cart">
                                                     <span id="subtotal-<%= i %>"> &#8377; <%= (productWithQuantity.quantity * parseFloat(productWithQuantity.product.offerPrice)).toFixed(2) %></span>
                                                 </td>
@@ -634,28 +634,20 @@
                 document.getElementById(`quantity-${index}`).textContent = data.quantity;
                 document.getElementById('total-price').textContent = data.totalPrice;
                 document.getElementById(`subtotal-${index}`).textContent = data.subtotal;
-                // Swal.fire({
-                //     title: "Updated",
-                //     text: "The quantity has been updated.",
-                //     icon: "success",
-                //     showConfirmButton: false,
-                //     timer: 1500
-                // });
             }).catch(error => {
                 console.error('Error:', error);
                 Swal.fire({
-                    position: "center",
-                    icon: "error",
-                    title: error.message,
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                position: "center",
+                icon: "warning",
+                title: error.message,
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                window.location.reload();
+            });
+
             });
         }
     </script>
      
 </body>
-
-
-<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/shop-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->
-</html>

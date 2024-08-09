@@ -174,11 +174,8 @@ const placeOrder = async (req, res) => {
         let paymentStatus;
         if (req.body.paymentMethod === 'Wallet') {
             const wallet = await Wallet.findOne({ userId });
-            if (!wallet) {
-                return res.status(400).json({ message: "Wallet not found", success: false });
-            }
 
-            if (wallet.balance < totalAmount) {
+            if (!wallet||wallet.balance < totalAmount) {
                 return res.status(400).json({ message: "Insufficient wallet balance", success: false });
             }
 
