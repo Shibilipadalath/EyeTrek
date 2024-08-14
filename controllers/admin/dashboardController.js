@@ -36,7 +36,9 @@ const fetchOrders = async (req, res) => {
     try {
         const { page = 1, limit = 10, category, startDate, endDate, paymentStatus, period } = req.query;
 
-        const filter = {};
+        const filter = {
+            status: 'Delivered'
+        };
 
         if (category) {
             const categoryData = await Category.findOne({ name: category, isActive: true });
@@ -78,13 +80,12 @@ const fetchOrders = async (req, res) => {
         }
 
         const orders = await Order.find(filter)
-        .limit(limit * 1)
-        .skip((page - 1) * limit)
-        .sort({ createdAt: -1 })
-        .populate('userId')
-        .populate('cartItems.productId')
-        .exec();
-    
+            .limit(limit * 1)
+            .skip((page - 1) * limit)
+            .sort({ createdAt: -1 })
+            .populate('userId')
+            .populate('cartItems.productId')
+            .exec();
 
         const count = await Order.countDocuments(filter);
 
@@ -101,11 +102,14 @@ const fetchOrders = async (req, res) => {
 
 
 
+
 const generateReport = async (req, res) => {
     try {
         const { startDate, endDate, format } = req.query;
 
-        const filter = {};
+        const filter = {
+            status: 'Delivered'
+        };
         if (startDate && endDate) {
             filter.createdAt = { $gte: new Date(startDate), $lte: new Date(endDate) };
         } else if (startDate) {
@@ -147,13 +151,24 @@ const generateReport = async (req, res) => {
             doc.text(`Overall Discount: ${overallDiscount.toFixed(2)}`);
             doc.moveDown();
 
+            doc.fontSize(12).text('Order ID', 50, doc.y, { width: 90, align: 'left' })
+                .text('Billing Name', 150, doc.y, { width: 100, align: 'left' })
+                .text('Date', 250, doc.y, { width: 70, align: 'left' })
+                .text('Total', 320, doc.y, { width: 70, align: 'right' })
+                .text('Payment Status', 390, doc.y, { width: 100, align: 'left' })
+                .text('Payment Method', 490, doc.y, { width: 90, align: 'left' });
+            doc.moveDown();
+
+            doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+            doc.moveDown();
+
             orders.forEach(order => {
-                doc.fontSize(12).text(`Order ID: ${order._id}`);
-                doc.text(`Billing Name: ${order.userId ? order.userId.userName : 'Unknown'}`);
-                doc.text(`Date: ${new Date(order.createdAt).toLocaleDateString()}`);
-                doc.text(`Total: ${order.totalPrice.toFixed(2)}`);
-                doc.text(`Payment Status: ${order.paymentStatus}`);
-                doc.text(`Payment Method: ${order.paymentMethod}`);
+                doc.fontSize(10).text(order._id, 50, doc.y, { width: 90, align: 'left' })
+                    .text(order.userId ? order.userId.userName : 'Unknown', 150, doc.y, { width: 100, align: 'left' })
+                    .text(new Date(order.createdAt).toLocaleDateString(), 250, doc.y, { width: 70, align: 'left' })
+                    .text(order.totalPrice.toFixed(2), 320, doc.y, { width: 70, align: 'right' })
+                    .text(order.paymentStatus, 390, doc.y, { width: 100, align: 'left' })
+                    .text(order.paymentMethod, 490, doc.y, { width: 90, align: 'left' });
                 doc.moveDown();
             });
 
@@ -162,24 +177,37 @@ const generateReport = async (req, res) => {
             const workbook = new ExcelJS.Workbook();
             const worksheet = workbook.addWorksheet('Sales Report');
 
-            worksheet.columns = [
-                { header: 'Order ID', key: 'orderId', width: 20 },
-                { header: 'Billing Name', key: 'billingName', width: 30 },
-                { header: 'Date', key: 'date', width: 15 },
-                { header: 'Total', key: 'total', width: 15 },
-                { header: 'Payment Status', key: 'paymentStatus', width: 20 },
-                { header: 'Payment Method', key: 'paymentMethod', width: 20 },
-            ];
+            const overallSalesCount = orders.length;
+            const overallOrderAmount = orders.reduce((total, order) => total + order.totalPrice, 0);
+            const overallDiscount = orders.reduce((discount, order) => {
+                const totalOriginalPrice = order.cartItems.reduce((total, item) => {
+                    return total + (item.quantity * item.productId.originalPrice);
+                }, 0);
+                const totalOfferPrice = order.cartItems.reduce((total, item) => {
+                    return total + (item.quantity * item.productId.offerPrice);
+                }, 0);
+                return discount + (totalOriginalPrice - totalOfferPrice);
+            }, 0);
+
+            worksheet.addRow([]); 
+            worksheet.addRow(['Sales Summary']); 
+            worksheet.addRow([]); 
+            worksheet.addRow(['Overall Sales Count:', overallSalesCount]);
+            worksheet.addRow(['Overall Order Amount:', overallOrderAmount.toFixed(2)]);
+            worksheet.addRow(['Overall Discount:', overallDiscount.toFixed(2)]);
+            worksheet.addRow([]);
+
+            worksheet.addRow(['Order ID', 'Billing Name', 'Date', 'Total', 'Payment Status', 'Payment Method']);
 
             orders.forEach(order => {
-                worksheet.addRow({
-                    orderId: order._id,
-                    billingName: order.userId ? order.userId.userName : 'Unknown',
-                    date: new Date(order.createdAt).toLocaleDateString(),
-                    total: order.totalPrice.toFixed(2),
-                    paymentStatus: order.paymentStatus,
-                    paymentMethod: order.paymentMethod
-                });
+                worksheet.addRow([
+                    order._id,
+                    order.userId ? order.userId.userName : 'Unknown',
+                    new Date(order.createdAt).toLocaleDateString(),
+                    order.totalPrice.toFixed(2),
+                    order.paymentStatus,
+                    order.paymentMethod
+                ]);
             });
 
             const fileName = `Sales_Report_${new Date().toISOString()}.xlsx`;
@@ -187,7 +215,7 @@ const generateReport = async (req, res) => {
             res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
             await workbook.xlsx.write(res);
-            res.end();
+            res.end();;
         } else {
             res.status(400).json({ message: 'Invalid format specified' });
         }

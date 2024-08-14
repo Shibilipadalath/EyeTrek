@@ -6,15 +6,20 @@
     }
 </style>
 <style>
-    #image-preview img {
-        max-width: 100px;
-        max-height: 100px;
-        margin: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        padding: 5px;
-    }
+    .img-container {
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+}
+#image-to-crop {
+    width: 100%; 
+}
+
 </style>
+
+<link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.css">
+<script src="https://unpkg.com/cropperjs"></script>
+
 
 <body>
     <div class="screen-overlay"></div>
@@ -188,6 +193,28 @@
                                         </div>
                                         <div id="image-preview" class="row"></div>
                                     </div>
+                                    <!-- Cropping Modal -->
+                                    <div class="modal fade" id="cropperModal" tabindex="-1" role="dialog" aria-labelledby="cropperModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="cropperModalLabel">Crop Image</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="img-container">
+                                                        <img id="image-to-crop" src="">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                    <button type="button" id="crop-image-btn" class="btn btn-primary">Crop</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-9 offset-md-3">
@@ -304,34 +331,81 @@
         <!-- image preview -->
         <script>
             document.getElementById('images').addEventListener('change', function(event) {
-                const imagePreviewContainer = document.getElementById('image-preview');
-                imagePreviewContainer.innerHTML = ''; // Clear previous previews
-            
-                const files = event.target.files;
-            
-                if (files) {
-                    Array.from(files).forEach(file => {
-                        const reader = new FileReader();
-            
-                        reader.onload = function(e) {
-                            const imgElement = document.createElement('img');
-                            imgElement.src = e.target.result;
-                            imgElement.classList.add('img-thumbnail');
-                            imgElement.style.margin = '10px';
-                            imgElement.style.width = '100px'; // Adjust the width as needed
-                            imgElement.style.height = '100px'; // Adjust the height as needed
-            
-                            const colDiv = document.createElement('div');
-                            colDiv.classList.add('col-md-3');
-                            colDiv.appendChild(imgElement);
-            
-                            imagePreviewContainer.appendChild(colDiv);
-                        };
-            
-                        reader.readAsDataURL(file);
+            const imagePreviewContainer = document.getElementById('image-preview');
+            imagePreviewContainer.innerHTML = '';
+
+            const files = event.target.files;
+
+            if (files) {
+                Array.from(files).forEach(file => {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = e.target.result;
+                        imgElement.classList.add('img-thumbnail');
+                        imgElement.style.margin = '10px';
+                        imgElement.style.width = '100px';
+                        imgElement.style.height = '100px';
+
+                        imgElement.addEventListener('click', function() {
+                            cropperModal(e.target.result);
+                        });
+
+                        const colDiv = document.createElement('div');
+                        colDiv.classList.add('col-md-3');
+                        colDiv.appendChild(imgElement);
+
+                        imagePreviewContainer.appendChild(colDiv);
+                    };
+
+                    reader.readAsDataURL(file);
+                });
+            }
+        });
+
+        function cropperModal(imageSrc) {
+            const cropperModal = document.getElementById('cropperModal');
+            const imageToCrop = document.getElementById('image-to-crop');
+
+            imageToCrop.src = imageSrc;
+
+            $(cropperModal).modal('show');
+
+            $(cropperModal).on('shown.bs.modal', function () {
+                let cropper = new Cropper(imageToCrop, {
+                    aspectRatio: 1,
+                    viewMode: 1,
+                    autoCropArea: 1,
+                    responsive: true
+                });
+
+                document.getElementById('crop-image-btn').onclick = function() {
+                    const canvas = cropper.getCroppedCanvas();
+                    const croppedImageSrc = canvas.toDataURL('image/png');
+
+                    const previewImages = document.querySelectorAll('#image-preview img');
+                    previewImages.forEach(img => {
+                        if (img.src === imageSrc) {
+                            img.src = croppedImageSrc;
+                        }
                     });
-                }
+
+                    $(cropperModal).modal('hide');
+
+                    cropper.destroy();
+                };
             });
-            </script>
+
+            $(cropperModal).on('hidden.bs.modal', function () {
+                const imageToCrop = document.getElementById('image-to-crop');
+                if (imageToCrop.cropper) {
+                    imageToCrop.cropper.destroy();
+                }
+                $(cropperModal).off('shown.bs.modal');
+            });
+        }
+
+        </script>
             
         <%- include('./partials/adminFooter') %>
