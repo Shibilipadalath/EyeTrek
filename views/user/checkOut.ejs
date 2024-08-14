@@ -819,7 +819,7 @@
                         "modal": {
                             "ondismiss": function () {
                                 // Handle the modal dismiss (i.e., payment failure)
-                                finalizeOrder(data.order._id, "Pending").then(() => {
+                                finalizeOrder(data.order._id, "Failed").then(() => {
                                     removeItem();
                                     window.location.href = '/thankYou';
                                 }).catch(error => {

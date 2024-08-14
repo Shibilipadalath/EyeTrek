@@ -69,8 +69,7 @@
             <p>Date: <%= new Date(order.createdAt).toLocaleString() %></p>
         </div>
         <div class="order-info">
-            <p>Status: <span><%= order.status %></span></p>
-            <p>Status: <span><%= order.paymentStatus %></span></p>
+            <p>Payment Status: <span><%= order.paymentStatus %></span></p>
             <p>Total Price: <span>₹<%= (order.totalPrice).toFixed(2) %></span></p>
         </div>
         <h2>Items</h2>
@@ -81,6 +80,8 @@
                     <th>Product</th>
                     <th>Quantity</th>
                     <th>Price</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -92,6 +93,21 @@
                         </td>
                         <td><%= item.quantity %></td>
                         <td>₹<%= (item.price).toFixed(2) %></td>
+                        <td><%= item.status %></td>
+                        <td>
+                            <% if (item.status !== 'Cancelled' && item.status !== 'Delivered' && item.status !== 'Returned' && item.status !== 'Refunded') { %>
+                                <form action="/orders/<%= order._id %>/cancel-item" method="POST" class="d-inline">
+                                    <input type="hidden" name="productId" value="<%= item.productId._id %>">
+                                    <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                                </form>
+                            <% } %>
+                            <% if (item.status === 'Delivered') { %>
+                                <form action="/orders/<%= order._id %>/return-item" method="POST" class="d-inline">
+                                    <input type="hidden" name="productId" value="<%= item.productId._id %>">
+                                    <button type="submit" class="btn btn-warning btn-sm">Return</button>
+                                </form>
+                            <% } %>
+                        </td>
                     </tr>
                 <% }) %>
             </tbody>
@@ -106,18 +122,8 @@
             <p>State: <%= order.address[0].state %></p>
             <p>Pin Code: <%= order.address[0].pinCode %></p>
         </div>
-        <div class="d-flex justify-content-between align-items-center mt-3">         
-            <% if (order.status !== 'Cancelled' && order.status !== 'Delivered' && order.status !== 'Returned' && order.status !== 'Refunded') { %>
-                <form action="/orders/<%= order._id %>/cancel" method="POST" class="d-inline">
-                    <button type="submit" class="btn btn-danger">Cancel Order</button>
-                </form>
-            <% } %>
-            <% if (order.status === 'Delivered') { %>
-                <form action="/orders/<%= order._id %>/return" method="POST" class="d-inline">
-                    <button type="submit" class="btn btn-warning">Return Order</button>
-                </form>
-            <% } %>
-            <% if (order.paymentStatus === 'Pending') { %>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <% if (order.paymentStatus === 'Failed') { %>
                 <button id="rzp-button1" class="btn btn-primary">Pay with Razorpay</button>
             <% } %>
             <div>
@@ -130,7 +136,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Pending payment -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
     <script>
         document.getElementById('rzp-button1').onclick = function(e) {
             e.preventDefault();

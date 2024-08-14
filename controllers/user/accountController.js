@@ -242,7 +242,8 @@ const viewOrder = async (req, res) => {
 
 const cancelOrder = async (req, res) => {
     try {
-        const orderId = req.params.orderId;
+        const { orderId } = req.params;
+        const { productId } = req.body; 
 
         const order = await Order.findById(orderId);
 
@@ -250,28 +251,34 @@ const cancelOrder = async (req, res) => {
             return res.status(404).send('Order not found');
         }
 
-        if (['Pending', 'Processing', 'Shipped', 'ORDER PLACED'].includes(order.status)) {
-            order.status = 'Cancelled';
+        const item = order.cartItems.find(item => item.productId.toString() === productId);
+
+        if (!item) {
+            return res.status(404).send('Product not found in order');
+        }
+
+        if (['ORDER PLACED', 'Pending', 'Processing', 'Shipped'].includes(item.status)) {
+            item.status = 'Cancelled';
             await order.save();
 
-            for (const item of order.cartItems) {
-                const product = await Product.findById(item.productId);
-                if (product) {
-                    product.stock += item.quantity;
-                    await product.save();
-                }
+            const product = await Product.findById(productId);
+            if (product) {
+                product.stock += item.quantity;
+                await product.save();
             }
 
-            if (order.paymentMethod === 'Wallet') {
+             if (order.paymentMethod === 'Wallet' || order.paymentMethod === 'RazorPay') {
                 const userWallet = await Wallet.findOne({ userId: order.userId });
                 if (!userWallet) {
                     return res.status(404).send('Wallet not found');
                 }
 
-                userWallet.balance += order.totalPrice;
+                const refundAmount = item.price * item.quantity;
+
+                userWallet.balance += refundAmount;
 
                 userWallet.history.push({
-                    amount: order.totalPrice,
+                    amount: refundAmount,
                     type: 'credit',
                     createdAt: new Date(),
                 });
@@ -281,19 +288,21 @@ const cancelOrder = async (req, res) => {
 
             return res.redirect(`/order/${orderId}`);
         } else {
-            return res.status(400).send('Order cannot be cancelled');
+            return res.status(400).send('Product cannot be cancelled');
         }
     } catch (error) {
         console.error(error);
         return res.status(500).send('Server error');
     }
 };
+
 
 
 
 const returnOrder = async (req, res) => {
     try {
-        const orderId = req.params.orderId;
+        const { orderId } = req.params;
+        const { productId } = req.body;
 
         const order = await Order.findById(orderId);
 
@@ -301,28 +310,34 @@ const returnOrder = async (req, res) => {
             return res.status(404).send('Order not found');
         }
 
-        if (order.status === 'Delivered') {
-            order.status = 'Returned';
+        const item = order.cartItems.find(item => item.productId.toString() === productId);
+
+        if (!item) {
+            return res.status(404).send('Product not found in order');
+        }
+
+        if (item.status === 'Delivered') {
+            item.status = 'Returned';
             await order.save();
 
-            for(const item of order.cartItems){
-                const product=await Product.findById(item.productId)
-                if(product){
-                    product.stock+=item.quantity
-                    await product.save()
-                }
+            const product = await Product.findById(productId);
+            if (product) {
+                product.stock += item.quantity;
+                await product.save();
             }
 
-            if (order.paymentMethod === 'Wallet') {
+            if (order.paymentMethod === 'Wallet' || order.paymentMethod === 'Razorpay') {
                 const userWallet = await Wallet.findOne({ userId: order.userId });
                 if (!userWallet) {
                     return res.status(404).send('Wallet not found');
                 }
 
-                userWallet.balance += order.totalPrice;
+                const refundAmount = item.price * item.quantity;
+
+                userWallet.balance += refundAmount;
 
                 userWallet.history.push({
-                    amount: order.totalPrice,
+                    amount: refundAmount,
                     type: 'credit',
                     createdAt: new Date(),
                 });
@@ -332,13 +347,14 @@ const returnOrder = async (req, res) => {
 
             return res.redirect(`/order/${orderId}`);
         } else {
-            return res.status(400).send('Order cannot be returned');
+            return res.status(400).send('Product cannot be returned');
         }
     } catch (error) {
         console.error(error);
         return res.status(500).send('Server error');
     }
 };
+
 
 const downloadInvoice=async(req,res)=>{
     try {

@@ -51,7 +51,7 @@ adminRouter.post('/ToggleBlockCategories/:id', adminAuth.isLogin, categoryContro
 
 adminRouter.get('/orderPage', adminAuth.isLogin, adminController.orderPage)
 adminRouter.get('/orders/:id', adminAuth.isLogin, adminController.orderDetailsPage)
-adminRouter.post('/orders/:id/status', adminAuth.isLogin, adminController.updateOrderStatus)
+adminRouter.post('/orders/:orderId/products/:productId/status', adminAuth.isLogin, adminController.updateOrderStatus)
 
 //offer
 

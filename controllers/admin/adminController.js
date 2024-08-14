@@ -101,18 +101,27 @@ const orderDetailsPage = async (req, res) => {
 
 const updateOrderStatus = async (req, res) => {
     try {
-        const orderId = req.params.id;
+        const { orderId, productId } = req.params;
         const { status } = req.body;
 
-        const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true });
+        const order = await Order.findById(orderId);
 
         if (!order) {
             return res.status(404).send('Order not found');
         }
 
+        const cartItem = order.cartItems.find(item => item.productId.toString() === productId);
+
+        if (!cartItem) {
+            return res.status(404).send('Product not found in the order');
+        }
+
+        cartItem.status = status;
+        await order.save();
+
         res.redirect(`/admin/orders/${orderId}`);
     } catch (error) {
-        console.error('Error updating order status:', error);
+        console.error('Error updating product status:', error);
         res.status(500).send('Internal Server Error');
     }
 }

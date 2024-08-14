@@ -63,8 +63,8 @@ userRoute.get('/orders/:id/download-invoice', userBlock.isBlocked, userAuth.isLo
 
 userRoute.post('/api/razorpayOrderId', userBlock.isBlocked, userAuth.isLogin, accountController.pendingPayment);
 userRoute.post('/finalizeOrder', userBlock.isBlocked, userAuth.isLogin, accountController.finalizePendingPayment);
-userRoute.post('/orders/:orderId/cancel', userBlock.isBlocked, userAuth.isLogin, accountController.cancelOrder);
-userRoute.post('/orders/:orderId/return', userBlock.isBlocked, userAuth.isLogin, accountController.returnOrder);
+userRoute.post('/orders/:orderId/cancel-item', userBlock.isBlocked, userAuth.isLogin, accountController.cancelOrder);
+userRoute.post('/orders/:orderId/return-item', userBlock.isBlocked, userAuth.isLogin, accountController.returnOrder);
 
 userRoute.post('/wallet/add-money', userBlock.isBlocked, userAuth.isLogin, accountController.addMoney);
 userRoute.post('/wallet/payment-success', userBlock.isBlocked, userAuth.isLogin, accountController.paymentSuccess);

@@ -83,6 +83,7 @@ const onlinePay = async (req, res) => {
         cartItems.forEach(data => {
             total.push(data.quantity * data.price);
         });
+        const totalAmount = total.reduce((acc, cur) => acc + cur, 0);
 
         const generateOrderId = () => {
             const timestamp = Date.now().toString();
@@ -95,15 +96,17 @@ const onlinePay = async (req, res) => {
             return orderId + timestamp.slice(-6);
         };
 
-        const totalAmount = total.reduce((acc, cur) => acc + cur, 0);
-
         const order = new Order({
             userId,
-            cartItems,
+            cartItems: cartItems.map(item => ({
+                productId: item.productId._id,
+                quantity: item.quantity,
+                price: item.price,
+                status: "ORDER PLACED"
+            })),
             totalPrice: totalAmount,
             paymentMethod: "RazorPay",
-            paymentStatus: "Pending",
-            status: "ORDER PLACED",
+            paymentStatus: "Success",
             address: addressData
         });
 
@@ -120,7 +123,7 @@ const onlinePay = async (req, res) => {
         const order2 = await instance.orders.create({
             amount: totalAmount * 100,
             currency: "INR",
-            receipt: req.session.user,
+            receipt: generateOrderId(),
         });
 
         res.json({ order2, order });
@@ -131,19 +134,25 @@ const onlinePay = async (req, res) => {
 };
 
 
+
 const saveOrder = async (req, res) => {
     try {
         const orderId = req.query.id;
-        const { paymentStatus } = req.body;
-        
+        const { productStatusUpdates } = req.body;
+
         const order = await Order.findById(orderId);
         if (!order) {
             return res.status(404).json({ message: "Order not found" });
         }
-        
-        order.paymentStatus = paymentStatus;
+
+        productStatusUpdates.forEach(update => {
+            const item = order.cartItems.find(item => item.productId.toString() === update.productId);
+            if (item) {
+                item.status = update.status;
+            }
+        });
+
         await order.save();
-        
         res.status(200).json({ message: "Order updated successfully" });
     } catch (error) {
         console.error('Error saving order:', error);
@@ -153,15 +162,13 @@ const saveOrder = async (req, res) => {
 
 
 
+
 const placeOrder = async (req, res) => {
     try {
         let total = [];
-        console.log(req.body, "Request body");
-
         const userId = req.session.userId;
         const address = await Address.findOne({ userId });
         const addressData = address.address.filter(data => data._id == req.body.addressId);
-
         const cart = await Cart.findOne({ userId }).populate('cartItems.productId');
         const cartItems = cart.cartItems;
 
@@ -174,11 +181,9 @@ const placeOrder = async (req, res) => {
         let paymentStatus;
         if (req.body.paymentMethod === 'Wallet') {
             const wallet = await Wallet.findOne({ userId });
-
-            if (!wallet||wallet.balance < totalAmount) {
+            if (!wallet || wallet.balance < totalAmount) {
                 return res.status(400).json({ message: "Insufficient wallet balance", success: false });
             }
-
             wallet.balance -= totalAmount;
             wallet.history.push({
                 amount: totalAmount,
@@ -186,22 +191,26 @@ const placeOrder = async (req, res) => {
                 createdAt: new Date()
             });
             await wallet.save();
-
             paymentStatus = "Success";
         } else if (req.body.paymentMethod === 'Cash on Delivery') {
             paymentStatus = "Pending";
         } else if (req.body.paymentMethod === 'Razorpay') {
-            paymentStatus = "Pending";
+            paymentStatus = "Success";
         } else {
             paymentStatus = "Pending";
         }
+
         const order = new Order({
             userId,
-            cartItems,
+            cartItems: cartItems.map(item => ({
+                productId: item.productId._id,
+                quantity: item.quantity,
+                price: item.price,
+                status: "ORDER PLACED"
+            })),
             totalPrice: totalAmount,
             paymentMethod: req.body.paymentMethod,
             paymentStatus: paymentStatus,
-            status: "ORDER PLACED",
             address: addressData
         });
 
@@ -221,6 +230,7 @@ const placeOrder = async (req, res) => {
         res.status(500).json({ message: "Something went wrong", success: false });
     }
 };
+
 
 
 

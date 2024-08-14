@@ -53,17 +53,6 @@
             <p><strong>Total Price:</strong> &#8377;<%= order.totalPrice.toFixed(2) %></p>
             <p><strong>Payment Method:</strong> <%= order.paymentMethod %></p>
             <p><strong>Payment Status:</strong> <%= order.paymentStatus %></p>
-            <p><strong>Status:</strong> 
-                <span class="badge badge-status <%= order.status === 'Pending' ? 'badge-warning' : 
-                    order.status === 'Processing' ? 'badge-info' : 
-                    order.status === 'Shipped' ? 'badge-primary' : 
-                    order.status === 'Delivered' ? 'badge-success' : 
-                    order.status === 'Cancelled' ? 'badge-danger' : 
-                    order.status === 'Returned' ? 'badge-secondary' : 
-                    'badge-dark' %>">
-                    <%= order.status %>
-                </span>
-            </p>
             <p><strong>Created At:</strong> <%= new Date(order.createdAt).toLocaleString() %></p>
             <p><strong>Address:</strong></p>
             <% order.address.forEach(addr => { %>
@@ -83,27 +72,25 @@
                         <p><strong>Name:</strong> <%= item.productId.name %></p>
                         <p><strong>Quantity:</strong> <%= item.quantity %></p>
                         <p><strong>Price:</strong> &#8377;<%= item.price.toFixed(2) %></p>
+                        <form action="/admin/orders/<%= order._id %>/products/<%= item.productId._id %>/status" method="POST">
+                            <div class="form-group">
+                                <label for="status_<%= item.productId._id %>">Update Status:</label>
+                                <select id="status_<%= item.productId._id %>" name="status" class="form-control">
+                                    <option value="Pending" <%= item.status === 'Pending' ? 'selected' : '' %>>Pending</option>
+                                    <option value="Processing" <%= item.status === 'Processing' ? 'selected' : '' %>>Processing</option>
+                                    <option value="Shipped" <%= item.status === 'Shipped' ? 'selected' : '' %>>Shipped</option>
+                                    <option value="Delivered" <%= item.status === 'Delivered' ? 'selected' : '' %>>Delivered</option>
+                                    <option value="Cancelled" <%= item.status === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
+                                    <option value="Returned" <%= item.status === 'Returned' ? 'selected' : '' %>>Returned</option>
+                                    <option value="Refunded" <%= item.status === 'Refunded' ? 'selected' : '' %>>Refunded</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-2">Update Status</button>
+                        </form>
                     </div>
                 </div>
             <% }) %>
             <div style="text-align: right;"><a href="/admin/orderPage" class="btn btn-secondary mt-3">Back to Orders</a></div>
-            
-        </div>
-        
-        <div class="update-status">
-            <h2 class="text-secondary">Update Order Status</h2>
-            <form action="/admin/orders/<%= order._id %>/status" method="POST">
-                <select name="status" class="form-control">
-                    <option value="Pending" <%= order.status === 'Pending' ? 'selected' : '' %>>Pending</option>
-                    <option value="Processing" <%= order.status === 'Processing' ? 'selected' : '' %>>Processing</option>
-                    <option value="Shipped" <%= order.status === 'Shipped' ? 'selected' : '' %>>Shipped</option>
-                    <option value="Delivered" <%= order.status === 'Delivered' ? 'selected' : '' %>>Delivered</option>
-                    <option value="Cancelled" <%= order.status === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
-                    <option value="Returned" <%= order.status === 'Returned' ? 'selected' : '' %>>Returned</option>
-                    <option value="Refunded" <%= order.status === 'Refunded' ? 'selected' : '' %>>Refunded</option>
-                </select>
-                <button type="submit" class="btn btn-primary">Update Status</button>
-            </form>
         </div>
     </div>
     <!-- Bootstrap JS and dependencies -->
