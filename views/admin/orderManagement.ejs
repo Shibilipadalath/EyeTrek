@@ -112,7 +112,8 @@
                                 <th scope="col" class="text-end">Action</th>
                             </tr>
                         </thead>
-                        <tbody><% orders.forEach((order,index) => { %>
+                        <tbody>
+                            <% orders.forEach((order,index) => { %>
                                 <tr>
                                     <td><%= index+1 %></td>
                                     <td><b><%= order.userId?.userName %></b></td>

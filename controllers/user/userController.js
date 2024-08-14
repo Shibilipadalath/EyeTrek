@@ -1,5 +1,6 @@
 const User = require('../../models/userModel')
 const Product = require('../../models/productModel')
+const Wallet = require('../../models/walletModel')
 const Cart = require('../../models/cartModel')
 const WishList = require('../../models/wishListModel')
 const otpGenerator = require('otp-generator')
@@ -45,6 +46,16 @@ const userLogin = async (req, res) => {
                 const match = await bcrypt.compare(loginPassword, userExist.password)
                 if (match) {
                     req.session.userId = userExist._id
+                    let wallet = await Wallet.findOne({ userId: req.session.userId });
+                    if(!wallet){
+                        wallet = new Wallet({
+                            userId: req.session.userId,
+                            balance: 0,
+                            history: []
+                        });
+                        await wallet.save();
+                        
+                    }
                     res.redirect('/')
                 } else {
                     res.render('login', { error: "Invalid password" })
