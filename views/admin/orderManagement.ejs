@@ -112,12 +112,11 @@
                                 <th scope="col" class="text-end">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <% orders.forEach((order,index) => { %>
+                        <tbody><% orders.forEach((order,index) => { %>
                                 <tr>
                                     <td><%= index+1 %></td>
-                                    <td><b><%= order.userId.userName %></b></td>
-                                    <td><%= order.userId.email %></td>
+                                    <td><b><%= order.userId?.userName %></b></td>
+                                    <td><%= order.userId?.email %></td>
                                     <td>&#8377;<%= order.totalPrice.toFixed(2) %></td>
                                     <td><span class="badge rounded-pill alert-<%= order.status === 'Pending' ? 'warning' : order.status === 'Completed' ? 'success' : 'secondary' %>"><%= order.status %></span></td>
                                     <td><%= new Date(order.createdAt).toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }) %></td>
