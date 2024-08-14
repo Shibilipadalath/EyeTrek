@@ -50,8 +50,7 @@ app.use((req, res, next) => {
   res.status(404);
 
   if (req.originalUrl.startsWith('/admin')) {
-      const adminId=req.session.adminId
-      return res.render('admin/Admin404',adminId);
+      return res.render('admin/Admin404');
   } else {
       return res.render('user/User404');
   }
