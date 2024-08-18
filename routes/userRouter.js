@@ -69,6 +69,9 @@ userRoute.post('/orders/:orderId/return-item', userBlock.isBlocked, userAuth.isL
 userRoute.post('/wallet/add-money', userBlock.isBlocked, userAuth.isLogin, accountController.addMoney);
 userRoute.post('/wallet/payment-success', userBlock.isBlocked, userAuth.isLogin, accountController.paymentSuccess);
 
+userRoute.get('/about', accountController.about)
+userRoute.get('/contact', accountController.contact)
+
 
 //order
 

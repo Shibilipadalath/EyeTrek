@@ -3,30 +3,45 @@
 <!-- search -->
 <style>
     .search-suggestions {
-        border: 1px solid #ccc;
-        max-height: 200px;
-        overflow-y: auto;
-        position: absolute;
-        background-color: #fff;
-        width: 200%;
-        z-index: 1000;
-        display: none;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: #fff;
+    width: 200%;
+    z-index: 1000;
+    display: none;
     }
+
     .search-suggestions div {
         padding: 10px;
         cursor: pointer;
         display: flex;
         align-items: center;
     }
+
     .search-suggestions div:hover {
         background-color: #f0f0f0;
     }
+
     .search-suggestions img {
         width: 100px;
         height: 100px;
         object-fit: cover;
         margin-right: 10px;
     }
+
+    .search-suggestions .no-result {
+        padding: 10px;
+        color: #999;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        font-weight: bold;
+    }
+
 </style>
 
 <body>
@@ -200,7 +215,6 @@
                     <div class="header-right">
                         <div class="search-style-2">
                             <!-- search -->
-
                             <div style="position: relative; width: 300px;">
                                 <input type="text" id="search-query" placeholder="Search for items..." autocomplete="off" style="width: 200%;">
                                 <div id="search-suggestions" class="search-suggestions"></div>
@@ -244,8 +258,8 @@
                                     <li><a class="active" href="/">Home</a></li>
                                     <li><a href="/shop">Shop</a></li>
                                     <li><a href="/myAccount">My Account</a></li>
-                                    <li><a href="page-about.html">About</a></li>
-                                    <li> <a href="page-contact.html">Contact</a></li>
+                                    <li><a href="/about">About</a></li>
+                                    <li> <a href="/contact">Contact</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -486,9 +500,11 @@
                                                     <span>&#8377;<%= product[i].offerPrice.toFixed(2) %> </span>
                                                     <span class="old-price">&#8377;<%= product[i].originalPrice %></span>
                                                 </div>
+                                                <% if(userExist){ %>
                                                 <div class="product-action-1 show">
                                                     <a aria-label="Add To Cart" class="action-btn hover-up" onclick="addToCart('<%= product[i]._id %>')"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
+                                                <% } %>
                                             </div>
                                         </div>                                                                                                                
                                     </div>
@@ -639,7 +655,7 @@
                     });
                 } else if (data.error) {
                     Swal.fire({
-                        title: 'Error!',
+                        title: 'Ooops!',
                         text: data.error,
                         icon: 'error',
                         confirmButtonText: 'OK'
@@ -713,10 +729,14 @@
                         suggestionsContainer.appendChild(suggestionDiv);
                     });
                 } else {
-                    suggestionsContainer.style.display = 'none';
+                    suggestionsContainer.style.display = 'block';
+                    const noResultDiv = document.createElement('div');
+                    noResultDiv.textContent = 'No products found';
+                    noResultDiv.classList.add('no-result');
+                    suggestionsContainer.appendChild(noResultDiv);
                 }
             }
         });
-    </script>                 
+    </script>                
     <%- include('./partials/userFooter')  %> 
 </body>

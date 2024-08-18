@@ -598,6 +598,33 @@
             </div>
         </div>
     </div>
+    
+
+    <!-- Vendor JS-->
+    <script src="public/assets/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="public/assets/js/vendor/jquery-3.6.0.min.js"></script>
+    <script src="public/assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+    <script src="public/assets/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="public/assets/js/plugins/slick.js"></script>
+    <script src="public/assets/js/plugins/jquery.syotimer.min.js"></script>
+    <script src="public/assets/js/plugins/wow.js"></script>
+    <script src="public/assets/js/plugins/jquery-ui.js"></script>
+    <script src="public/assets/js/plugins/perfect-scrollbar.js"></script>
+    <script src="public/assets/js/plugins/magnific-popup.js"></script>
+    <script src="public/assets/js/plugins/select2.min.js"></script>
+    <script src="public/assets/js/plugins/waypoints.js"></script>
+    <script src="public/assets/js/plugins/counterup.js"></script>
+    <script src="public/assets/js/plugins/jquery.countdown.min.js"></script>
+    <script src="public/assets/js/plugins/images-loaded.js"></script>
+    <script src="public/assets/js/plugins/isotope.js"></script>
+    <script src="public/assets/js/plugins/scrollup.js"></script>
+    <script src="public/assets/js/plugins/jquery.vticker-min.js"></script>
+    <script src="public/assets/js/plugins/jquery.theia.sticky.js"></script>
+    <script src="public/assets/js/plugins/jquery.elevatezoom.js"></script>
+    <!-- Template  JS -->
+    <script src="public/assets/js/maind134.js?v=3.4"></script>
+    <script src="public/assets/js/shopd134.js?v=3.4"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             // Initialize the main slider
@@ -653,31 +680,6 @@
 
     </script>
 
-    <!-- Vendor JS-->
-    <script src="public/assets/js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="public/assets/js/vendor/jquery-3.6.0.min.js"></script>
-    <script src="public/assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
-    <script src="public/assets/js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="public/assets/js/plugins/slick.js"></script>
-    <script src="public/assets/js/plugins/jquery.syotimer.min.js"></script>
-    <script src="public/assets/js/plugins/wow.js"></script>
-    <script src="public/assets/js/plugins/jquery-ui.js"></script>
-    <script src="public/assets/js/plugins/perfect-scrollbar.js"></script>
-    <script src="public/assets/js/plugins/magnific-popup.js"></script>
-    <script src="public/assets/js/plugins/select2.min.js"></script>
-    <script src="public/assets/js/plugins/waypoints.js"></script>
-    <script src="public/assets/js/plugins/counterup.js"></script>
-    <script src="public/assets/js/plugins/jquery.countdown.min.js"></script>
-    <script src="public/assets/js/plugins/images-loaded.js"></script>
-    <script src="public/assets/js/plugins/isotope.js"></script>
-    <script src="public/assets/js/plugins/scrollup.js"></script>
-    <script src="public/assets/js/plugins/jquery.vticker-min.js"></script>
-    <script src="public/assets/js/plugins/jquery.theia.sticky.js"></script>
-    <script src="public/assets/js/plugins/jquery.elevatezoom.js"></script>
-    <!-- Template  JS -->
-    <script src="public/assets/js/maind134.js?v=3.4"></script>
-    <script src="public/assets/js/shopd134.js?v=3.4"></script>
-
     <!-- zoom -->
     <script>
         $(document).ready(function () {
@@ -718,7 +720,7 @@
                     });
                 } else if (data.error) {
                     Swal.fire({
-                        title: 'Error!',
+                        title: 'Oops!',
                         text: data.error,
                         icon: 'error',
                         confirmButtonText: 'OK'
@@ -728,7 +730,7 @@
             .catch(error => {
                 console.error('Error:', error);
                 Swal.fire({
-                    title: 'Error!',
+                    title: 'Oops!',
                     text: 'Please Login',
                     icon: 'error',
                     confirmButtonText: 'OK'

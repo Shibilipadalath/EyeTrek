@@ -6,30 +6,45 @@
 <!-- search -->
 <style>
     .search-suggestions {
-        border: 1px solid #ccc;
-        max-height: 200px;
-        overflow-y: auto;
-        position: absolute;
-        background-color: #fff;
-        width: 200%;
-        z-index: 1000;
-        display: none;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: #fff;
+    width: 200%;
+    z-index: 1000;
+    display: none;
     }
+
     .search-suggestions div {
         padding: 10px;
         cursor: pointer;
         display: flex;
         align-items: center;
     }
+
     .search-suggestions div:hover {
         background-color: #f0f0f0;
     }
+
     .search-suggestions img {
         width: 100px;
         height: 100px;
         object-fit: cover;
         margin-right: 10px;
     }
+
+    .search-suggestions .no-result {
+        padding: 10px;
+        color: #999;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        font-weight: bold;
+    }
+
 </style>
 
 <body>
@@ -202,11 +217,12 @@
                         <a href="/"><img src="public/assets/imgs/theme/eyetrek.png" alt="logo"></a>
                     </div>
                     <div class="header-right">
-                        <!-- search -->
-                             
-                        <div style="position: relative; width: 300px;">
-                            <input type="text" id="search-query" placeholder="Search for items..." autocomplete="off" style="width: 200%;">
-                            <div id="search-suggestions" class="search-suggestions"></div>
+                        <div class="search-style-2">
+                            <!-- search -->
+                            <div style="position: relative; width: 300px;">
+                                <input type="text" id="search-query" placeholder="Search for items..." autocomplete="off" style="width: 200%;">
+                                <div id="search-suggestions" class="search-suggestions"></div>
+                            </div>                                                                       
                         </div>
                         <div class="header-action-right">
                             <div class="header-action-2">
@@ -522,7 +538,7 @@
                             </div>
                         </div>
                         <div class="row product-grid-3">
-                            <% if(product){ %>
+                            <% if(product && product.length>0){ %>
                                 <% for(let i=0;i<product.length;i++){ %>
                             <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                 <div class="product-cart-wrap mb-30">
@@ -562,7 +578,11 @@
                                 </div>
                             </div>
                             <% } %>
-                            <% } %>
+                            <% }else{ %>
+                                <div>
+                                    <h1>No Products Found</h1>
+                                </div>
+                            <% } %>   
                         </div>
                         <!--pagination-->
                         <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
@@ -622,27 +642,7 @@
     <footer class="main">
         <section class="newsletter p-30 text-white wow fadeIn animated">
             <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-7 mb-md-3 mb-lg-0">
-                        <div class="row align-items-center">
-                            <div class="col flex-horizontal-center">
-                                <img class="icon-email" src="public/assets/imgs/theme/icons/icon-email.svg" alt="">
-                                <h4 class="font-size-20 mb-0 ml-3">Sign up to Newsletter</h4>
-                            </div>
-                            <div class="col my-4 my-md-0 des">
-                                <h5 class="font-size-15 ml-4 mb-0">...and receive <strong>$25 coupon for first shopping.</strong></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-5">
-                        <!-- Subscribe Form -->
-                        <form class="form-subcriber d-flex wow fadeIn animated">
-                            <input type="email" class="form-control bg-white font-small" placeholder="Enter your email">
-                            <button class="btn bg-dark text-white" type="submit">Subscribe</button>
-                        </form>
-                        <!-- End Subscribe Form -->
-                    </div>
-                </div>
+                
             </div>
         </section>
         <section class="section-padding footer-mid">
@@ -902,10 +902,14 @@
                         suggestionsContainer.appendChild(suggestionDiv);
                     });
                 } else {
-                    suggestionsContainer.style.display = 'none';
+                    suggestionsContainer.style.display = 'block';
+                    const noResultDiv = document.createElement('div');
+                    noResultDiv.textContent = 'No products found';
+                    noResultDiv.classList.add('no-result');
+                    suggestionsContainer.appendChild(noResultDiv);
                 }
             }
         });
-    </script> 
+    </script>  
 
 </body>

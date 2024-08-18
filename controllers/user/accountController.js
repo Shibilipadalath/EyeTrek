@@ -531,6 +531,28 @@ const paymentSuccess = async (req, res) => {
 };
 
 
+const about=async(req,res)=>{
+    try {
+        const user = await User.findOne({ _id: req.session.userId });
+        return res.render('aboutPage',{user})
+    } catch (error) {
+        console.error(error);
+        
+    }
+}
+
+
+const contact=async(req,res)=>{
+    try {
+        const user = await User.findOne({ _id: req.session.userId });
+        return res.render('contactPage',{user})
+    } catch (error) {
+        console.error(error);
+        
+    }
+}
+
+
 
 module.exports = {
     myAccount,
@@ -547,5 +569,7 @@ module.exports = {
     pendingPayment,
     finalizePendingPayment,
     addMoney,
-    paymentSuccess
+    paymentSuccess,
+    about,
+    contact
 }
