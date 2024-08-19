@@ -1,25 +1,50 @@
-<%- include('./partials/adminHeader') %>
+<!DOCTYPE HTML>
+<html lang="en">
 
-<style>
-    .colorForError{
-        color: red;
-    }
-</style>
-<style>
-    .img-container {
-    width: 100%;
-    max-height: 500px;
-    overflow: hidden;
-}
-#image-to-crop {
-    width: 100%; 
-}
+<head>
+    <meta charset="utf-8">
+    <title>EyeTrek Admin</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/public/adminAsset/imgs/theme/EyetreckLogo.jpg">
+    <!-- Template CSS -->
+    <link href="/public/adminAsset/css/main.css" rel="stylesheet" type="text/css" />
 
-</style>
+    
+    <link  href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet"/>
 
-<link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.css">
-<script src="https://unpkg.com/cropperjs"></script>
+    <style>
+        .colorForError{
+            color: red;
+        }
+    </style>
+    <style>
+        #image-preview .image-container {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
+        #image-preview img {
+            max-width: 300px; /* Increase the size of the image preview */
+            max-height: 300px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        #image-preview button {
+            margin: 5px;
+        }
+
+    </style>      
+</head>
 
 <body>
     <div class="screen-overlay"></div>
@@ -191,31 +216,9 @@
                                             <input class="form-control" type="file" name="images" id="images" accept=".jpg,.jpeg,.png,.webp" multiple>
                                             <span id="images-error" class="colorForError"></span>
                                         </div>
-                                        <div id="image-preview" class="row"></div>
+                                        <div id="image-preview"></div>
                                     </div>
-                                    <!-- Cropping Modal -->
-                                    <div class="modal fade" id="cropperModal" tabindex="-1" role="dialog" aria-labelledby="cropperModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="cropperModalLabel">Crop Image</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="img-container">
-                                                        <img id="image-to-crop" src="">
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                    <button type="button" id="crop-image-btn" class="btn btn-primary">Crop</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>                                                                                         
                                 <div class="row">
                                     <div class="col-md-9 offset-md-3">
                                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -228,184 +231,260 @@
                 </div>
             </div>
         </section>
+        <footer class="main-footer font-xs">
+            <div class="row pb-30 pt-15">
+                <div class="col-sm-6">
+                    <script>
+                    document.write(new Date().getFullYear())
+                    </script> ©, Evara - HTML Ecommerce Template .
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end">
+                        All rights reserved
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script src="/public/adminAsset/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="/public/adminAsset/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/public/adminAsset/js/vendors/select2.min.js"></script>
+    <script src="/public/adminAsset/js/vendors/perfect-scrollbar.js"></script>
+    <script src="/public/adminAsset/js/vendors/jquery.fullscreen.min.js"></script> 
+    <script src="https://unpkg.com/cropperjs"></script>
+    <!-- Main Script -->
+    <script src="/public/adminAsset/js/main.js" type="text/javascript"></script>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', (event) => {
-                const form = document.getElementById('productForm');
-                const title = document.getElementById('name');
-                const description = document.getElementById('Description');
-                const brand = document.getElementById('brand');
-                const stock = document.getElementById('stock');
-                const originalPrice = document.getElementById('originalPrice');
-                const offerPrice = document.getElementById('offerPrice');
-                const category = document.getElementById('category');
-                const images = document.getElementById('images');
+    <!-- validation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const form = document.getElementById('productForm');
+            const title = document.getElementById('name');
+            const description = document.getElementById('Description');
+            const brand = document.getElementById('brand');
+            const stock = document.getElementById('stock');
+            const originalPrice = document.getElementById('originalPrice');
+            const offerPrice = document.getElementById('offerPrice');
+            const category = document.getElementById('category');
+            const images = document.getElementById('images');
 
-                const titleError = document.getElementById('title-error');
-                const descriptionError = document.getElementById('description-error');
-                const brandError = document.getElementById('brand-error');
-                const stockError = document.getElementById('stock-error');
-                const originalPriceError = document.getElementById('originalPrice-error');
-                const offerPriceError = document.getElementById('offerPrice-error');
-                const imagesError = document.getElementById('images-error');
+            const titleError = document.getElementById('title-error');
+            const descriptionError = document.getElementById('description-error');
+            const brandError = document.getElementById('brand-error');
+            const stockError = document.getElementById('stock-error');
+            const originalPriceError = document.getElementById('originalPrice-error');
+            const offerPriceError = document.getElementById('offerPrice-error');
+            const imagesError = document.getElementById('images-error');
 
-                form.addEventListener('submit', function(event) {
-                    let isValid = true;
+            form.addEventListener('submit', function(event) {
+                let isValid = true;
 
-                    // Title validation
-                    const textPattern = /^(?!.* {2})[a-zA-Z0-9 ]+$/;
+                // Title validation
+                const textPattern = /^(?!.* {2})[a-zA-Z0-9 ]+$/;
 
-                    if (!textPattern.test(title.value)) {
-                        isValid = false;
-                        titleError.innerText = 'Invalid Title';
-                    } else {
-                        titleError.innerText = '';
-                    }
+                if (!textPattern.test(title.value)) {
+                    isValid = false;
+                    titleError.innerText = 'Invalid Title';
+                } else {
+                    titleError.innerText = '';
+                }
 
-                    // Description validation
-                    if (!textPattern.test(description.value)) {
-                        isValid = false;
-                        descriptionError.innerText = 'Invalid Description';
-                    } else {
-                        descriptionError.innerText = '';
-                    }
+                // Description validation
+                if (!textPattern.test(description.value)) {
+                    isValid = false;
+                    descriptionError.innerText = 'Invalid Description';
+                } else {
+                    descriptionError.innerText = '';
+                }
 
-                    // Brand validation
-                    if (!textPattern.test(brand.value)) {
-                        isValid = false;
-                        brandError.innerText = 'Invalid Brand';
-                    } else {
-                        brandError.innerText = '';
-                    }
+                // Brand validation
+                if (!textPattern.test(brand.value)) {
+                    isValid = false;
+                    brandError.innerText = 'Invalid Brand';
+                } else {
+                    brandError.innerText = '';
+                }
 
-                    // Stock validation
-                    const numberPattern = /^(?!.* {2})[0-9 ]+$/;
+                // Stock validation
+                const numberPattern = /^(?!.* {2})[0-9 ]+$/;
 
-                    if (!numberPattern.test(stock.value)) {
-                        isValid = false;
-                        stockError.innerText = 'Invalid Stock';
-                    } else {
-                        stockError.innerText = '';
-                    }
+                if (!numberPattern.test(stock.value)) {
+                    isValid = false;
+                    stockError.innerText = 'Invalid Stock';
+                } else {
+                    stockError.innerText = '';
+                }
 
-                    // Original Price validation
-                    if (!numberPattern.test(originalPrice.value)) {
-                        isValid = false;
-                        originalPriceError.innerText = 'Invalid Price';
-                    } else {
-                        originalPriceError.innerText = '';
-                    }
+                // Original Price validation
+                if (!numberPattern.test(originalPrice.value)) {
+                    isValid = false;
+                    originalPriceError.innerText = 'Invalid Price';
+                } else {
+                    originalPriceError.innerText = '';
+                }
 
-                    // Offer Price validation
-                    if (!numberPattern.test(offerPrice.value)) {
-                        isValid = false;
-                        offerPriceError.innerText = 'Invalid Price';
-                    } else {
-                        offerPriceError.innerText = '';
-                    }
+                // Offer Price validation
+                if (!numberPattern.test(offerPrice.value)) {
+                    isValid = false;
+                    offerPriceError.innerText = 'Invalid Price';
+                } else {
+                    offerPriceError.innerText = '';
+                }
 
-                    // Images validation
-                    const validImageTypes = ['image/jpeg', 'image/png', 'image/webp'];
-                    if (images.files.length < 1) {
-                        isValid = false;
-                        imagesError.innerText = 'Please upload at least 1 image';
-                    } else {
-                        for (const file of images.files) {
-                            if (!validImageTypes.includes(file.type)) {
-                                isValid = false;
-                                imagesError.innerText = 'Only image files are allowed (JPEG, PNG, WEBP)';
-                                break;
-                            } else {
-                                imagesError.innerText = '';
-                            }
+                // Images validation
+                const validImageTypes = ['image/jpeg', 'image/png', 'image/webp'];
+                if (images.files.length < 1) {
+                    isValid = false;
+                    imagesError.innerText = 'Please upload at least 1 image';
+                } else {
+                    for (const file of images.files) {
+                        if (!validImageTypes.includes(file.type)) {
+                            isValid = false;
+                            imagesError.innerText = 'Only image files are allowed (JPEG, PNG, WEBP)';
+                            break;
+                        } else {
+                            imagesError.innerText = '';
                         }
                     }
+                }
 
-                    if (!isValid) {
-                        event.preventDefault();
-                    }
-                });
+                if (!isValid) {
+                    event.preventDefault();
+                }
             });
-        </script>
+        });
+    </script>
 
-        <!-- image preview -->
-        <script>
-            document.getElementById('images').addEventListener('change', function(event) {
+    <!-- image preview and crop-->
+    <script>
+        document.getElementById('images').addEventListener('change', function(event) {
             const imagePreviewContainer = document.getElementById('image-preview');
             imagePreviewContainer.innerHTML = '';
-
+    
             const files = event.target.files;
-
+            const dataTransfer = new DataTransfer(); // For updating the file input
+    
             if (files) {
-                Array.from(files).forEach(file => {
+                Array.from(files).forEach((file, index) => {
                     const reader = new FileReader();
-
+    
                     reader.onload = function(e) {
                         const imgElement = document.createElement('img');
                         imgElement.src = e.target.result;
                         imgElement.classList.add('img-thumbnail');
-                        imgElement.style.margin = '10px';
-                        imgElement.style.width = '100px';
-                        imgElement.style.height = '100px';
-
-                        imgElement.addEventListener('click', function() {
-                            cropperModal(e.target.result);
+    
+                        const cropIcon = document.createElement('button');
+                        cropIcon.innerHTML = '✂️ Crop';
+                        cropIcon.classList.add('btn', 'btn-sm', 'btn-warning');
+                        cropIcon.addEventListener('click', function() {
+                            cropImage(imgElement, file, index);
                         });
-
-                        const colDiv = document.createElement('div');
-                        colDiv.classList.add('col-md-3');
-                        colDiv.appendChild(imgElement);
-
-                        imagePreviewContainer.appendChild(colDiv);
+    
+                        const replaceIcon = document.createElement('button');
+                        replaceIcon.innerHTML = '🔄 Replace';
+                        replaceIcon.classList.add('btn', 'btn-sm', 'btn-info');
+                        replaceIcon.addEventListener('click', function() {
+                            replaceImage(file, index);
+                        });
+    
+                        const deleteIcon = document.createElement('button');
+                        deleteIcon.innerHTML = '❌ Delete';
+                        deleteIcon.classList.add('btn', 'btn-sm', 'btn-danger');
+                        deleteIcon.addEventListener('click', function() {
+                            imagePreviewContainer.removeChild(imageContainer);
+                            // Remove the file from the DataTransfer object
+                            dataTransfer.items.remove(index);
+                            document.getElementById('images').files = dataTransfer.files;
+                        });
+    
+                        const imageContainer = document.createElement('div');
+                        imageContainer.classList.add('image-container');
+                        imageContainer.appendChild(imgElement);
+                        imageContainer.appendChild(cropIcon);
+                        imageContainer.appendChild(replaceIcon);
+                        imageContainer.appendChild(deleteIcon);
+    
+                        imagePreviewContainer.appendChild(imageContainer);
                     };
-
+    
                     reader.readAsDataURL(file);
+                    dataTransfer.items.add(file); // Add the file to the DataTransfer object
                 });
+    
+                document.getElementById('images').files = dataTransfer.files;
             }
         });
-
-        function cropperModal(imageSrc) {
-            const cropperModal = document.getElementById('cropperModal');
-            const imageToCrop = document.getElementById('image-to-crop');
-
-            imageToCrop.src = imageSrc;
-
-            $(cropperModal).modal('show');
-
-            $(cropperModal).on('shown.bs.modal', function () {
-                let cropper = new Cropper(imageToCrop, {
-                    aspectRatio: 1,
-                    viewMode: 1,
-                    autoCropArea: 1,
-                    responsive: true
-                });
-
-                document.getElementById('crop-image-btn').onclick = function() {
-                    const canvas = cropper.getCroppedCanvas();
-                    const croppedImageSrc = canvas.toDataURL('image/png');
-
-                    const previewImages = document.querySelectorAll('#image-preview img');
-                    previewImages.forEach(img => {
-                        if (img.src === imageSrc) {
-                            img.src = croppedImageSrc;
+    
+        function cropImage(imgElement, file, index) {
+            const aspectRatio = 547 / 308;
+            const cropper = new Cropper(imgElement, {
+                aspectRatio: aspectRatio,
+                viewMode: 1,
+                autoCropArea: 1,
+                ready() {
+                    cropper.crop();
+                }
+            });
+    
+            const cropButton = document.createElement('button');
+            cropButton.innerHTML = 'Apply Crop';
+            cropButton.classList.add('btn', 'btn-sm', 'btn-success');
+            cropButton.addEventListener('click', function() {
+                const canvas = cropper.getCroppedCanvas();
+                canvas.toBlob(function(blob) {
+                    const newFile = new File([blob], file.name, { type: 'image/png' });
+                    const dataTransfer = new DataTransfer();
+                    
+                    Array.from(document.getElementById('images').files).forEach((file, i) => {
+                        if (i === index) {
+                            dataTransfer.items.add(newFile); // Replace the old file with the cropped file
+                        } else {
+                            dataTransfer.items.add(file);
                         }
                     });
-
-                    $(cropperModal).modal('hide');
-
+    
+                    document.getElementById('images').files = dataTransfer.files;
+                    imgElement.src = URL.createObjectURL(newFile);
                     cropper.destroy();
-                };
+                    cropButton.remove();
+                }, 'image/png');
             });
-
-            $(cropperModal).on('hidden.bs.modal', function () {
-                const imageToCrop = document.getElementById('image-to-crop');
-                if (imageToCrop.cropper) {
-                    imageToCrop.cropper.destroy();
-                }
-                $(cropperModal).off('shown.bs.modal');
-            });
+    
+            imgElement.after(cropButton);
         }
+    
+        function replaceImage(file, index) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.jpg,.jpeg,.png,.webp';
+            input.style.display = 'none';
+    
+            input.addEventListener('change', function(event) {
+                const newFile = event.target.files[0];
+                if (newFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.querySelectorAll('#image-preview .image-container img')[index].src = e.target.result;
+                        
+                        const dataTransfer = new DataTransfer();
+                        Array.from(document.getElementById('images').files).forEach((file, i) => {
+                            if (i === index) {
+                                dataTransfer.items.add(newFile);
+                            } else {
+                                dataTransfer.items.add(file);
+                            }
+                        });
+    
+                        document.getElementById('images').files = dataTransfer.files;
+                    };
+                    reader.readAsDataURL(newFile);
+                }
+            });
+    
+            input.click();
+        }
+    </script>
+    
+</body>
 
-        </script>
-            
-        <%- include('./partials/adminFooter') %>
+</html>
